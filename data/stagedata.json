@@ -1,0 +1,139 @@
+{
+	"chapter": {
+		"Dongguk university": {
+			"1": [
+				"map1",
+				1,
+				300,
+				"./Image/catthema/map1.png",
+				"./Sound/bgm/bensound-epic.wav",
+				0,
+				1,
+				"./Image/catthema/attack/cat_att.png",
+				[],
+				"",
+				""
+			],
+			"2": [
+				"map1",
+				2,
+				450,
+				"./Image/catthema/map1.png",
+				"./Sound/bgm/bensound-epic.wav",
+				0,
+				1,
+				"./Image/catthema/attack/cat_att.png",
+				[],
+				"",
+				""
+			],
+			"3": [
+				"map1",
+				3,
+				1000,
+				"./Image/catthema/map1.png",
+				"./Sound/bgm/bensound-theduel.wav",
+				1,
+				1,
+				"./Image/catthema/attack/cat_att.png",
+				[
+					"Image/catthema/attack/cat_att.png",
+					"Image/catthema/attack/cat_att.png",
+					"Image/catthema/attack/cat_att.png"
+				],
+				"./Image/catthema/attack/dust.png",
+				"F5S1"
+			]
+		},
+		"Night view": {
+			"1": [
+				"map2",
+				1,
+				300,
+				"./Image/catthema/map2.png",
+				"./Sound/bgm/bensound-adventure.wav",
+				0,
+				1,
+				"./Image/catthema/attack/dog.png",
+				[],
+				"",
+				""
+			],
+			"2": [
+				"map2",
+				2,
+				450,
+				"./Image/catthema/map2.png",
+				"./Sound/bgm/bensound-adventure.wav",
+				0,
+				1,
+				"./Image/catthema/attack/dog.png",
+				[],
+				"",
+				""
+			],
+			"3": [
+				"map2",
+				3,
+				1000,
+				"./Image/catthema/map2.png",
+				"./Sound/bgm/bensound-theduel.wav",
+				1,
+				1,
+				"./Image/catthema/attack/dog.png",
+				[
+					"Image/catthema/attack/dog.png",
+					"Image/catthema/attack/dog.png",
+					"Image/catthema/attack/dog.png"
+				],
+				"./Image/catthema/attack/dust.png",
+				"F5S4"
+			]
+		},
+		"Namsan": {
+			"1": [
+				"map3",
+				1,
+				300,
+				"./Image/catthema/map3.png",
+				"./Sound/bgm/bensound-evolution.wav",
+				0,
+				1,
+				"./Image/catthema/attack/snake.png",
+				[],
+				"",
+				""
+			],
+			"2": [
+				"map3",
+				2,
+				450,
+				"./Image/catthema/map3.png",
+				"./Sound/bgm/bensound-evolution.wav",
+				0,
+				1,
+				"./Image/catthema/attack/snake.png",
+				[],
+				"",
+				""
+			],
+			"3": [
+				"map3",
+				3,
+				1000,
+				"./Image/catthema/map3.png",
+				"./Sound/bgm/bensound-theduel.wav",
+				1,
+				1,
+				"./Image/catthema/attack/snake.png",
+				[
+					"Image/catthema/attack/snake.png",
+					"Image/catthema/attack/snake.png",
+					"Image/catthema/attack/snake.png"
+				],
+				"Image/catthema/attack/dust.png",
+				"Tank"
+			]
+		}
+	}
+}
