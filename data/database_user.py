@@ -4,13 +4,13 @@ from datetime import datetime
 import bcrypt
 from data.Defs import User
 class Database:
-    def __init__(self):     
+    def __init__(self): 
         self.dct_db = pymysql.connect(
         db="sys",
-        host="database-2.cskg3bhzvpnw.ap-northeast-2.rds.amazonaws.com",
+        host="localhost",
         port=3306,
-        user="admin",
-        passwd="dreamscometrue",
+        user="root",
+        passwd="trio",
         charset = 'utf8'
         )
         self.salt = bcrypt.gensalt()
