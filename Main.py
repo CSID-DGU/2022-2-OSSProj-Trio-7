@@ -37,7 +37,7 @@ class Login:
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
 
         menu_image = pygame_menu.baseimage.BaseImage(
-            image_path=Images.login.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+            image_path=Images.main.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
             widget_font=pygame_menu.font.FONT_8BIT,
             # 버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
@@ -62,7 +62,7 @@ class Login:
         self.board_height = self.changed_screen_size[1]  # y
 
         self.menu = pygame_menu.Menu(
-            'DreamsComeTrue', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+            'Trio', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
         self.first_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 

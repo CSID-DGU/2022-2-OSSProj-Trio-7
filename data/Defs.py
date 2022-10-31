@@ -3,6 +3,7 @@ import math
 from operator import truediv
 from sys import version
 
+
 class User:
     user_id = ""
     coin = 0
@@ -11,12 +12,13 @@ class User:
     price = [0, 100, 100, 200]
     easy_score = 0
     hard_score = 0
-    cat_lock = [False,False,False,False]
-    
+    cat_lock = [False, False, False, False]
+
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
     login = "./Image/Login.png"
+    main = "./Image/main.png"
     start = "./Image/StartImage.png"
     how_to_play = "./Image/howtoplay.png"
     about = "./Image/AboutPage.jpg"
@@ -72,22 +74,24 @@ class Images(enum.Enum):
     failbuy_cat3 = "./Image/catthema/failbuy_cat3.png"
     failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
 
+
 class Scales(enum.Enum):
     large = (2, 2)
     default = (1, 1)
     small = (.6, .6)
     tiny = (.1, .1)
-    
+
 
 class Color(enum.Enum):
-    RED = (200,60,50)
-    BLUE = (0,60,200)
-    GREEN = (50,200,50)
-    YELLOW = (255,255,0)
-    WHITE = (255,255,255)
-    TRANSPARENT = (255,255,255,128)
-    GRAY = (220,220,220)
-    BLACK = (0,0,0)
+    RED = (200, 60, 50)
+    BLUE = (0, 60, 200)
+    GREEN = (50, 200, 50)
+    YELLOW = (255, 255, 0)
+    WHITE = (255, 255, 255)
+    TRANSPARENT = (255, 255, 255, 128)
+    GRAY = (220, 220, 220)
+    BLACK = (0, 0, 0)
+
 
 class Menus(enum.Enum):
     margin_10 = 10
@@ -96,7 +100,7 @@ class Menus(enum.Enum):
     margin_50 = 50
     margin_100 = 100
     margin_200 = 200
-    ranking_search_result_margin = (0,20)
+    ranking_search_result_margin = (0, 20)
 
     fontsize_50 = 50
     fontsize_30 = 30
@@ -110,20 +114,20 @@ class Menus(enum.Enum):
 class Default(enum.Enum):
     game = {
         "size": {
-            "x":0, 
-            "y":0
-            }
+            "x": 0,
+            "y": 0
+        }
     }
     sound = {
-        "sfx":{
+        "sfx": {
             "volume": 0.1
         }
     }
     font = "./Font/DXHanlgrumStd-Regular.otf"
     boss = {
         "size": {
-            "x":250, 
-            "y":250
+            "x": 250,
+            "y": 250
         },
         "velocity": [
             6,
@@ -132,109 +136,109 @@ class Default(enum.Enum):
         ],
         "gun_size": 10,
         "bullet_size": {
-            "x":20, 
-            "y":20
+            "x": 20,
+            "y": 20
         },
         "health": 12000,
         "firing_speed": [
-            25, 
-            20, 
+            25,
+            20,
             15
         ],
         "grace_timers": [
             120,
-            90, 
+            90,
             65
         ],
         "grace_time": 30
     }
     character = {
         "size": {
-            "x":40, 
-            "y":80
-            },
+            "x": 40,
+            "y": 80
+        },
         "invincible_period": 4.0,
-        "missile":{
-            "min":1,
-            "max":4,
-            "speed":20,
-            "speed_inc":1
-            },
-        "max_stats":{
-            "power":500,
-            "fire_rate":0.3,
-            "mobility":25
+        "missile": {
+            "min": 1,
+            "max": 4,
+            "speed": 20,
+            "speed_inc": 1
+        },
+        "max_stats": {
+            "power": 500,
+            "fire_rate": 0.3,
+            "mobility": 25
         }
     }
     item = {
-        "duration":10.0,
-        "size":{
-            "x":45, 
-            "y":45
+        "duration": 10.0,
+        "size": {
+            "x": 45,
+            "y": 45
         },
-        "size2":{
-            "x":70,
-            "y":35
+        "size2": {
+            "x": 70,
+            "y": 35
         },
-        "size3":{
-            "x":80,
-            "y":33
+        "size3": {
+            "x": 80,
+            "y": 33
         },
         "sound": "./Sound/Item/speedup.wav",
-        "velocity":5,
-        "speedup":{
+        "velocity": 5,
+        "speedup": {
             "spawn_rate": 0.004,
-            "frames":[
-                "./Image/catthema/item/item_milk.png", 
-                "./Image/catthema/item/item_milk.png", 
-                "./Image/catthema/item/item_milk.png", 
-                "./Image/catthema/item/item_milk.png", 
+            "frames": [
+                "./Image/catthema/item/item_milk.png",
+                "./Image/catthema/item/item_milk.png",
+                "./Image/catthema/item/item_milk.png",
+                "./Image/catthema/item/item_milk.png",
                 "./Image/catthema/item/item_milk.png",
                 "./Image/catthema/item/item_milk.png"
             ]
         },
-        "powerup":{
+        "powerup": {
             "spawn_rate": 0.004,
-            "duration":10.0,
-            "frames":[
-                "./Image/catthema/item/item_fish.png", 
-                "./Image/catthema/item/item_fish.png", 
-                "./Image/catthema/item/item_fish.png", 
-                "./Image/catthema/item/item_fish.png", 
+            "duration": 10.0,
+            "frames": [
+                "./Image/catthema/item/item_fish.png",
+                "./Image/catthema/item/item_fish.png",
+                "./Image/catthema/item/item_fish.png",
+                "./Image/catthema/item/item_fish.png",
                 "./Image/catthema/item/item_fish.png",
                 "./Image/catthema/item/item_fish.png"
             ]
         },
-        "bomb":{
+        "bomb": {
             "spawn_rate": 0.004,
-            "interval":1.0,
-            "power":1000,
-            "frames":[
-                "./Image/catthema/item/item_chu.png", 
-                "./Image/catthema/item/item_chu.png", 
-                "./Image/catthema/item/item_chu.png", 
-                "./Image/catthema/item/item_chu.png", 
+            "interval": 1.0,
+            "power": 1000,
+            "frames": [
+                "./Image/catthema/item/item_chu.png",
+                "./Image/catthema/item/item_chu.png",
+                "./Image/catthema/item/item_chu.png",
+                "./Image/catthema/item/item_chu.png",
                 "./Image/catthema/item/item_chu.png",
                 "./Image/catthema/item/item_chu.png"
             ]
         },
-        "health":{
+        "health": {
             "spawn_rate": 0.002,
-            "frames":[
-                "./Image/catthema/item/item_heart.png", 
-                "./Image/catthema/item/item_heart.png", 
-                "./Image/catthema/item/item_heart.png", 
+            "frames": [
+                "./Image/catthema/item/item_heart.png",
+                "./Image/catthema/item/item_heart.png",
+                "./Image/catthema/item/item_heart.png",
                 "./Image/catthema/item/item_heart.png",
                 "./Image/catthema/item/item_heart.png"
             ]
         },
-        "coin":{
+        "coin": {
             "spawn_rate": 0.002,
-            "frames":[
-                "./Image/catthema/item/item_coin.png", 
-                "./Image/catthema/item/item_coin.png", 
-                "./Image/catthema/item/item_coin.png", 
-                "./Image/catthema/item/item_coin.png", 
+            "frames": [
+                "./Image/catthema/item/item_coin.png",
+                "./Image/catthema/item/item_coin.png",
+                "./Image/catthema/item/item_coin.png",
+                "./Image/catthema/item/item_coin.png",
                 "./Image/catthema/item/item_coin.png",
                 "./Image/catthema/item/item_coin.png"
             ]
@@ -243,48 +247,48 @@ class Default(enum.Enum):
     effect = {
         "speed": 0.4,
         "velocity": 5,
-        "bomb":{
+        "bomb": {
             "duration": 7.0,
-            "size":{
+            "size": {
                 "x": 500,
                 "y": 500
             },
             "frames": [
-                "./Image/Effects/Bomb/frame-1.png", 
-                "./Image/Effects/Bomb/frame-2.png", 
-                "./Image/Effects/Bomb/frame-3.png", 
-                "./Image/Effects/Bomb/frame-4.png", 
-                "./Image/Effects/Bomb/frame-5.png", 
-                "./Image/Effects/Bomb/frame-6.png", 
-                "./Image/Effects/Bomb/frame-7.png", 
-                "./Image/Effects/Bomb/frame-8.png", 
+                "./Image/Effects/Bomb/frame-1.png",
+                "./Image/Effects/Bomb/frame-2.png",
+                "./Image/Effects/Bomb/frame-3.png",
+                "./Image/Effects/Bomb/frame-4.png",
+                "./Image/Effects/Bomb/frame-5.png",
+                "./Image/Effects/Bomb/frame-6.png",
+                "./Image/Effects/Bomb/frame-7.png",
+                "./Image/Effects/Bomb/frame-8.png",
                 "./Image/Effects/Bomb/frame-9.png",
-                "./Image/Effects/Bomb/frame-10.png", 
-                "./Image/Effects/Bomb/frame-11.png", 
+                "./Image/Effects/Bomb/frame-10.png",
+                "./Image/Effects/Bomb/frame-11.png",
                 "./Image/Effects/Bomb/frame-12.png",
-                "./Image/Effects/Bomb/frame-13.png", 
-                "./Image/Effects/Bomb/frame-14.png", 
+                "./Image/Effects/Bomb/frame-13.png",
+                "./Image/Effects/Bomb/frame-14.png",
                 "./Image/Effects/Bomb/frame-15.png"
             ],
             "sound": "./Sound/Weapon/explosion.wav"
         },
-        "boom":{
+        "boom": {
             "duration": 4.0,
-            "size":{
+            "size": {
                 "x": 150,
                 "y": 150
             },
-            "frames":[
-                "./Image/Effects/Boom/frame-1.png", 
-                "./Image/Effects/Boom/frame-2.png", 
-                "./Image/Effects/Boom/frame-3.png", 
-                "./Image/Effects/Boom/frame-4.png", 
-                "./Image/Effects/Boom/frame-5.png", 
-                "./Image/Effects/Boom/frame-6.png", 
+            "frames": [
+                "./Image/Effects/Boom/frame-1.png",
+                "./Image/Effects/Boom/frame-2.png",
+                "./Image/Effects/Boom/frame-3.png",
+                "./Image/Effects/Boom/frame-4.png",
+                "./Image/Effects/Boom/frame-5.png",
+                "./Image/Effects/Boom/frame-6.png",
             ],
             "sound": "./Sound/destroyed.wav"
         },
-        "crosshair":{
+        "crosshair": {
             "image": "./Image/Effects/Crosshair.png",
             "size": {
                 "x": 120,
@@ -294,40 +298,41 @@ class Default(enum.Enum):
         }
     }
     animation = {
-        "blink":{
-            "speed":0.05,
-            "frame":0.2,
-            "duration":4.0
+        "blink": {
+            "speed": 0.05,
+            "frame": 0.2,
+            "duration": 4.0
         },
-        "interval":10.0,
-        "speed":0.5
+        "interval": 10.0,
+        "speed": 0.5
     }
     about = {
         "authors": [
             "Yaena Lee",
-            "Mingyeong Jung", 
+            "Mingyeong Jung",
             "Dahee Choi",
         ],
         "open_source": {
 
-            "SOUNDS":{
+            "SOUNDS": {
                 "MATRIXXX_ CC0 1.0": "https://freesound.org/people/MATRIXXX_/sounds/441373/",
                 "simoneyoh3998 CC0 1.0": "https://freesound.org/people/simoneyoh3998/sounds/500673/",
                 "jalastram CC BY 3.0": "https://freesound.org/people/jalastram/sounds/317769/",
                 "befig CC BY 3.0": "https://freesound.org/people/befig/sounds/455530/",
-                "Royalty Free Music from Bensound":"www.bensound.com"
+                "Royalty Free Music from Bensound": "www.bensound.com"
             },
-            "BASE CODE":{
-                "CSID-DGU/2021-1-OSSPC-MUHIRYO-4":"https://github.com/CSID-DGU/2021-1-OSSPC-MUHIRYO-4.git",
-                "CSID-DGU/2021-2-OSSProj-PlusAlpha-9":"https://github.com/CSID-DGU/2021-2-OSSProj-PlusAlpha-9"
+            "BASE CODE": {
+                "CSID-DGU/2021-1-OSSPC-MUHIRYO-4": "https://github.com/CSID-DGU/2021-1-OSSPC-MUHIRYO-4.git",
+                "CSID-DGU/2021-2-OSSProj-PlusAlpha-9": "https://github.com/CSID-DGU/2021-2-OSSProj-PlusAlpha-9"
             }
         }
     }
 
+
 class Utils():
     @classmethod
     def clamp(cls, val, n_min, n_max):
-        return max(n_min, min(val, n_max)) 
+        return max(n_min, min(val, n_max))
 
     @classmethod
     def get_distance(cls, a, b):
