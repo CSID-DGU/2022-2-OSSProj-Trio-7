@@ -197,6 +197,7 @@ class Login:
         self.menu.add.button('  back  ', self.show_signup)
 
     def pvp_page(self):  # 2인 플레이어
+        print(self.pvpcharacter_data[2].name)
         pvpgame = pvp(self.pvpcharacter_data,
                       self.pvpcharacter_data[0], self.pvpcharacter_data[1], self.mode)
         pvpgame.pvp_info()
