@@ -7,10 +7,10 @@ class Database:
     def __init__(self): 
         self.dct_db = pymysql.connect(
         db="sys",
-        host="database-1.ch80vdihvl1x.ap-northeast-2.rds.amazonaws.com",
+        host="localhost",
         port = 3306,
-        user="gamego",
-        passwd="pygamemaking",
+        user="root",
+        passwd="trio",
         charset = 'utf8'
         )
         self.salt = bcrypt.gensalt()
@@ -42,6 +42,7 @@ class Database:
         return check_password
 
     def add_id(self, user_id): #아이디 추가
+        print(user_id)
         curs = self.dct_db.cursor()
         sql = "INSERT INTO users1 (user_id) VALUES (%s)" #users테이블에서 user_id 필드에 %s의 값을 삽입
         curs.execute(sql, user_id)
@@ -57,11 +58,11 @@ class Database:
         initial_coin = 0 #가입시, 보유한 coin 0으로 설정
         initial_character = 0
         hashed_pw = bcrypt.hashpw(user_pw.encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
-        #print(hashed_pw, "입력값")
+        print(hashed_pw, "입력값")
         curs = self.dct_db.cursor()
         sql = "UPDATE users1 SET user_password=%s WHERE user_id=%s"
         curs.execute(sql,(hashed_pw, user_id))
-        #print(hashed_pw, "라라")
+        print(hashed_pw, "라라")
         self.dct_db.commit()
         curs = self.dct_db.cursor()
         sql = "UPDATE users2 SET user_coin=%s WHERE user_id=%s"
