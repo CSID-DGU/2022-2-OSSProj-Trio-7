@@ -7,10 +7,10 @@ class Database:
     def __init__(self): 
         self.dct_db = pymysql.connect(
         db="sys",
-        host="localhost",
+        host="dkssik12.ch80vdihvl1x.ap-northeast-2.rds.amazonaws.com",
         port = 3306,
-        user="root",
-        passwd="trio",
+        user="gamego",
+        passwd="pygamemaking",
         charset = 'utf8'
         )
         self.salt = bcrypt.gensalt()
