@@ -60,6 +60,13 @@ class Login:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
 
+        # main bgm
+        self.background_music = "./Sound/bgm/bgm_main.mp3"
+        pygame.mixer.init()
+        pygame.mixer.music.load(self.background_music)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.1)
+
         self.menu = pygame_menu.Menu(
             '직업 슈팅 게임', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
         self.first_page()

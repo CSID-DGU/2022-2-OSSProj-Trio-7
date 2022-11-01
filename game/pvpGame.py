@@ -80,7 +80,7 @@ class pvp:
         self.gameover_image1 = "Image/catthema/win1_.png"
         self.gameover_image2 = "Image/catthema/win2_.png"
         self.gameover_image3 = "Image/catthema/same.png"
-        self.background_music = "./Sound/bgm/bensound-evolution.wav"
+        self.background_music = "./Sound/bgm/bgm_police.mp3"
         self.k = 0
         self.SB = 0
         #self.infowindow_image = "Image/catthema/map1.png"

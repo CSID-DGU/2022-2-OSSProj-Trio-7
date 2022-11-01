@@ -315,8 +315,8 @@ class Default(enum.Enum):
         "open_source": {
 
             "SOUNDS": {
-                "MATRIXXX_ CC0 1.0": "https://freesound.org/people/MATRIXXX_/sounds/441373/",
-                "simoneyoh3998 CC0 1.0": "https://freesound.org/people/simoneyoh3998/sounds/500673/",
+                "MATRIXXX_ CC0 1.0": "https://freesound.org/people/MATRIXXX_/sounds/441373/", # shooting from a weapon
+                "simoneyoh3998 CC0 1.0": "https://freesound.org/people/simoneyoh3998/sounds/500673/", #explosion of a bomb of normal length
                 "jalastram CC BY 3.0": "https://freesound.org/people/jalastram/sounds/317769/",
                 "befig CC BY 3.0": "https://freesound.org/people/befig/sounds/455530/",
                 "Royalty Free Music from Bensound": "www.bensound.com"
