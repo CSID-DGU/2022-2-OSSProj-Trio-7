@@ -123,7 +123,7 @@ class Default(enum.Enum):
             "volume": 0.1
         }
     }
-    font = "./Font/DXHanlgrumStd-Regular.otf"
+    font = "./Font/강원교육튼튼.ttf"
     boss = {
         "size": {
             "x": 250,

@@ -36,23 +36,22 @@ class Login:
         self.size = [infoObject.current_w, infoObject.current_h]
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
 
-        menu_image = pygame_menu.baseimage.BaseImage(
+        main_image = pygame_menu.baseimage.BaseImage(
             image_path=Images.main.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
-            widget_font=pygame_menu.font.FONT_8BIT,
-            # 버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
-            widget_background_color=(150, 213, 252),
-            title_font=pygame_menu.font.FONT_BEBAS,
-            selection_color=(0, 0, 0),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 글씨색 설정
-            title_background_color=(0, 100, 162),
+            widget_font=Default.font.value,
+            # 버튼 가독성 올리기 위해서 버튼 배경색 설정 : 노란색
+            widget_background_color=(255, 171, 0),
+            title_font=Default.font.value,
+            selection_color=(0, 0, 0),  # 선택됐을때 글씨색 설정 (white)
+            widget_font_color=(255, 255, 255),  # 기본 글씨색 설정 (black)
+            title_background_color=(255, 171, 0),
             title_font_color=(255, 255, 255),
-            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL,
-            widget_font_size=self.size[0] * 30 // 720
-
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
         )
 
-        self.mytheme.background_color = menu_image
+        self.mytheme.background_color = main_image
 
         # pvp 관련
         self.pvpcharacter_data = PvpCharacterDataManager.load()  # pvp 캐릭터 데이터
@@ -62,7 +61,7 @@ class Login:
         self.board_height = self.changed_screen_size[1]  # y
 
         self.menu = pygame_menu.Menu(
-            'Trio', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+            '직업 슈팅 게임', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
         self.first_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
@@ -91,13 +90,13 @@ class Login:
 
     def first_page(self):  # 첫화면
         self.menu.clear()
-        b1 = self.menu.add.button(' Sign Up ', self.show_signup)
+        b1 = self.menu.add.button('  회원가입  ', self.show_signup)
         self.menu.add.vertical_margin(10)
-        b2 = self.menu.add.button('   Login   ', self.login_page)
+        b2 = self.menu.add.button('   로그인   ', self.login_page)
         self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button('2 Players', self.pvp_page)
+        b3 = self.menu.add.button(' 게임소개 ', self.pvp_page)
         self.menu.add.vertical_margin(10)
-        b4 = self.menu.add.button('    Quit    ', pygame_menu.events.EXIT)
+        b4 = self.menu.add.button('     종료     ', pygame_menu.events.EXIT)
 
     def login_page(self):  # 로그인 페이지
         self.menu.clear()
