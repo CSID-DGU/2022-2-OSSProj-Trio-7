@@ -1,38 +1,38 @@
 {
     "Characters": [
         {
-            "name": "Dongguk",
-            "img_path": "./Image/catthema/cat1_back.png",
-            "velocity": 11,
-            "missile_img": "./Image/Weapon/worm.png",
+            "name": "police",
+            "img_path": "./Image/policeCharacters/policeOfficer.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/handcuffs.png",
             "missile_size": {
-                "x": 35,
-                "y": 55
+                "x": 50,
+                "y": 50
             },
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 180,
-            "fire_interval": 1.3,
+            "missile_power": 300,
+            "fire_interval": 0.7,
             "price": 0
         },
         {
-            "name": "Merry",
-            "img_path": "./Image/catthema/cat2_back.png",
+            "name": "doctor",
+            "img_path": "./Image/doctorCharacters/doctor.png",
             "velocity": 13,
-            "missile_img": "./Image/Weapon/carrot.png",
+            "missile_img": "./Image/Weapon/pill.png",
             "missile_size": {
-                "x": 35,
-                "y": 55
+                "x": 40,
+                "y": 40
             },
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 330,
+            "missile_power": 300,
             "fire_interval": 0.7,
-            "price": 100
+            "price": 0
         },
         {
-            "name": "Haengal",
-            "img_path": "./Image/catthema/cat3_back.png",
+            "name": "firefighter",
+            "img_path": "./Image/fireCharacters/firefighter.png",
             "velocity": 13,
-            "missile_img": "./Image/Weapon/carrot.png",
+            "missile_img": "./Image/Weapon/waterCannon.png",
             "missile_size": {
                 "x": 35,
                 "y": 55
@@ -60,10 +60,10 @@
 
     "PVPcharacter" : [
         {
-            "name": "player1",
-            "img_path": "./Image/catthema/cat1_back.png",
+            "name": "police",
+            "img_path": "./Image/policeCharacters/policeOfficer.png",
             "velocity": 13,
-            "missile_img": "./Image/Weapon/worm.png",
+            "missile_img": "./Image/Weapon/handcuffs.png",
             "missile_size": {
                 "x": 50,
                 "y": 50
@@ -74,10 +74,10 @@
             "price": 0
         },
         {
-            "name": "player2",
-            "img_path": "./Image/catthema/cat2_back.png",
+            "name": "doctor",
+            "img_path": "./Image/doctorCharacters/doctor.png",
             "velocity": 13,
-            "missile_img": "./Image/Weapon/carrot.png",
+            "missile_img": "./Image/Weapon/pill.png",
             "missile_size": {
                 "x": 40,
                 "y": 40
