@@ -28,6 +28,7 @@ class Login:
     def __init__(self, screen):
         self.database = Database()
         # 1. 게임초기화
+        
         pygame.init()
 
         # 2. 게임창 옵션 설정
