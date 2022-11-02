@@ -43,13 +43,6 @@ class GameselectMenu:
         self.level_map3 = button(self.board_width, self.board_height,
                                  0.8, 0.65, 0.2, 0.05, "Image/catthema/level1.png")
 
-        self.mode_map1 = button(self.board_width, self.board_height,
-                                0.2, 0.65, 0.2, 0.05, "Image/catthema/EASY.png")
-        self.mode_map2 = button(self.board_width, self.board_height,
-                                0.5, 0.65, 0.2, 0.05, "Image/catthema/EASY.png")
-        self.mode_map3 = button(self.board_width, self.board_height,
-                                0.8, 0.65, 0.2, 0.05, "Image/catthema/EASY.png")
-
         self.rankpage = button(self.board_height, self.board_height,
                                0.766, 0.05, 0.1, 0.05, "Image/catthema/RANK.png")
         self.mypage = button(self.board_height, self.board_height,
@@ -75,7 +68,7 @@ class GameselectMenu:
         self.buttonlist1 = [self.barcol, self.map1, self.map2, self.map3, self.level_map1, self.level_map2, self.level_map3,
                             self.rankpage, self.mypage, self.gamemode, self.store, self.setting, self.logout, self.help, self.logo]  # stagemode
 
-        self.buttonlist2 = [self.barcol, self.map1, self.map2, self.map3, self.mode_map1, self.mode_map2, self.mode_map3,
+        self.buttonlist2 = [self.barcol, self.map1, self.map2, self.map3,
                             self.rankpage, self.mypage, self.gamemode, self.store, self.setting, self.logout, self.help, self.logo]  # inf mode
 
         self.attchar = ["./Image/policeCharacters/policeStage_monster.png",
@@ -90,9 +83,6 @@ class GameselectMenu:
         self.inf_mode_map3 = 0
 
         self.sound = "on"
-
-        self.mode = [("EASY", InfiniteGame.EasyMode()),
-                     ("HARD", InfiniteGame.HardMode())]
 
         self.modestate = "stage"
 
@@ -338,15 +328,6 @@ class GameselectMenu:
                         self.map3.image = "Image/catthema/map3.png"
                     pygame.display.update()
 
-                    if self.mode_map1.isOver(pos):
-                        pygame.display.update()
-
-                    if self.mode_map2.isOver(pos):
-                        pygame.display.update()
-
-                    if self.mode_map3.isOver(pos):
-                        pygame.display.update()
-
                     if self.gamemode.isOver(pos):
                         self.gamemode.image = "Image/catthema/STAGE.png"
                     else:
@@ -356,7 +337,7 @@ class GameselectMenu:
                 if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
 
                     if self.map1.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                        self.stage_map = self.mode[self.inf_mode_map1][1]
+                        self.stage_map = InfiniteGame.EasyMode()
                         # print(self.character_data[User.character])
                         if self.check:
                             import menu.FailPlay
@@ -368,7 +349,7 @@ class GameselectMenu:
                     pygame.display.update()
 
                     if self.map2.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                        self.stage_map = self.mode[self.inf_mode_map2][1]
+                        self.stage_map = InfiniteGame.EasyMode()
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
@@ -378,40 +359,13 @@ class GameselectMenu:
                     pygame.display.update()
 
                     if self.map3.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                        self.stage_map = self.mode[self.inf_mode_map3][1]
+                        self.stage_map = InfiniteGame.EasyMode()
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             InfiniteGame(self.character_data[User.character], self.stage_map,
                                          "Image/background/doctor_background.png", self.attchar[2]).main()
-                    pygame.display.update()
-
-                    if self.mode_map1.isOver(pos):
-                        if self.inf_mode_map1 == 0:
-                            self.inf_mode_map1 = 1
-                            self.mode_map1.image = "Image/catthema/HARD.png"
-                        else:
-                            self.inf_mode_map1 = 0
-                            self.mode_map1.image = "Image/catthema/EASY.png"
-                    pygame.display.update()
-
-                    if self.mode_map2.isOver(pos):
-                        if self.inf_mode_map2 == 0:
-                            self.inf_mode_map2 = 1
-                            self.mode_map2.image = "Image/catthema/HARD.png"
-                        else:
-                            self.inf_mode_map2 = 0
-                            self.mode_map2.image = "Image/catthema/EASY.png"
-                    pygame.display.update()
-
-                    if self.mode_map3.isOver(pos):
-                        if self.inf_mode_map3 == 0:
-                            self.inf_mode_map3 = 1
-                            self.mode_map3.image = "Image/catthema/HARD.png"
-                        else:
-                            self.inf_mode_map3 = 0
-                            self.mode_map3.image = "Image/catthema/EASY.png"
                     pygame.display.update()
 
                     if self.gamemode.isOver(pos):
