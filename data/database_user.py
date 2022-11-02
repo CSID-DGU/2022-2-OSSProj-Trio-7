@@ -6,15 +6,15 @@ from data.Defs import User
 
 
 class Database:
-    def __init__(self):
-        # self.dct_db = pymysql.connect(
-        # db = "sys",
-        # host = "database-2.cskg3bhzvpnw.ap-northeast-2.rds.amazonaws.com",
-        # port = 3306,
-        # user = "admin",
-        # passwd = "dreamscometrue",
-        # charset = 'utf8'
-        # )
+    def __init__(self): 
+        self.dct_db = pymysql.connect(
+        db="sys",
+        host="dkssik12.ch80vdihvl1x.ap-northeast-2.rds.amazonaws.com",
+        port = 3306,
+        user="gamego",
+        passwd="pygamemaking",
+        charset = 'utf8'
+        )
         self.salt = bcrypt.gensalt()
 
     def id_not_exists(self, input_id):
@@ -46,7 +46,8 @@ class Database:
         # print( data['user_password'].encode('utf-8'), "데이터베이스")
         return check_password
 
-    def add_id(self, user_id):  # 아이디 추가
+
+    def add_id(self, user_id): #아이디 추가
         curs = self.dct_db.cursor()
         # users테이블에서 user_id 필드에 %s의 값을 삽입
         sql = "INSERT INTO users1 (user_id) VALUES (%s)"
