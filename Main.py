@@ -26,7 +26,7 @@ class Utillization:
 
 class Login:
     def __init__(self, screen):
-        # self.database = Database()
+        self.database = Database()
         # 1. 게임초기화
         pygame.init()
 
