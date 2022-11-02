@@ -27,7 +27,7 @@ from data.Defs import User
 
 class InfiniteGame:
 
-    def __init__(self, character, mode, mapimg, attimg):
+    def __init__(self, character, mode, mapimg, target1img, target2img, target3img, target4img):
         # 1. 게임초기화
         pygame.init()
 
@@ -57,7 +57,10 @@ class InfiniteGame:
         self.life = 3
         self.start_time = time.time()
         self.mob_gen_rate = 0.01
-        self.mob_image = attimg
+        self.target1_image = target1img
+        self.target2_image = target2img
+        self.target3_image = target3img
+        self.target4_image = target4img
         self.background_image = mapimg
         self.background_music = "./Sound/bgm/bensound-evolution.wav"
         self.SB = 0
@@ -141,39 +144,68 @@ class InfiniteGame:
                     self.check_resize()
                     self.animation.on_resize(self)
 
-            # 몹을 확률적으로 발생시키기
+            # 몹/ 아이템을 확률적으로 발생시키기
+            # 기본값 0.01
             if (random.random() < self.mob_gen_rate):
-                newMob = Mob(
-                    self.mob_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                if (self.mob_gen_rate < 0.5):
+                    self.mob_gen_rate += 0.000005
+                # 게임 시작 후 일정 시간 지나면 새로운 attack target 등장
+                if (time.time() - self.start_time > 180):
+                    newMob = Mob(
+                        self.target4_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                elif (time.time() - self.start_time > 120):
+                    newMob = Mob(
+                        self.target3_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                elif (time.time() - self.start_time > 60):
+                    newMob = Mob(
+                        self.target2_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                else:
+                    newMob = Mob(
+                        self.target1_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
                 # set mob location randomly
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
 
+            # 기본값 0.01
             if random.random() < Default.item.value["powerup"]["spawn_rate"]:
+                if (Default.item.value["powerup"]["spawn_rate"] < 0.5):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
                 new_item = PowerUp(self.animation.animations["powerup"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
+                if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
+                if (Default.item.value["powerup"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["coin"]["spawn_rate"]:
+                if (Default.item.value["powerup"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
                 new_item = Coin(self.animation.animations["coin"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+                if (Default.item.value["powerup"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
                 new_item = SpeedUp(self.animation.animations["speedup"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -261,7 +293,7 @@ class InfiniteGame:
                 self.show_ranking_register_screen()
                 return
 
-            self.mode.update_difficulty(self)
+            # self.mode.update_difficulty(self)
 
         # While 빠져나오면 랭킹등록 스크린 실행
         self.register_ranking()
