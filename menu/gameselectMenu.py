@@ -77,7 +77,7 @@ class GameselectMenu:
         self.police_attackTarget = ["./Image/policeCharacters/policeStage_monster.png",
                                     "./Image/policeCharacters/policeStage_boss1.png", "./Image/policeCharacters/policeStage_boss2.png", "./Image/policeCharacters/policeStage_boss3.png"]
         self.firefighter_attackTarget = ["./Image/fireCharacters/FireStage_monster.png",
-                                         "./Image/fireCharacters/FireStage_boss1.png", "./Image/fireCharacters/FireStage_boss2.png" "./Image/fireCharacters/FireStage_boss3.png"]
+                                         "./Image/fireCharacters/FireStage_boss1.png", "./Image/fireCharacters/FireStage_boss2.png", "./Image/fireCharacters/FireStage_boss3.png"]
         self.doctor_attackTarget = ["./Image/doctorCharacters/doctorStage_monster.png",
                                     "./Image/doctorCharacters/doctorStage_boss1.png", "./Image/doctorCharacters/doctorStage_boss2.png", "./Image/doctorCharacters/doctorStage_boss3.png"]
 
@@ -372,7 +372,7 @@ class GameselectMenu:
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             InfiniteGame(self.character_data[User.character], self.stage_map,
-                                         "Image/background/doctor_background.png", self.doctor_attackTarget[0], self.doctor_attackTarget[2], self.doctor_attackTarget[0], self.doctor_attackTarget[3]).main()
+                                         "Image/background/doctor_background.png", self.doctor_attackTarget[0], self.doctor_attackTarget[1], self.doctor_attackTarget[2], self.doctor_attackTarget[3]).main()
                     pygame.display.update()
 
                     if self.gamemode.isOver(pos):
