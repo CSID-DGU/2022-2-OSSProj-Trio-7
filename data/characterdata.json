@@ -38,7 +38,7 @@
                 "y": 55
             },
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 200,
+            "missile_power": 300,
             "fire_interval": 0.5,
             "price": 100
         },
