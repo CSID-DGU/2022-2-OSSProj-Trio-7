@@ -128,21 +128,21 @@ class GameselectMenu:
                 if event.type == pygame.MOUSEMOTION:  # 마우스모션
 
                     if self.map1.isOver(pos):  # 이미지 바꿈
-                        self.map1.image = "Image/catthema/map1_dark.png"
+                        self.map1.image = "./Image/background/police_background.png"
                     else:
-                        self.map1.image = "Image/catthema/map1.png"
+                        self.map1.image = "./Image/background/police_background.png"
                     pygame.display.update()
 
                     if self.map2.isOver(pos):
-                        self.map2.image = "Image/catthema/map2_dark.png"
+                        self.map2.image = "./Image/background/firefighter_background.png"
                     else:
-                        self.map2.image = "Image/catthema/map2.png"
+                        self.map2.image = "./Image/background/firefighter_background.png"
                     pygame.display.update()
 
                     if self.map3.isOver(pos):
-                        self.map3.image = "Image/catthema/map3_dark.png"
+                        self.map3.image = "./Image/background/doctor_background.png"
                     else:
-                        self.map3.image = "Image/catthema/map3.png"
+                        self.map3.image = "./Image/background/doctor_background.png"
                     pygame.display.update()
 
                     if self.level_map1.isOver(pos):
@@ -188,7 +188,7 @@ class GameselectMenu:
                     self.check = Database().check_char_lock()
                     if self.map1.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                         self.stage_map = Stage(
-                            self.stage_data["chapter"]["Dongguk university"][self.stage_level_map1])
+                            self.stage_data["chapter"]["gloomy street"][self.stage_level_map1])
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
@@ -199,7 +199,7 @@ class GameselectMenu:
 
                     if self.map2.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                         self.stage_map = Stage(
-                            self.stage_data["chapter"]["Night view"][self.stage_level_map2])
+                            self.stage_data["chapter"]["buring house"][self.stage_level_map2])
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
@@ -210,7 +210,7 @@ class GameselectMenu:
 
                     if self.map3.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                         self.stage_map = Stage(
-                            self.stage_data["chapter"]["Namsan"][self.stage_level_map3])
+                            self.stage_data["chapter"]["hospital"][self.stage_level_map3])
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
