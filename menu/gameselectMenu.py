@@ -199,7 +199,7 @@ class GameselectMenu:
 
                     if self.map2.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                         self.stage_map = Stage(
-                            self.stage_data["chapter"]["buring house"][self.stage_level_map2])
+                            self.stage_data["chapter"]["burning house"][self.stage_level_map2])
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()

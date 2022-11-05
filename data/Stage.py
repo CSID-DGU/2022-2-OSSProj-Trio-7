@@ -7,7 +7,7 @@ class Stage: #data model of stage data, saved in stagedata.json
         self.goal_score = stageInfo[2]
         self.background_image = stageInfo[3]
         self.background_music = stageInfo[4]
-        self.is_boss_stage = stageInfo[5]
+        self.is_boss_stage = stageInfo[5] # 보스가 등장하는 스테이지 1(true로 체크)
         self.is_unlocked = stageInfo[6]
         self.mob_image = stageInfo[7]
         self.boss_image = stageInfo[8]

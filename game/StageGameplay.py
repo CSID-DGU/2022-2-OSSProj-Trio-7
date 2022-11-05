@@ -93,13 +93,13 @@ class StageGame:
         infowindow = pygame.image.load(self.infowindow_image)
         infowindow = pygame.transform.scale(infowindow, self.size)
         self.screen.blit(infowindow, [0,0])
-        font = pygame.font.Font(Default.font.value, self.size[0]//15)
+        font = pygame.font.Font(Default.font.value, self.size[0]//21)
         info_stage_test = font.render("stage {} ".format(self.stage.stage), True, Color.WHITE.value) 
-        info_score_text = font.render("목표점수는 {} 입니다.".format(self.goal_score), True, Color.WHITE.value)
+        info_score_text = font.render("목표점수는 {} 입니다. 보스를 처치하세요.".format(self.goal_score), True, Color.WHITE.value)
         self.screen.blit(info_stage_test,(self.size[0]*0.35,self.size[1]*0.35)) 
         self.screen.blit(info_score_text,(self.size[0]*0.15,self.size[1]*0.45))
         pygame.display.flip()
-        time.sleep(3) # 3초뒤에 게임 시작.
+        time.sleep(4) # 4초뒤에 게임 시작.
         self.main()
         
     def main(self):
@@ -211,27 +211,27 @@ class StageGame:
 
             #보스 이동
             #보스 업데이트
+            if(self.score>=self.goal_score or self.stage_cleared):
+                if(self.is_boss_stage):
+                    self.boss.draw(self.screen)
+                    self.boss.update(self.enemyBullets,self.character,self.size)
+                    self.boss.check(self.character,self)
 
-            if(self.is_boss_stage):
-                self.boss.draw(self.screen)
-                self.boss.update(self.enemyBullets,self.character,self.size)
-                self.boss.check(self.character,self)
-
-                # 보스와 플레이어 충돌 감지
-                if(self.check_crash(self.boss,self.character)):
-                    if self.character.is_collidable == True:
-                        self.character.last_crashed = time.time()
-                        self.character.is_collidable = False
-                        self.life -=1
-
-                #보스의 총알과 플레이어 충돌 감지
-                for bullet in self.enemyBullets:
-                    if(bullet.check_crash(self.character)):
+                    # 보스와 플레이어 충돌 감지
+                    if(self.check_crash(self.boss,self.character)):
                         if self.character.is_collidable == True:
                             self.character.last_crashed = time.time()
                             self.character.is_collidable = False
                             self.life -=1
-                            self.enemyBullets.remove(bullet)
+
+                    #보스의 총알과 플레이어 충돌 감지
+                    for bullet in self.enemyBullets:
+                        if(bullet.check_crash(self.character)):
+                            if self.character.is_collidable == True:
+                                self.character.last_crashed = time.time()
+                                self.character.is_collidable = False
+                                self.life -=1
+                                self.enemyBullets.remove(bullet)
 
             #적 투사체 이동
             for bullet in self.enemyBullets:
@@ -294,8 +294,8 @@ class StageGame:
             # 화면갱신
             pygame.display.flip() # 그려왔던데 화면에 업데이트가 됨
 
-            #점수가 목표점수 이상이면 스테이지 클리어 화면
-            if(self.score>=self.goal_score or self.stage_cleared):
+            # 보스를 처치하면 스테이지 클리어 화면
+            if(self.stage_cleared):
                 StageDataManager.unlockNextStage(self.stage)
                 self.showStageClearScreen()
                 return
