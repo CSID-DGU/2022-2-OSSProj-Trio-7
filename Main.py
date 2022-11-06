@@ -125,6 +125,7 @@ class Login:
                     print("로그인 성공")
                     print(self.id)
                     User.user_id = self.id
+                    User.user_nickname = self.nickname
                     User.character = self.database.show_mychar()
                     User.coin = self.database.show_mycoin()
                     Database().char_lock()
@@ -165,6 +166,9 @@ class Login:
     def get_pw(self, value):
         self.password = value
 
+    def get_nickname(self, value):
+        self.nickname = value
+
     def save_id(self, value):  # 아이디 데이터베이스에 저장
         self.id = value
         print("출력:", value)
@@ -177,6 +181,10 @@ class Login:
         self.password = value
         self.database.add_pw(self.password, self.id)
 
+    def save_nickname(self, value):
+        self.nickname = value
+        self.database.add_ninkname(self.nickname, self.id)
+
     def show_signup(self):
         self.menu.clear()
         # mytheme.widget_background_color = (0,0,0,0) #투명 배경
@@ -184,6 +192,7 @@ class Login:
         self.menu.add.text_input('ID : ', maxchar=15, onreturn=self.save_id)
         self.menu.add.text_input(
             'PASSWORD : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
+        self.menu.add.text_input('NICKNAME : ', maxchar=15, onreturn=self.save_nickname)
         self.menu.add.button('  Sign Up  ', self.login_page)
         self.menu.add.button('  back  ', self.first_page)
         self.menu.add.button('  Quit   ', pygame_menu.events.EXIT)

@@ -6,6 +6,7 @@ from sys import version
 
 class User:
     user_id = ""
+    user_nickname = ""
     coin = 0
     character = 0
     buy_character = 0

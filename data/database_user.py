@@ -61,6 +61,12 @@ class Database:
         self.dct_db.commit()
         curs.close()
 
+    def add_ninkname(self, user_nickname, user_id): #닉네임 추가
+        curs = self.dct_db.cursor()
+        sql = "UPDATE users1 SET user_nickname=%s WHERE user_id=%s"
+        curs.execute(sql,(user_nickname, user_id))
+        self.dct_db.commit()
+
     def add_pw(self, user_pw, user_id):  # 비밀번호 & coin 초기값 추가 * 캐릭터 초기값은 1로(캐릭터 숫자로 표현)
         initial_coin = 0  # 가입시, 보유한 coin 0으로 설정
         initial_character = 0
@@ -117,6 +123,7 @@ class Database:
     def set_coin(self):
         self.id = User.user_id
         self.coin = User.coin
+        print(self.coin)
         curs = self.dct_db.cursor()
         sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
         curs.execute(sql, (self.coin, self.id))
