@@ -112,6 +112,7 @@ class Login:
         self.menu.add.text_input('ID : ', maxchar=100, onchange=self.get_id)
         self.menu.add.text_input(
             'PASSWORD : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
+        self.menu.add.text_input('NICKNAME : ', maxchar=100, onchange=self.get_nickname)   
         b1 = self.menu.add.button('  Login  ', self.login)
         b2 = self.menu.add.button('  Back  ', self.first_page)
         b3 = self.menu.add.button('  Quit  ', pygame_menu.events.EXIT)
