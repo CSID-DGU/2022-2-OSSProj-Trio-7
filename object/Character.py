@@ -429,10 +429,10 @@ class Character(Object):
             self.missile_img = "./Image/gung_image/watercannon.png"
         self.is_gunged = True
 
-        # 4개의 궁극기 그리기
-        for i in range(4):
-            i = i + 1
-            gung = Gung(self.gung_img, {"x": 75, "y": 95}, self.missile_power)
+        # 5개의 궁극기 그리기
+        for i in range(5):
+            gung = Gung(self.gung_img, {
+                        "x": self.boundary[0] / 3, "y": self.boundary[0] / 5}, self.missile_power)
             gung.change_size()
             gung.x = round((self.boundary[0] / 5) * i) - self.sx
             gung.y = self.boundary[1] - self.sy
