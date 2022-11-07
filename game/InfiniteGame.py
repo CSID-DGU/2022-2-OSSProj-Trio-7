@@ -146,10 +146,10 @@ class InfiniteGame:
                     self.animation.on_resize(self)
 
             # 몹/ 아이템을 확률적으로 발생시키기
-            # 기본값 0.01
+            # 기본값 0.015
             if (random.random() < self.mob_gen_rate):
                 if (self.mob_gen_rate < 0.5):
-                    self.mob_gen_rate += 0.000005
+                    self.mob_gen_rate += 0.002
                 # 게임 시작 후 일정 시간 지나면 새로운 attack target 등장
                 if (time.time() - self.start_time > 180):
                     newMob = Mob(
