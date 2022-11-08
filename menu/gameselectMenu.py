@@ -194,7 +194,7 @@ class GameselectMenu:
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map).main_info()
+                                self.character_data, self.character_data[User.character], self.stage_map, "map1").main_info()
                     pygame.display.update()
 
                     if self.map2.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
@@ -205,7 +205,7 @@ class GameselectMenu:
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map).main_info()
+                                self.character_data, self.character_data[User.character], self.stage_map, "map2").main_info()
                     pygame.display.update()
 
                     if self.map3.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
@@ -216,7 +216,7 @@ class GameselectMenu:
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map).main_info()
+                                self.character_data, self.character_data[User.character], self.stage_map, "map3").main_info()
                     pygame.display.update()
 
                     if self.level_map1.isOver(pos):
