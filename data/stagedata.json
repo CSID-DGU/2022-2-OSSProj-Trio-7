@@ -1,135 +1,159 @@
 {
 	"chapter": {
-		"Dongguk university": {
+		"gloomy street": {
 			"1": [
 				"map1",
 				1,
-				300,
-				"./Image/catthema/map1.png",
+				150,
+				"./Image/background/police_background.png",
 				"./Sound/bgm/bensound-epic.wav",
-				0,
 				1,
-				"./Image/catthema/attack/cat_att.png",
-				[],
-				"",
+				1,
+				"./Image/policeCharacters/policeStage_monster.png",
+				[
+					"./Image/policeCharacters/policeStage_boss1.png",
+					"./Image/policeCharacters/policeStage_boss1.png",
+					"./Image/policeCharacters/policeStage_boss1.png"
+				],
+				"./Image/catthema/attack/dust.png",
 				""
 			],
 			"2": [
 				"map1",
 				2,
-				450,
-				"./Image/catthema/map1.png",
+				200,
+				"./Image/background/police_background.png",
 				"./Sound/bgm/bensound-epic.wav",
-				0,
 				1,
-				"./Image/catthema/attack/cat_att.png",
-				[],
-				"",
+				1,
+				"./Image/policeCharacters/policeStage_monster.png",
+				[
+					"./Image/policeCharacters/policeStage_boss2.png",
+					"./Image/policeCharacters/policeStage_boss2.png",
+					"./Image/policeCharacters/policeStage_boss2.png"
+				],
+				"./Image/catthema/attack/dust.png",
 				""
 			],
 			"3": [
 				"map1",
 				3,
-				1000,
-				"./Image/catthema/map1.png",
+				350,
+				"./Image/background/police_background.png",
 				"./Sound/bgm/bensound-theduel.wav",
 				1,
 				1,
-				"./Image/catthema/attack/cat_att.png",
+				"./Image/policeCharacters/policeStage_monster.png",
 				[
-					"Image/catthema/attack/cat_att.png",
-					"Image/catthema/attack/cat_att.png",
-					"Image/catthema/attack/cat_att.png"
+					"./Image/policeCharacters/policeStage_boss3.png",
+					"./Image/policeCharacters/policeStage_boss3.png",
+					"./Image/policeCharacters/policeStage_boss3.png"
 				],
 				"./Image/catthema/attack/dust.png",
 				"F5S1"
 			]
 		},
-		"Night view": {
+		"burning house": {
 			"1": [
 				"map2",
 				1,
-				300,
-				"./Image/catthema/map2.png",
+				150,
+				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bensound-adventure.wav",
-				0,
 				1,
-				"./Image/catthema/attack/dog.png",
-				[],
-				"",
+				1,
+				"./Image/fireCharacters/fireStage_monster.png",
+				[
+					"./Image/fireCharacters/fireStage_boss1.png",
+					"./Image/fireCharacters/fireStage_boss1.png",
+					"./Image/fireCharacters/fireStage_boss1.png"
+				],
+				"./Image/catthema/attack/dust.png",
 				""
 			],
 			"2": [
 				"map2",
 				2,
-				450,
-				"./Image/catthema/map2.png",
+				200,
+				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bensound-adventure.wav",
-				0,
 				1,
-				"./Image/catthema/attack/dog.png",
-				[],
-				"",
+				1,
+				"./Image/fireCharacters/fireStage_monster.png",
+				[
+					"./Image/fireCharacters/fireStage_boss2.png",
+					"./Image/fireCharacters/fireStage_boss2.png",
+					"./Image/fireCharacters/fireStage_boss2.png"
+				],
+				"./Image/catthema/attack/dust.png",
 				""
 			],
 			"3": [
 				"map2",
 				3,
-				1000,
-				"./Image/catthema/map2.png",
+				350,
+				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bensound-theduel.wav",
 				1,
 				1,
-				"./Image/catthema/attack/dog.png",
+				"./Image/fireCharacters/fireStage_monster.png",
 				[
-					"Image/catthema/attack/dog.png",
-					"Image/catthema/attack/dog.png",
-					"Image/catthema/attack/dog.png"
+					"./Image/fireCharacters/fireStage_boss3.png",
+					"./Image/fireCharacters/fireStage_boss3.png",
+					"./Image/fireCharacters/fireStage_boss3.png"
 				],
 				"./Image/catthema/attack/dust.png",
 				"F5S4"
 			]
 		},
-		"Namsan": {
+		"hospital": {
 			"1": [
 				"map3",
 				1,
-				300,
-				"./Image/catthema/map3.png",
+				150,
+				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bensound-evolution.wav",
-				0,
 				1,
-				"./Image/catthema/attack/snake.png",
-				[],
-				"",
+				1,
+				"./Image/doctorCharacters/doctorStage_monster.png",
+				[
+					"./Image/doctorCharacters/doctorStage_boss1.png",
+					"./Image/doctorCharacters/doctorStage_boss1.png",
+					"./Image/doctorCharacters/doctorStage_boss1.png"
+				],
+				"Image/catthema/attack/dust.png",
 				""
 			],
 			"2": [
 				"map3",
 				2,
-				450,
-				"./Image/catthema/map3.png",
+				200,
+				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bensound-evolution.wav",
-				0,
 				1,
-				"./Image/catthema/attack/snake.png",
-				[],
-				"",
+				1,
+				"./Image/doctorCharacters/doctorStage_monster.png",
+				[
+					"./Image/doctorCharacters/doctorStage_boss2.png",
+					"./Image/doctorCharacters/doctorStage_boss2.png",
+					"./Image/doctorCharacters/doctorStage_boss2.png"
+				],
+				"Image/catthema/attack/dust.png",
 				""
 			],
 			"3": [
 				"map3",
 				3,
-				1000,
-				"./Image/catthema/map3.png",
+				350,
+				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bensound-theduel.wav",
 				1,
 				1,
-				"./Image/catthema/attack/snake.png",
+				"./Image/doctorCharacters/doctorStage_monster.png",
 				[
-					"Image/catthema/attack/snake.png",
-					"Image/catthema/attack/snake.png",
-					"Image/catthema/attack/snake.png"
+					"./Image/doctorCharacters/doctorStage_boss3.png",
+					"./Image/doctorCharacters/doctorStage_boss3.png",
+					"./Image/doctorCharacters/doctorStage_boss3.png"
 				],
 				"Image/catthema/attack/dust.png",
 				"Tank"
