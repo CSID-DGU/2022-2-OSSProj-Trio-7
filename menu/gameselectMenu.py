@@ -358,7 +358,7 @@ class GameselectMenu:
                 if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
 
                     if self.map1.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                        self.stage_map = InfiniteGame.EasyMode()
+                        self.stage_map = InfiniteGame.ScoreMode()
                         # print(self.character_data[User.character])
                         if self.check:
                             import menu.FailPlay
@@ -370,7 +370,7 @@ class GameselectMenu:
                     pygame.display.update()
 
                     if self.map2.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                        self.stage_map = InfiniteGame.EasyMode()
+                        self.stage_map = InfiniteGame.ScoreMode()
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
@@ -380,7 +380,7 @@ class GameselectMenu:
                     pygame.display.update()
 
                     if self.map3.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                        self.stage_map = InfiniteGame.EasyMode()
+                        self.stage_map = InfiniteGame.ScoreMode()
                         if self.check:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()

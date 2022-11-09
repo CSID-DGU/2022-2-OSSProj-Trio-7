@@ -47,7 +47,7 @@ class LeaderBoardMenu:
     # 리더보드 메인 메뉴
     def rank(self):
         self.menu.clear()
-        self.menu.add.button('     easy mode     ', self.show_current_easy_rank,font_size = self.font_size)
+        self.menu.add.button('     Score Ranking    ', self.show_current_score_rank,font_size = self.font_size)
         self.menu.add.button('     hard mode     ', self.show_current_hard_rank,font_size = self.font_size)
         #self.menu.add.button('     rank search     ', self.show_current_rank_search)
         self.menu.add.button('         back         ', self.to_menu,font_size = self.font_size)
@@ -58,8 +58,8 @@ class LeaderBoardMenu:
             self.rank()
 
     # 이번 달 easy 모드 랭킹 보여주기
-    def show_current_easy_rank(self):
-        self.get_current_rank('easy')
+    def show_current_score_rank(self):
+        self.get_current_rank('score')
 
     # 이번 달 hard 모드 랭킹 보여주기
     def show_current_hard_rank(self):
@@ -72,10 +72,10 @@ class LeaderBoardMenu:
             self.menu.clear()
             self.tens = 0 # 페이지 변수
 
-            if(mode == 'easy'):
-                global easy_data
-                easy_data = rank.load_data('easy') # 데이터 불러옴
-                self.get_current_easy_rank_page(self.tens)
+            if(mode == 'score'):
+                global score_data
+                score_data = rank.load_data('score') # 데이터 불러옴
+                self.get_current_score_rank_page(self.tens)
 
             elif(mode == 'hard'):
                 global hard_data
@@ -83,10 +83,10 @@ class LeaderBoardMenu:
                 self.get_current_hard_rank_page(self.tens)
 
     # 페이지화 된 이번 달 easy 모드 랭킹 보여주기
-    def get_current_easy_rank_page(self, tens):
+    def get_current_score_rank_page(self, tens):
         self.menu.clear()
-        self.menu.add.label("--Easy Rank--",selectable=False,font_size = self.font_size+self.font_option)
-        if(len(easy_data) == 0): # 데이터가 없는 경우
+        self.menu.add.label("--Score Rank--",selectable=False,font_size = self.font_size+self.font_option)
+        if(len(score_data) == 0): # 데이터가 없는 경우
             self.menu.add.vertical_margin(Menus.margin_100.value)
             self.menu.add.label('No Ranking Information.\nRegister ranking for the update.')
             self.menu.add.vertical_margin(Menus.margin_100.value)
@@ -99,10 +99,10 @@ class LeaderBoardMenu:
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             
             for i in range(10): # 한 페이지에 10개씩 조회 가능
-                if(tens*10+i == len(easy_data)): break
-                name = str(easy_data[tens*10+i]['ID'])
-                score = '{0:>05s}'.format(str(easy_data[tens*10+i]['score']))
-                date = str(easy_data[tens*10+i]['date'])
+                if(tens*10+i == len(score_data)): break
+                name = str(score_data[tens*10+i]['ID'])
+                score = '{0:>05s}'.format(str(score_data[tens*10+i]['score']))
+                date = str(score_data[tens*10+i]['date'])
                 table.add_row([str(i+1+tens*10), name, score, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성
             '''수정함'''
@@ -110,33 +110,33 @@ class LeaderBoardMenu:
             if(tens == 0):  # 1 페이지 일 때
                 prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                if(tens != len(easy_data)//10):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
-                    prev_next_frame.pack(self.menu.add.button('>', self.get_next_easy_rank_page),align=ALIGN_CENTER)
-            elif(tens == len(easy_data)//10): # 마지막 페이지 일 때
-                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_easy_rank_page),align=ALIGN_CENTER)
+                if(tens != len(score_data)//10):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
+                    prev_next_frame.pack(self.menu.add.button('>', self.get_next_score_rank_page),align=ALIGN_CENTER)
+            elif(tens == len(score_data)//10): # 마지막 페이지 일 때
+                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_score_rank_page),align=ALIGN_CENTER)
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
                 prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
             else:   # 1 페이지도, 마지막 페이지도 아닐 때
-                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_easy_rank_page),align=ALIGN_CENTER)
+                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_score_rank_page),align=ALIGN_CENTER)
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                prev_next_frame.pack(self.menu.add.button('>', self.get_next_easy_rank_page),align=ALIGN_CENTER)
+                prev_next_frame.pack(self.menu.add.button('>', self.get_next_score_rank_page),align=ALIGN_CENTER)
         self.menu.add.button('back', self.rank,font_size = self.font_size)
-        self.menu.mainloop(self.screen,bgfun = self.check_resize_easy)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize_score)
     
-    def check_resize_easy(self):
+    def check_resize_score(self):
         if self.check_resize() :
             #self.menu.disable()
-            self.get_current_easy_rank_page(self.tens)
+            self.get_current_score_rank_page(self.tens)
 
     # 이번 달 easy 모드 랭킹에서 다음 페이지 보기
-    def get_next_easy_rank_page(self):
+    def get_next_score_rank_page(self):
         self.tens += 1
-        self.get_current_easy_rank_page(self.tens)
+        self.get_current_score_rank_page(self.tens)
 
     # 이번 달 easy 모드 랭킹에서 이전 페이지 보기
-    def get_prev_easy_rank_page(self):
+    def get_prev_score_rank_page(self):
         self.tens -= 1
-        self.get_current_easy_rank_page(self.tens)
+        self.get_current_score_rank_page(self.tens)
 
     # 페이지화 된 이번 달 hard 모드 랭킹 보여주기
     def get_current_hard_rank_page(self, tens):

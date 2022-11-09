@@ -175,8 +175,8 @@ class Database:
         curs = self.dct_db.cursor()
         now = datetime.now()
 
-        if mode == "easy":  # easy mode
-            sql = "UPDATE current_easy_score SET score=%s, date=%s WHERE ID=%s"
+        if mode == "score":  # score mode
+            sql = "UPDATE current_score_score SET score=%s, date=%s WHERE ID=%s"
         else:  # hard mode
             sql = "UPDATE current_hard_score SET score=%s, date=%s WHERE ID=%s"
 
@@ -189,8 +189,8 @@ class Database:
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
-        if mode == "easy":
-            sql = "SELECT score FROM current_easy_score WHERE ID=%s"
+        if mode == "score":
+            sql = "SELECT score FROM current_score_score WHERE ID=%s"
         else:
             sql = "SELECT score FROM current_hard_score WHERE ID=%s"
 
@@ -203,8 +203,8 @@ class Database:
     # 데이터 로드 (랭킹메뉴에서)
     def load_data(self, mode):
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
-        if mode == 'easy':
-            sql = 'select * from current_easy_score order by score desc'
+        if mode == 'score':
+            sql = 'select * from current_score_score order by score desc'
         elif mode == 'hard':
             sql = 'select * from current_hard_score order by score desc'
 
@@ -215,8 +215,8 @@ class Database:
 
     # 유저 랭킹 기록 있는지 확인.
     def rank_not_exists(self, input_id, mode):
-        if mode == 'easy':
-            sql = "SELECT * FROM current_easy_score WHERE ID=%s"
+        if mode == 'score':
+            sql = "SELECT * FROM current_score_score WHERE ID=%s"
         else:
             sql = "SELECT * FROM current_hard_score WHERE ID=%s"
 
@@ -235,8 +235,8 @@ class Database:
         curs = self.dct_db.cursor()
         self.id = User.user_id
 
-        if mode == "easy":
-            sql = "INSERT INTO current_easy_score(ID, score, date) VALUES (%s,%s,%s)"
+        if mode == "score":
+            sql = "INSERT INTO current_score_score(ID, score, date) VALUES (%s,%s,%s)"
         else:
             sql = "INSERT INTO current_hard_score(ID, score, date) VALUES (%s,%s,%s)"
 
@@ -245,19 +245,19 @@ class Database:
         curs.close()
         print("suc")
 
-    def my_easy_rank(self):
+    def my_score_rank(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT ID,score FROM current_easy_score WHERE ID=%s"
+        sql = "SELECT ID,score FROM current_score_score WHERE ID=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
         if data == None:
-            User.easy_score = "None"
+            User.score_score = "None"
         else:
-            easy_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
-            User.easy_score = easy_score
+            score_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
+            User.score_score = score_score
 
     def my_hard_rank(self):
         self.id = User.user_id

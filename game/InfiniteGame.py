@@ -42,7 +42,7 @@ class InfiniteGame:
 
         # 3. 게임 내 필요한 설정
         self.clock = pygame.time.Clock()  # 이걸로 FPS설정함
-        self.mode = mode  # Game mode = hard/easy
+        self.mode = mode  # Game mode = hard/score
         self.menu = pygame_menu.Menu('게임이 끝났습니다!', self.size[0], self.size[1],
                                      theme=pygame_menu.themes.THEME_DEFAULT)
 
@@ -368,14 +368,14 @@ class InfiniteGame:
         current_score = self.score  # 현재 게임 기록
         print(self.user)
         print(current_score)
-        if (isinstance(self.mode, InfiniteGame.EasyMode)):  # easy mode
-            if self.database.rank_not_exists(self.user, "easy") is True:  # 기록 없는 경우
-                self.database.update_score2("easy", current_score)  # 기록추가
+        if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
+            if self.database.rank_not_exists(self.user, "score") is True:  # 기록 없는 경우
+                self.database.update_score2("score", current_score)  # 기록추가
                 print("enter")
             else:
-                if (self.database.high_score("easy") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
+                if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
                     self.database.update_score(
-                        'easy', current_score)  # 새로운 점수가 더 높으면 기록
+                        'score', current_score)  # 새로운 점수가 더 높으면 기록
         else:  # hard mode
             if self.database.rank_not_exists(self.user, "hard") is True:  # 기록 없는 경우
                 self.database.update_score2("hard", current_score)
@@ -462,7 +462,7 @@ class InfiniteGame:
         def update_difficulty():
             pass
 
-    class EasyMode(Mode):  # 이지 모드
+    class ScoreMode(Mode):  # 이지 모드
         @staticmethod
         def update_difficulty(game):
             play_time = (time.time() - game.start_time)  # 게임 진행 시간
