@@ -39,7 +39,9 @@ class Gung(Object):
     def update(self, game):
         if (game.size[0] != self.boundary[0]) or (game.size[1] != self.boundary[1]):
             self.on_resize(game)
-        self.y -= 4
+
+        self.y -= 10
+
 
 
 class TargetedMissile(Missile):

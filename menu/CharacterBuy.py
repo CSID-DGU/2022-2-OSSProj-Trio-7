@@ -23,9 +23,9 @@ class CharacterBuy:
             title_font_color = (255,255,255),
             title_bar_style = pygame_menu.pygame_menu.widgets.MENUBAR_STYLE_NONE,
             widget_font_size = self.size[0] * 30 //720)
-        if(character == 'Merry'):
+        if(character == 'doctor'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat2.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        elif(character == 'Haengal'):
+        elif(character == 'firefighter'):
              self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat3.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         elif(character == 'Kongchi'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat4.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
