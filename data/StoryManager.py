@@ -11,7 +11,7 @@ class StoryManager():
         clock = pygame.time.Clock()
 
         # sound init
-        self.test_sound = pygame.mixer.Sound("C://Users//songk//OneDrive//바탕 화면//2022-2-OSSProj-Trio-7//Sound//message.wav")
+        self.test_sound = pygame.mixer.Sound("./Sound/message.wav")
 
         # bg init
         
