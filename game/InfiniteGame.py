@@ -27,7 +27,7 @@ from data.Defs import User
 
 class InfiniteGame:
 
-    def __init__(self, character, mode, mapimg, attimg):
+    def __init__(self, character, mode, mapimg, target1img, target2img, target3img, target4img):
         # 1. 게임초기화
         pygame.init()
 
@@ -57,7 +57,10 @@ class InfiniteGame:
         self.life = 3
         self.start_time = time.time()
         self.mob_gen_rate = 0.01
-        self.mob_image = attimg
+        self.target1_image = target1img
+        self.target2_image = target2img
+        self.target3_image = target3img
+        self.target4_image = target4img
         self.background_image = mapimg
         self.background_music = "./Sound/bgm/bensound-evolution.wav"
         self.SB = 0
@@ -65,6 +68,7 @@ class InfiniteGame:
         self.mob_velocity = 2
         self.coin = 0
         self.enemyBullets = []
+        self.crashed_mob_count = 0  # 폭파시킨 몹 갯수
 
         # 5. 캐릭터 초기화
         self.character.reinitialize(self)
@@ -141,39 +145,68 @@ class InfiniteGame:
                     self.check_resize()
                     self.animation.on_resize(self)
 
-            # 몹을 확률적으로 발생시키기
+            # 몹/ 아이템을 확률적으로 발생시키기
+            # 기본값 0.015
             if (random.random() < self.mob_gen_rate):
-                newMob = Mob(
-                    self.mob_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                if (self.mob_gen_rate < 0.5):
+                    self.mob_gen_rate += 0.002
+                # 게임 시작 후 일정 시간 지나면 새로운 attack target 등장
+                if (time.time() - self.start_time > 180):
+                    newMob = Mob(
+                        self.target4_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                elif (time.time() - self.start_time > 120):
+                    newMob = Mob(
+                        self.target3_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                elif (time.time() - self.start_time > 60):
+                    newMob = Mob(
+                        self.target2_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
+                else:
+                    newMob = Mob(
+                        self.target1_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
                 # set mob location randomly
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
 
-            if random.random() < Default.item.value["powerup"]["spawn_rate"]:
-                new_item = PowerUp(self.animation.animations["powerup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
+            # 기본값 0.01
+            # if random.random() < Default.item.value["powerup"]["spawn_rate"]:
+            #     if (Default.item.value["powerup"]["spawn_rate"] < 0.5):
+            #         Default.item.value["powerup"]["spawn_rate"] += 0.0003
+            #     new_item = PowerUp(self.animation.animations["powerup"])
+            #     new_item.set_XY(
+            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
+            #     self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
+                if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
+                if (Default.item.value["health"]["spawn_rate"] < 0.3):
+                    Default.item.value["health"]["spawn_rate"] += 0.0003
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["coin"]["spawn_rate"]:
+                if (Default.item.value["coin"]["spawn_rate"] < 0.3):
+                    Default.item.value["coin"]["spawn_rate"] += 0.0003
                 new_item = Coin(self.animation.animations["coin"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+                if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
+                    Default.item.value["speedup"]["spawn_rate"] += 0.0003
                 new_item = SpeedUp(self.animation.animations["speedup"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -206,8 +239,20 @@ class InfiniteGame:
                 for mob in list(self.mobList):
                     if self.check_crash(missile, mob):
                         self.score += 10
+                        self.crashed_mob_count += 1
+                        if (self.crashed_mob_count >= 5):  # 5마리 이상 몹 잡으면 궁극기 추가
+                            self.character.gung_count += 1
+                            self.crashed_mob_count = 0
                         if missile in self.character.missiles_fired:
                             self.character.missiles_fired.remove(missile)
+                        mob.destroy(self)
+
+            # 궁극기와 몹 충돌 감지
+            for gung in list(self.character.get_gung_fired()):
+                for mob in list(self.mobList):
+                    if self.check_crash(gung, mob):
+                        self.score += 10
+                        self.crashed_mob_count += 1
                         mob.destroy(self)
 
             # 몹과 플레이어 충돌 감지
@@ -230,19 +275,25 @@ class InfiniteGame:
             for mob in self.mobList:
                 mob.show(self.screen)
 
+            # 아이템 그리기
             for item in list(self.item_list):
                 item.show(self.screen)
 
+            # 발사된 미사일 그리기
             for i in self.character.get_missiles_fired():
                 i.show(self.screen)
                 if hasattr(i, "crosshair"):
                     if i.locked_on == True:
                         i.crosshair.show(self.screen)
 
+            # 궁극기 사용시 그리기
+            for gung in self.character.get_gung_fired():
+                gung.show(self.screen)
+
             # 점수와 목숨 표시
             font = pygame.font.Font(Default.font.value, self.size[0]//40)
-            score_life_text = font.render("Score : {} Life: {} Bomb: {} Coin : {}".format(
-                self.score, self.life, self.character.bomb_count, self.coin), True, Color.YELLOW.value)  # 폰트가지고 랜더링 하는데 표시할 내용, True는 글자가 잘 안깨지게 하는 거임 걍 켜두기, 글자의 색깔
+            score_life_text = font.render("점수 : {} 생명: {} 폭탄: {} 돈 : {} 궁극기 : {} ".format(
+                self.score, self.life, self.character.bomb_count, self.coin, self.character.gung_count), True, Color.YELLOW.value)  # 폰트가지고 랜더링 하는데 표시할 내용, True는 글자가 잘 안깨지게 하는 거임 걍 켜두기, 글자의 색깔
             # 이미지화 한 텍스트라 이미지를 보여준다고 생각하면 됨
             self.screen.blit(score_life_text, (10, 5))
 
@@ -261,7 +312,7 @@ class InfiniteGame:
                 self.show_ranking_register_screen()
                 return
 
-            self.mode.update_difficulty(self)
+            # self.mode.update_difficulty(self)
 
         # While 빠져나오면 랭킹등록 스크린 실행
         self.register_ranking()
