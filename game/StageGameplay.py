@@ -397,7 +397,13 @@ class StageGame:
         if(self.stage.stage !=  "3"):
             self.menu.add.button('Next stage', self.nextstage, font_size = self.font_size)
         self.menu.add.button('Home', self.gameselectmenu, font_size = self.font_size)
-        self.menu.mainloop(self.screen,bgfun = self.check_resize)
+        print(User.coin)
+        print(self.coin)
+        User.coin = User.coin + self.coin
+        print(User.coin)
+        self.database = Database()
+        self.database.set_coin() 
+        self.menu.mainloop(self.screen) #,bgfun = self.check_resize)
 
     # 실패 화면
     def showGameOverScreen(self):
@@ -415,10 +421,16 @@ class StageGame:
         self.menu.add.label("Score : {}".format(self.score) ,font_size = self.font_size)
         self.menu.add.button('Retry', self.retry, font_size = self.font_size)
         self.menu.add.button('Home', self.Home, self.menu,font_size = self.font_size)
-        self.menu.mainloop(self.screen,bgfun = self.check_resize)
+        print(User.coin)
+        print(self.coin)
         User.coin = User.coin + self.coin
+        print(User.coin)
         self.database = Database()
-        self.database.set_coin()       
+        self.database.set_coin()  
+        self.menu.mainloop(self.screen) #,bgfun = self.check_resize)
+        #User.coin = User.coin + self.coin
+        #self.database = Database()
+        #self.database.set_coin()       
 
 # 일시정지 화면
     def StopGame(self):

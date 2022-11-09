@@ -355,11 +355,14 @@ class InfiniteGame:
         self.menu.add.button('Retry', self.retry, font_size=self.font_size)
         self.menu.add.button('to Home', self.gameselectmenu,
                              font_size=self.font_size)
-        self.menu.mainloop(self.screen, bgfun=self.check_resize_end)
-        pygame.display.flip()
+        print(User.coin)
+        print(self.coin)
         User.coin = User.coin + self.coin
+        print(User.coin)
         self.database = Database()
-        self.database.set_coin()
+        self.database.set_coin()                     
+        self.menu.mainloop(self.screen) #bgfun=self.check_resize_end)
+        pygame.display.flip()
 
     def register_ranking(self):  # 랭크 기록
         current_score = self.score  # 현재 게임 기록
