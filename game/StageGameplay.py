@@ -24,7 +24,7 @@ from data.Defs import User
 from data.database_user import *
 from data.Stage import Stage
 import time
-from data.StoryManager import StoryManager
+from data.StoryManager import *
 
 class StageGame:
 
@@ -106,12 +106,14 @@ class StageGame:
         self.screen.blit(pygame.font.Font(None, 30).render("Loading...", True, (150,150,150), (0,0,0)), (400, 510))
         pygame.display.flip()
         time.sleep(3) # 3초뒤에 스토리라인 전개.
-        ################################################################################################################################
-        StoryManager(self.storyInfo)
-        #####################################################################################################################
+        
+        
+        self.size = StoryManager(self.storyInfo).get_size()
+        
         self.main()
 
     def main(self):
+        
         print(" ch_vol " ,Default.sound.value['sfx']['volume'])
         from menu.gameselectMenu import soundset
         # 메인 이벤트
