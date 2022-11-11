@@ -1,6 +1,7 @@
 from button import *
 import pygame
 import pygame_menu
+from menu.gameselectMenu import *
 
 
 class CharacterSelectMenu:
@@ -61,12 +62,27 @@ class CharacterSelectMenu:
 
     def show_policMap(self):
         print("경찰관선택")
+        game = GameselectMenu(self.screen)
+
+        while True:
+            game.show(self.screen, "police")
+            pygame.display.flip()
 
     def show_firefighterMap(self):
         print("소방관선택")
+        game = GameselectMenu(self.screen)
+
+        while True:
+            game.show(self.screen, "firefighter")
+            pygame.display.flip()
 
     def show_doctorMap(self):
         print("의사선택")
+        game = GameselectMenu(self.screen)
+
+        while True:
+            game.show(self.screen, "doctor")
+            pygame.display.flip()
 
     def first_page(self):
         self.menu.clear()
