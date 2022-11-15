@@ -72,20 +72,6 @@
             "missile_power": 300,
             "fire_interval": 0.7,
             "price": 0
-        },
-        {
-            "name": "doctor",
-            "img_path": "./Image/doctorCharacters/doctor.png",
-            "velocity": 13,
-            "missile_img": "./Image/Weapon/pill.png",
-            "missile_size": {
-                "x": 40,
-                "y": 40
-            },
-            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 300,
-            "fire_interval": 0.7,
-            "price": 0
         }
     ]
 }
