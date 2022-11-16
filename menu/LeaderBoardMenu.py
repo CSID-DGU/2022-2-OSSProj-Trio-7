@@ -48,7 +48,7 @@ class LeaderBoardMenu:
     def rank(self):
         self.menu.clear()
         self.menu.add.button('     Score Ranking    ', self.show_current_score_rank,font_size = self.font_size)
-        self.menu.add.button('     hard mode     ', self.show_current_hard_rank,font_size = self.font_size)
+        self.menu.add.button('     Time Ranking     ', self.show_current_time_rank,font_size = self.font_size)
         #self.menu.add.button('     rank search     ', self.show_current_rank_search)
         self.menu.add.button('         back         ', self.to_menu,font_size = self.font_size)
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
@@ -61,12 +61,12 @@ class LeaderBoardMenu:
     def show_current_score_rank(self):
         self.get_current_rank('score')
 
-    # 이번 달 hard 모드 랭킹 보여주기
-    def show_current_hard_rank(self):
-        self.get_current_rank('hard')
+    # 이번 달 time 모드 랭킹 보여주기
+    def show_current_time_rank(self):
+        self.get_current_rank('time')
 
     # 데이터 베이스에서 이번 달 랭킹 정보 가져오기
-    # mode : 난이도 (easy, hard)
+    # mode : (score, time)
     def get_current_rank(self, mode):
             rank = Database()
             self.menu.clear()
@@ -77,10 +77,10 @@ class LeaderBoardMenu:
                 score_data = rank.load_data('score') # 데이터 불러옴
                 self.get_current_score_rank_page(self.tens)
 
-            elif(mode == 'hard'):
-                global hard_data
-                hard_data = rank.load_data('hard')
-                self.get_current_hard_rank_page(self.tens)
+            elif(mode == 'time'):
+                global time_data
+                time_data = rank.load_data('time')
+                self.get_current_time_rank_page(self.tens)
 
     # 페이지화 된 이번 달 easy 모드 랭킹 보여주기
     def get_current_score_rank_page(self, tens):
@@ -123,6 +123,46 @@ class LeaderBoardMenu:
         self.menu.add.button('back', self.rank,font_size = self.font_size)
         self.menu.mainloop(self.screen,bgfun = self.check_resize_score)
     
+    def get_current_time_rank_page(self, tens):
+        self.menu.clear()
+        self.menu.add.label("--Time Rank--",selectable=False,font_size = self.font_size+self.font_option)
+        if(len(time_data) == 0): # 데이터가 없는 경우
+            self.menu.add.vertical_margin(Menus.margin_100.value)
+            self.menu.add.label('No Ranking Information.\nRegister ranking for the update.')
+            self.menu.add.vertical_margin(Menus.margin_100.value)
+        else:   # 데이터가 있는 경우
+            self.menu.add.vertical_margin(Menus.margin_40.value)
+            table = self.menu.add.table(table_id='my_table', font_size = self.font_size-self.font_option)
+            table.default_cell_padding = Menus.table_padding.value
+            table.default_row_background_color = Color.GRAY.value
+            table.add_row(['Rank', 'ID', 'Time', 'Date'],
+                            cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
+            
+            for i in range(10): # 한 페이지에 10개씩 조회 가능
+                if(tens*10+i == len(time_data)): break
+                name = str(time_data[tens*10+i]['ID'])
+                time = '{0:>05s}'.format(str(time_data[tens*10+i]['time']))
+                date = str(time_data[tens*10+i]['date'])
+                table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
+            prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성
+            '''수정함'''
+            # 페이지 넘김을 위한 버튼 구성
+            if(tens == 0):  # 1 페이지 일 때
+                prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
+                #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
+                if(tens != len(time_data)//10):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
+                    prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
+            elif(tens == len(time_data)//10): # 마지막 페이지 일 때
+                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_time_rank_page),align=ALIGN_CENTER)
+                #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
+                prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
+            else:   # 1 페이지도, 마지막 페이지도 아닐 때
+                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_time_rank_page),align=ALIGN_CENTER)
+                #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
+                prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
+        self.menu.add.button('back', self.rank,font_size = self.font_size)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize_score)
+
     def check_resize_score(self):
         if self.check_resize() :
             #self.menu.disable()
@@ -133,16 +173,24 @@ class LeaderBoardMenu:
         self.tens += 1
         self.get_current_score_rank_page(self.tens)
 
+    def get_next_time_rank_page(self):
+        self.tens += 1
+        self.get_current_time_rank_page(self.tens)
+
     # 이번 달 easy 모드 랭킹에서 이전 페이지 보기
     def get_prev_score_rank_page(self):
         self.tens -= 1
         self.get_current_score_rank_page(self.tens)
 
-    # 페이지화 된 이번 달 hard 모드 랭킹 보여주기
-    def get_current_hard_rank_page(self, tens):
+    def get_prev_time_rank_page(self):
+        self.tens -= 1
+        self.get_current_time_rank_page(self.tens)
+
+    # 페이지화 된 이번 달 time 모드 랭킹 보여주기
+    def get_current_time_rank_page(self, tens):
         self.menu.clear()
-        self.menu.add.label("--Hard Rank--",selectable=False,font_size = self.font_size+self.font_option)
-        if(len(hard_data) == 0): # 데이터가 없는 경우
+        self.menu.add.label("--Time Rank--",selectable=False,font_size = self.font_size+self.font_option)
+        if(len(time_data) == 0): # 데이터가 없는 경우
             self.menu.add.vertical_margin(Menus.margin_100.value)
             self.menu.add.label('No Ranking Information.\nRegister ranking for the update.')
             self.menu.add.vertical_margin(Menus.margin_100.value)
@@ -151,46 +199,46 @@ class LeaderBoardMenu:
             table = self.menu.add.table(table_id='my_table', font_size=self.font_size-self.font_option)
             table.default_cell_padding = Menus.table_padding.value
             table.default_row_background_color = Color.GRAY.value
-            table.add_row(['Rank', 'ID', 'Score', 'Date'],
+            table.add_row(['Rank', 'ID', 'Time', 'Date'],
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
           
             for i in range(10): # 한 페이지에 10개씩 조회 가능
-                if(tens*10+i == len(hard_data)): break
-                name = str(hard_data[tens*10+i]['ID'])
-                score = '{0:>05s}'.format(str(hard_data[tens*10+i]['score']))
-                date = str(hard_data[tens*10+i]['date'])
-                table.add_row([str(i+1+tens*10), name, score, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
+                if(tens*10+i == len(time_data)): break
+                name = str(time_data[tens*10+i]['ID'])
+                time = '{0:>05s}'.format(str(time_data[tens*10+i]['time']))
+                date = str(time_data[tens*10+i]['date'])
+                table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성
             # 페이지 넘김을 위한 버튼 구성
             if(tens == 0):   # 1 페이지 일 때
                 prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                if(tens != len(hard_data)//10): # 1 페이지가 마지막 페이지는 아닐 때
-                    prev_next_frame.pack(self.menu.add.button('>', self.get_next_hard_rank_page),align=ALIGN_CENTER)
-            elif(tens == len(hard_data)//10):   # 마지막 페이지 일 때
-                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_hard_rank_page),align=ALIGN_CENTER)
+                if(tens != len(time_data)//10): # 1 페이지가 마지막 페이지는 아닐 때
+                    prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
+            elif(tens == len(time_data)//10):   # 마지막 페이지 일 때
+                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_time_rank_page),align=ALIGN_CENTER)
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
                 prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
             else:   # 1 페이지도, 마지막 페이지도 아닐 때
-                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_hard_rank_page),align=ALIGN_CENTER)
+                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_time_rank_page),align=ALIGN_CENTER)
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                prev_next_frame.pack(self.menu.add.button('>', self.get_next_hard_rank_page),align=ALIGN_CENTER)
+                prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
         self.menu.add.button('back', self.rank, font_size = self.font_size)
-        self.menu.mainloop(self.screen,bgfun = self.check_resize_hard)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize_time)
 
-    def check_resize_hard(self):
+    def check_resize_time(self):
         if self.check_resize():
-            self.get_current_hard_rank_page(self.tens)
+            self.get_current_time_rank_page(self.tens)
 
-    # 이번 달 hard 모드 랭킹에서 다음 페이지 보기
-    def get_next_hard_rank_page(self):
+    # 이번 달 time 모드 랭킹에서 다음 페이지 보기
+    def get_next_time_rank_page(self):
         self.tens += 1
-        self.get_current_hard_rank_page(self.tens)
+        self.get_current_time_rank_page(self.tens)
 
-    # 이번 달 hard 모드 랭킹에서 다음 페이지 보기
-    def get_prev_hard_rank_page(self):
+    # 이번 달 time 모드 랭킹에서 다음 페이지 보기
+    def get_prev_time_rank_page(self):
         self.tens -= 1
-        self.get_current_hard_rank_page(self.tens)
+        self.get_current_time_rank_page(self.tens)
 
     
     # 화면 크기 조정 감지 및 비율 고정

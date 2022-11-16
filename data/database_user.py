@@ -177,10 +177,20 @@ class Database:
 
         if mode == "score":  # score mode
             sql = "UPDATE current_score_score SET score=%s, date=%s WHERE ID=%s"
-        else:  # hard mode
-            sql = "UPDATE current_hard_score SET score=%s, date=%s WHERE ID=%s"
 
         curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.id))
+        self.dct_db.commit()
+        curs.close()
+
+    def update_time(self, mode, new_time):
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        now = datetime.now()
+
+        if mode == "time":  # time mode
+            sql = "UPDATE current_time_score SET time=%f, date=%s WHERE ID=%s"
+
+        curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.id))
         self.dct_db.commit()
         curs.close()
 
@@ -191,8 +201,6 @@ class Database:
 
         if mode == "score":
             sql = "SELECT score FROM current_score_score WHERE ID=%s"
-        else:
-            sql = "SELECT score FROM current_hard_score WHERE ID=%s"
 
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -200,13 +208,26 @@ class Database:
         highscore = data[0]
         return highscore
 
+    def high_time(self, mode):
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+
+        if mode == "time":
+            sql = "SELECT time FROM current_time_score WHERE ID=%s"
+    
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        hightime = data[0]
+        return hightime
+
     # 데이터 로드 (랭킹메뉴에서)
     def load_data(self, mode):
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         if mode == 'score':
             sql = 'select * from current_score_score order by score desc'
-        elif mode == 'hard':
-            sql = 'select * from current_hard_score order by score desc'
+        elif mode == 'time':
+            sql = 'select * from current_time_score order by score desc'
 
         curs.execute(sql)
         data = curs.fetchall()
@@ -218,7 +239,7 @@ class Database:
         if mode == 'score':
             sql = "SELECT * FROM current_score_score WHERE ID=%s"
         else:
-            sql = "SELECT * FROM current_hard_score WHERE ID=%s"
+            sql = "SELECT * FROM current_time_score WHERE ID=%s"
 
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         curs.execute(sql, input_id)
@@ -237,10 +258,21 @@ class Database:
 
         if mode == "score":
             sql = "INSERT INTO current_score_score(ID, score, date) VALUES (%s,%s,%s)"
-        else:
-            sql = "INSERT INTO current_hard_score(ID, score, date) VALUES (%s,%s,%s)"
 
         curs.execute(sql, (self.id, new_score, now.strftime('%Y-%m-%d')))
+        self.dct_db.commit()
+        curs.close()
+        print("suc")
+
+    def update_time2(self, mode, new_time):
+        now = datetime.now()
+        curs = self.dct_db.cursor()
+        self.id = User.user_id
+
+        if mode == "time":
+            sql = "INSERT INTO current_time_score(ID, time, date) VALUES (%s,%f,%s)"
+
+        curs.execute(sql, (self.id, new_time, now.strftime('%Y-%m-%d')))
         self.dct_db.commit()
         curs.close()
         print("suc")
@@ -259,19 +291,19 @@ class Database:
             score_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
             User.score_score = score_score
 
-    def my_hard_rank(self):
+    def my_time_rank(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT ID,score FROM current_hard_score WHERE ID=%s"
+        sql = "SELECT ID,time FROM current_time_score WHERE ID=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
         if data == None:
-            User.hard_score = "None"
+            User.time_time = "None"
         else:
-            hard_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
-            User.hard_score = hard_score
+            time_time = data[1]  # user_id는 인덱스 0에, time 인덱스 1에 저장되어 있음
+            User.time_time = time_time
 
     def reduce_char_life(self):  # 게임에서 죽으면 보유하고 있는 캐릭터의 목숨이 줄어들도록 함.
         self.id = User.user_id

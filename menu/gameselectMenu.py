@@ -44,11 +44,11 @@ class GameselectMenu:
                                  0.8, 0.65, 0.2, 0.05, "Image/catthema/level1.png")
 
         self.mode_map1 = button(self.board_width, self.board_height,
-                                0.2, 0.65, 0.2, 0.05, "Image/catthema/EASY.png")
+                                0.2, 0.65, 0.2, 0.05, "Image/catthema/EASY.png") # score로 바꾸기
         self.mode_map2 = button(self.board_width, self.board_height,
-                                0.5, 0.65, 0.2, 0.05, "Image/catthema/EASY.png")
+                                0.5, 0.65, 0.2, 0.05, "Image/catthema/EASY.png") # score로 바꾸기
         self.mode_map3 = button(self.board_width, self.board_height,
-                                0.8, 0.65, 0.2, 0.05, "Image/catthema/EASY.png")
+                                0.8, 0.65, 0.2, 0.05, "Image/catthema/EASY.png") # score로 바꾸기
 
         self.rankpage = button(self.board_height, self.board_height,
                                0.766, 0.05, 0.1, 0.05, "Image/catthema/RANK.png")
@@ -98,8 +98,8 @@ class GameselectMenu:
 
         self.sound = "on"
        
-        self.mode = [("EASY", InfiniteGame.ScoreMode()),
-                     ("HARD", InfiniteGame.HardMode())]
+        self.mode = [("score", InfiniteGame.ScoreMode()),
+                     ("time", InfiniteGame.TimeMode())]
 
         self.modestate = "stage"
 
@@ -401,28 +401,28 @@ class GameselectMenu:
                     if self.mode_map1.isOver(pos):
                         if self.inf_mode_map1 == 0:
                             self.inf_mode_map1 = 1
-                            self.mode_map1.image = "Image/catthema/HARD.png"
+                            self.mode_map1.image = "Image/catthema/HARD.png" # time으로 바꾸기
                         else:
                             self.inf_mode_map1 = 0
-                            self.mode_map1.image = "Image/catthema/EASY.png"
+                            self.mode_map1.image = "Image/catthema/EASY.png" # score로 바꾸기
                     pygame.display.update()
 
                     if self.mode_map2.isOver(pos):
                         if self.inf_mode_map2 == 0:
                             self.inf_mode_map2 = 1
-                            self.mode_map2.image = "Image/catthema/HARD.png"
+                            self.mode_map2.image = "Image/catthema/HARD.png" # time으로 바꾸기
                         else:
                             self.inf_mode_map2 = 0
-                            self.mode_map2.image = "Image/catthema/EASY.png"
+                            self.mode_map2.image = "Image/catthema/EASY.png" # score로 바꾸기
                     pygame.display.update()
 
                     if self.mode_map3.isOver(pos):
                         if self.inf_mode_map3 == 0:
                             self.inf_mode_map3 = 1
-                            self.mode_map3.image = "Image/catthema/HARD.png"
+                            self.mode_map3.image = "Image/catthema/HARD.png" # time으로 바꾸기
                         else:
                             self.inf_mode_map3 = 0
-                            self.mode_map3.image = "Image/catthema/EASY.png"
+                            self.mode_map3.image = "Image/catthema/EASY.png" # score로 바꾸기
                     pygame.display.update()
 
                     if self.gamemode.isOver(pos):
