@@ -171,14 +171,15 @@ class Database:
     # 유저 게임기록 업데이트
 
     def update_score(self, mode, new_score):
+        self.nickname = User.user_nickname
         self.id = User.user_id
         curs = self.dct_db.cursor()
         now = datetime.now()
 
         if mode == "score":  # score mode
-            sql = "UPDATE current_score_score SET score=%s, date=%s WHERE ID=%s"
+            sql = "UPDATE current_score_score SET score=%s, date=%s WHERE nickname=%s"
 
-        curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.id))
+        curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.nickname))
         self.dct_db.commit()
         curs.close()
 
@@ -196,11 +197,12 @@ class Database:
 
     # 현재 최고기록 확인
     def high_score(self, mode):
+        self.nickname = User.user_nickname
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
         if mode == "score":
-            sql = "SELECT score FROM current_score_score WHERE ID=%s"
+            sql = "SELECT score FROM current_score_score WHERE nickname=%s"
 
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -265,12 +267,13 @@ class Database:
     def update_score2(self, mode, new_score):
         now = datetime.now()
         curs = self.dct_db.cursor()
+        self.nickname = User.user_nickname
         self.id = User.user_id
 
         if mode == "score":
-            sql = "INSERT INTO current_score_score(ID, score, date) VALUES (%s,%s,%s)"
+            sql = "INSERT INTO current_score_score(nickname, score, date) VALUES (%s,%s,%s)"
 
-        curs.execute(sql, (self.id, new_score, now.strftime('%Y-%m-%d')))
+        curs.execute(sql, (self.nickname, new_score, now.strftime('%Y-%m-%d')))
         self.dct_db.commit()
         curs.close()
         print("suc")
@@ -292,7 +295,7 @@ class Database:
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT ID,score FROM current_score_score WHERE ID=%s"
+        sql = "SELECT nickname,score FROM current_score_score WHERE ID=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()

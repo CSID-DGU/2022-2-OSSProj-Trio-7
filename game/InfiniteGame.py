@@ -369,7 +369,7 @@ class InfiniteGame:
 
     def register_ranking(self):  # 랭크 기록
         current_score = self.score  # 현재 게임 기록
-        play_time = float(time.time() - self.start_time)
+        play_time = time.time() - self.start_time
         current_time = play_time
         print(self.user)
         print(current_score)

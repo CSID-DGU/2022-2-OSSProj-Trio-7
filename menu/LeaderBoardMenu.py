@@ -95,12 +95,12 @@ class LeaderBoardMenu:
             table = self.menu.add.table(table_id='my_table', font_size = self.font_size-self.font_option)
             table.default_cell_padding = Menus.table_padding.value
             table.default_row_background_color = Color.GRAY.value
-            table.add_row(['Rank', 'ID', 'Score', 'Date'],
+            table.add_row(['Rank', 'nickname', 'Score', 'Date'],
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             
             for i in range(10): # 한 페이지에 10개씩 조회 가능
                 if(tens*10+i == len(score_data)): break
-                name = str(score_data[tens*10+i]['ID'])
+                name = str(score_data[tens*10+i]['nickname'])
                 score = '{0:>05s}'.format(str(score_data[tens*10+i]['score']))
                 date = str(score_data[tens*10+i]['date'])
                 table.add_row([str(i+1+tens*10), name, score, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
