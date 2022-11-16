@@ -339,7 +339,7 @@ class InfiniteGame:
         pygame.mixer.music.stop()
 
     def show_ranking_register_screen(self):
-        play_time = float(time.time() - self.start_time)
+        play_time = time.time() - self.start_time
         pygame.mixer.music.stop()
         ranking_register_screen = pygame_menu.themes.THEME_DEFAULT.copy()
         ranking_register_screen.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
@@ -374,15 +374,15 @@ class InfiniteGame:
         print(self.user)
         print(current_score)
         if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
-            if self.database.rank_not_exists(self.user, "score") is True:  # 기록 없는 경우
+            if self.database.rank_not_score_exists(self.user, "score") is True:  # 기록 없는 경우
                 self.database.update_score2("score", current_score)  # 기록추가
                 print("enter")
             else:
-                if (self.database.high_time("time") <= current_time):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
-                    self.database.update_time(
-                        'time', current_time)  # 새로운 점수가 더 높으면 기록
+                if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
+                    self.database.update_score(
+                        'score', current_score)  # 새로운 점수가 더 높으면 기록
         elif (isinstance(self.mode, InfiniteGame.TimeMode)):  
-            if self.database.rank_not_exists(self.user, "time") is True:  # 기록 없는 경우
+            if self.database.rank_not_time_exists(self.user, "time") is True:  # 기록 없는 경우
                 self.database.update_time2("time", current_time)
             else:
                 if (self.database.high_time("time") <= current_time):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
@@ -480,7 +480,7 @@ class InfiniteGame:
                 # 10초마다 mob_velocity(몹 이동 속도) 1 증가 (기본 2)
                 game.mob_velocity = play_time//10*1 + 2
 
-    class TimeMode(Mode):  # 하드 모드
+    class TimeMode(Mode):  # time 모드
         @staticmethod
         def update_difficulty(game):
             play_time = (time.time() - game.start_time)  # 게임 진행 시간

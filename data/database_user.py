@@ -220,14 +220,14 @@ class Database:
         curs.close()
         hightime = data[0]
         return hightime
-
+   
     # 데이터 로드 (랭킹메뉴에서)
     def load_data(self, mode):
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         if mode == 'score':
             sql = 'select * from current_score_score order by score desc'
         elif mode == 'time':
-            sql = 'select * from current_time_score order by score desc'
+            sql = 'select * from current_time_score order by time desc'
 
         curs.execute(sql)
         data = curs.fetchall()
@@ -235,10 +235,21 @@ class Database:
         return data
 
     # 유저 랭킹 기록 있는지 확인.
-    def rank_not_exists(self, input_id, mode):
+    def rank_not_score_exists(self, input_id, mode):
         if mode == 'score':
             sql = "SELECT * FROM current_score_score WHERE ID=%s"
+
+        curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
+        curs.execute(sql, input_id)
+        data = curs.fetchone()
+        curs.close()
+        if data:
+            return False
         else:
+            return True
+
+    def rank_not_time_exists(self, input_id, mode):
+        if mode == 'time':
             sql = "SELECT * FROM current_time_score WHERE ID=%s"
 
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
@@ -300,10 +311,10 @@ class Database:
         data = curs.fetchone()
         curs.close()
         if data == None:
-            User.time_time = "None"
+            User.time_score = "None"
         else:
-            time_time = data[1]  # user_id는 인덱스 0에, time 인덱스 1에 저장되어 있음
-            User.time_time = time_time
+            time_score = data[1]  # user_id는 인덱스 0에, time 인덱스 1에 저장되어 있음
+            User.time_score = time_score
 
     def reduce_char_life(self):  # 게임에서 죽으면 보유하고 있는 캐릭터의 목숨이 줄어들도록 함.
         self.id = User.user_id

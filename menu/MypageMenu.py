@@ -64,7 +64,7 @@ class Mypage:
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
         self.menu.add.label("Best Score : %s"%User.score_score)
-        self.menu.add.label("Best Time : %s"%User.hard_score)
+        self.menu.add.label("Best Time : %s"%User.time_score)
         self.menu.add.label("My coin : %d "%User.coin)
         #캐릭터 선택 메뉴 구성
         characters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
