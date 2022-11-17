@@ -11,8 +11,8 @@ class User:
     character = 0
     buy_character = 0
     price = [0, 100, 100, 200]
-    easy_score = 0
-    hard_score = 0
+    score_score = 0
+    time_score = 0.0
     cat_lock = [False, False, False, False]
 
 

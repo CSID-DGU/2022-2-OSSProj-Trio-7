@@ -171,28 +171,39 @@ class Database:
     # 유저 게임기록 업데이트
 
     def update_score(self, mode, new_score):
+        self.nickname = User.user_nickname
         self.id = User.user_id
         curs = self.dct_db.cursor()
         now = datetime.now()
 
-        if mode == "easy":  # easy mode
-            sql = "UPDATE current_easy_score SET score=%s, date=%s WHERE ID=%s"
-        else:  # hard mode
-            sql = "UPDATE current_hard_score SET score=%s, date=%s WHERE ID=%s"
+        if mode == "score":  # score mode
+            sql = "UPDATE current_score_score SET score=%s, date=%s WHERE nickname=%s"
 
-        curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.id))
+        curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.nickname))
+        self.dct_db.commit()
+        curs.close()
+
+    def update_time(self, mode, new_time):
+        self.nickname = User.user_nickname
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        now = datetime.now()
+
+        if mode == "time":  # time mode
+            sql = "UPDATE current_time_score SET time=%f, date=%s WHERE nickname=%s" # %f 
+
+        curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.nickname))
         self.dct_db.commit()
         curs.close()
 
     # 현재 최고기록 확인
     def high_score(self, mode):
+        self.nickname = User.user_nickname
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
-        if mode == "easy":
-            sql = "SELECT score FROM current_easy_score WHERE ID=%s"
-        else:
-            sql = "SELECT score FROM current_hard_score WHERE ID=%s"
+        if mode == "score":
+            sql = "SELECT score FROM current_score_score WHERE nickname=%s"
 
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -200,13 +211,27 @@ class Database:
         highscore = data[0]
         return highscore
 
+    def high_time(self, mode):
+        self.nickname = User.user_nickname
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+
+        if mode == "time":
+            sql = "SELECT time FROM current_time_score WHERE nickname=%s"
+    
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        hightime = data[0]
+        return hightime
+   
     # 데이터 로드 (랭킹메뉴에서)
     def load_data(self, mode):
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
-        if mode == 'easy':
-            sql = 'select * from current_easy_score order by score desc'
-        elif mode == 'hard':
-            sql = 'select * from current_hard_score order by score desc'
+        if mode == 'score':
+            sql = 'select * from current_score_score order by score desc'
+        elif mode == 'time':
+            sql = 'select * from current_time_score order by time desc'
 
         curs.execute(sql)
         data = curs.fetchall()
@@ -214,11 +239,22 @@ class Database:
         return data
 
     # 유저 랭킹 기록 있는지 확인.
-    def rank_not_exists(self, input_id, mode):
-        if mode == 'easy':
-            sql = "SELECT * FROM current_easy_score WHERE ID=%s"
+    def rank_not_score_exists(self, input_id, mode):
+        if mode == 'score':
+            sql = "SELECT * FROM current_score_score WHERE nickname=%s"
+
+        curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
+        curs.execute(sql, input_id)
+        data = curs.fetchone()
+        curs.close()
+        if data:
+            return False
         else:
-            sql = "SELECT * FROM current_hard_score WHERE ID=%s"
+            return True
+
+    def rank_not_time_exists(self, input_id, mode):
+        if mode == 'time':
+            sql = "SELECT * FROM current_time_score WHERE nickname=%s"
 
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         curs.execute(sql, input_id)
@@ -233,45 +269,58 @@ class Database:
     def update_score2(self, mode, new_score):
         now = datetime.now()
         curs = self.dct_db.cursor()
+        self.nickname = User.user_nickname
         self.id = User.user_id
 
-        if mode == "easy":
-            sql = "INSERT INTO current_easy_score(ID, score, date) VALUES (%s,%s,%s)"
-        else:
-            sql = "INSERT INTO current_hard_score(ID, score, date) VALUES (%s,%s,%s)"
+        if mode == "score":
+            sql = "INSERT INTO current_score_score(nickname, score, date) VALUES (%s,%s,%s)"
 
-        curs.execute(sql, (self.id, new_score, now.strftime('%Y-%m-%d')))
+        curs.execute(sql, (self.nickname, new_score, now.strftime('%Y-%m-%d')))
         self.dct_db.commit()
         curs.close()
         print("suc")
 
-    def my_easy_rank(self):
-        self.id = User.user_id
+    def update_time2(self, mode, new_time):
+        now = datetime.now()
         curs = self.dct_db.cursor()
-        # user_id와 user_character열만 선택
-        sql = "SELECT ID,score FROM current_easy_score WHERE ID=%s"
-        curs.execute(sql, self.id)
-        data = curs.fetchone()
-        curs.close()
-        if data == None:
-            User.easy_score = "None"
-        else:
-            easy_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
-            User.easy_score = easy_score
+        self.nickname = User.user_nickname
+        self.id = User.user_id
 
-    def my_hard_rank(self):
+        if mode == "time":
+            sql = "INSERT INTO current_time_score(nickname, time, date) VALUES (%s,%s,%s)"
+
+        curs.execute(sql, (self.nickname, new_time, now.strftime('%Y-%m-%d')))
+        self.dct_db.commit()
+        curs.close()
+        print("suc")
+
+    def my_score_rank(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT ID,score FROM current_hard_score WHERE ID=%s"
+        sql = "SELECT nickname,score FROM current_score_score WHERE ID=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
         if data == None:
-            User.hard_score = "None"
+            User.score_score = "None"
         else:
-            hard_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
-            User.hard_score = hard_score
+            score_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
+            User.score_score = score_score
+
+    def my_time_rank(self):
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        # user_id와 user_character열만 선택
+        sql = "SELECT nickname,time FROM current_time_score WHERE ID=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        if data == None:
+            User.time_score = "None"
+        else:
+            time_score = data[1]  # user_id는 인덱스 0에, time 인덱스 1에 저장되어 있음
+            User.time_score = time_score
 
     def reduce_char_life(self):  # 게임에서 죽으면 보유하고 있는 캐릭터의 목숨이 줄어들도록 함.
         self.id = User.user_id

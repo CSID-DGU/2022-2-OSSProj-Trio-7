@@ -42,8 +42,10 @@ class InfiniteGame:
 
         # 3. 게임 내 필요한 설정
         self.clock = pygame.time.Clock()  # 이걸로 FPS설정함
-        self.mode = mode  # Game mode = hard/easy
+
+        self.mode = mode  # Game mode = score/time
         self.choosed_chracter = choosed_chracter
+
         self.menu = pygame_menu.Menu('게임이 끝났습니다!', self.size[0], self.size[1],
                                      theme=pygame_menu.themes.THEME_DEFAULT)
 
@@ -301,7 +303,7 @@ class InfiniteGame:
             self.screen.blit(score_life_text, (10, 5))
 
             # 현재 흘러간 시간
-            play_time = (time.time() - self.start_time)
+            play_time = float(time.time() - self.start_time)
             time_text = font.render("Time : {:.2f}".format(
                 play_time), True, Color.YELLOW.value)
             self.screen.blit(time_text, (self.size[0]//2, 5))
@@ -340,6 +342,7 @@ class InfiniteGame:
         pygame.mixer.music.stop()
 
     def show_ranking_register_screen(self):
+        play_time = time.time() - self.start_time
         pygame.mixer.music.stop()
         ranking_register_screen = pygame_menu.themes.THEME_DEFAULT.copy()
         ranking_register_screen.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
@@ -350,6 +353,8 @@ class InfiniteGame:
         self.menu.add.image(Images.lose.value, scale=self.scale)
         self.menu.add.label("Score : {}".format(
             self.score), font_size=self.font_size)
+        self.menu.add.label("Time : {:.2f}".format(
+            play_time), font_size=self.font_size)
         # 랭킹화면으로 넘어가도록 설정했음.
         self.menu.add.button(
             'Ranking', self.show_register_result, font_size=self.font_size)
@@ -367,22 +372,24 @@ class InfiniteGame:
 
     def register_ranking(self):  # 랭크 기록
         current_score = self.score  # 현재 게임 기록
+        play_time = time.time() - self.start_time
+        current_time = play_time
         print(self.user)
         print(current_score)
-        if (isinstance(self.mode, InfiniteGame.EasyMode)):  # easy mode
-            if self.database.rank_not_exists(self.user, "easy") is True:  # 기록 없는 경우
-                self.database.update_score2("easy", current_score)  # 기록추가
+        if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
+            if self.database.rank_not_score_exists(self.user, "score") is True:  # 기록 없는 경우
+                self.database.update_score2("score", current_score)  # 기록추가
                 print("enter")
             else:
-                if (self.database.high_score("easy") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
+                if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
                     self.database.update_score(
-                        'easy', current_score)  # 새로운 점수가 더 높으면 기록
-        else:  # hard mode
-            if self.database.rank_not_exists(self.user, "hard") is True:  # 기록 없는 경우
-                self.database.update_score2("hard", current_score)
+                        'score', current_score)  # 새로운 점수가 더 높으면 기록
+        elif (isinstance(self.mode, InfiniteGame.TimeMode)):  
+            if self.database.rank_not_time_exists(self.user, "time") is True:  # 기록 없는 경우
+                self.database.update_time2("time", current_time)
             else:
-                if (self.database.high_score("hard") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
-                    self.database.update_score('hard', current_score)
+                if (self.database.high_time("time") <= current_time):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
+                    self.database.update_time('time', current_time)
 
     # 랭킹 등록 결과 화면
 
@@ -463,10 +470,10 @@ class InfiniteGame:
         def update_difficulty():
             pass
 
-    class EasyMode(Mode):  # 이지 모드
+    class ScoreMode(Mode):  # 이지 모드
         @staticmethod
         def update_difficulty(game):
-            play_time = (time.time() - game.start_time)  # 게임 진행 시간
+            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
             if (game.mob_gen_rate < 0.215):  # 최대값 제한
                 # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
                 game.mob_gen_rate = play_time//10/10 + 0.015
@@ -476,15 +483,15 @@ class InfiniteGame:
                 # 10초마다 mob_velocity(몹 이동 속도) 1 증가 (기본 2)
                 game.mob_velocity = play_time//10*1 + 2
 
-    class HardMode(Mode):  # 하드 모드
+    class TimeMode(Mode):  # time 모드
         @staticmethod
         def update_difficulty(game):
-            play_time = (time.time() - game.start_time)  # 게임 진행 시간
-            if (game.mob_gen_rate < 0.315):  # 최대값 제한
+            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
+            if (game.mob_gen_rate < 0.215):  # 최대값 제한
                 # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
                 game.mob_gen_rate = play_time//10/10 + 0.015
             if (game.dy < 20):  # 최대값 제한
                 game.dy = play_time//5*2 + 2  # 5초마다 dy(배경 이동 속도) 2 증가 (기본 2)
-            if (game.mob_velocity < 6):  # 최대값 제한
+            if (game.mob_velocity < 3):  # 최대값 제한
                 # 10초마다 mob_velocity(몹 이동 속도) 2 증가 (기본 2)
-                game.mob_velocity = play_time//10*2 + 2
+                game.mob_velocity = play_time//10*1 + 2

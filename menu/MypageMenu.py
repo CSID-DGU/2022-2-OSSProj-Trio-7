@@ -60,11 +60,11 @@ class Mypage:
         Database().char_lock()  
         self.menu.add.label("My ID : %s "%User.user_id)
         self.menu.add.label("My NICKNAME : %s "%User.user_nickname)
-        Database().my_easy_rank()
-        Database().my_hard_rank()
+        Database().my_score_rank()
+        Database().my_time_rank()
         User.coin = Database().show_mycoin()
-        self.menu.add.label("Easy Score : %s"%User.easy_score)
-        self.menu.add.label("Hard Score : %s"%User.hard_score)
+        self.menu.add.label("Best Score : %s"%User.score_score)
+        self.menu.add.label("Best Time : %s"%User.time_score)
         self.menu.add.label("My coin : %d "%User.coin)
         #캐릭터 선택 메뉴 구성
         characters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트

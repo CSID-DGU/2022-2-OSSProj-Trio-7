@@ -57,7 +57,7 @@ class Login:
 
         # pvp 관련
         self.pvpcharacter_data = PvpCharacterDataManager.load()  # pvp 캐릭터 데이터
-        self.mode = ("EASY", InfiniteGame.EasyMode())
+        self.mode = ("score", InfiniteGame.ScoreMode())
         self.changed_screen_size = self.screen.get_size()
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
