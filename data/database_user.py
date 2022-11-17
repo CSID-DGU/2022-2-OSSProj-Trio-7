@@ -190,7 +190,7 @@ class Database:
         now = datetime.now()
 
         if mode == "time":  # time mode
-            sql = "UPDATE current_time_score SET time=%f, date=%s WHERE nickname=%s"
+            sql = "UPDATE current_time_score SET time=%f, date=%s WHERE nickname=%s" # %f 
 
         curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.nickname))
         self.dct_db.commit()
@@ -287,7 +287,7 @@ class Database:
         self.id = User.user_id
 
         if mode == "time":
-            sql = "INSERT INTO current_time_score(nickname, time, date) VALUES (%s,%f,%s)"
+            sql = "INSERT INTO current_time_score(nickname, time, date) VALUES (%s,%s,%s)"
 
         curs.execute(sql, (self.nickname, new_time, now.strftime('%Y-%m-%d')))
         self.dct_db.commit()

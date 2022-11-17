@@ -141,7 +141,7 @@ class LeaderBoardMenu:
             for i in range(10): # 한 페이지에 10개씩 조회 가능
                 if(tens*10+i == len(time_data)): break
                 name = str(time_data[tens*10+i]['nickname'])
-                time = float(time_data[tens*10+i]['time'])
+                time = '{0:>05s}'.format(str(time_data[tens*10+i]['time']))
                 date = str(time_data[tens*10+i]['date'])
                 table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성
@@ -191,45 +191,6 @@ class LeaderBoardMenu:
         self.tens -= 1
         self.get_current_time_rank_page(self.tens)
 
-    # 페이지화 된 이번 달 time 모드 랭킹 보여주기
-    def get_current_time_rank_page(self, tens):
-        self.menu.clear()
-        self.menu.add.label("--Time Rank--",selectable=False,font_size = self.font_size+self.font_option)
-        if(len(time_data) == 0): # 데이터가 없는 경우
-            self.menu.add.vertical_margin(Menus.margin_100.value)
-            self.menu.add.label('No Ranking Information.\nRegister ranking for the update.')
-            self.menu.add.vertical_margin(Menus.margin_100.value)
-        else:   # 데이터가 있는 경우
-            self.menu.add.vertical_margin(Menus.margin_40.value)
-            table = self.menu.add.table(table_id='my_table', font_size=self.font_size-self.font_option)
-            table.default_cell_padding = Menus.table_padding.value
-            table.default_row_background_color = Color.GRAY.value
-            table.add_row(['Rank', 'nickname', 'Time', 'Date'],
-                            cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
-          
-            for i in range(10): # 한 페이지에 10개씩 조회 가능
-                if(tens*10+i == len(time_data)): break
-                name = str(time_data[tens*10+i]['nickname'])
-                time = float(time_data[tens*10+i]['time'])
-                date = str(time_data[tens*10+i]['date'])
-                table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
-            prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성
-            # 페이지 넘김을 위한 버튼 구성
-            if(tens == 0):   # 1 페이지 일 때
-                prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
-                #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                if(tens != len(time_data)//10): # 1 페이지가 마지막 페이지는 아닐 때
-                    prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
-            elif(tens == len(time_data)//10):   # 마지막 페이지 일 때
-                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_time_rank_page),align=ALIGN_CENTER)
-                #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                prev_next_frame.pack(self.menu.add.label('  '),align=ALIGN_CENTER)
-            else:   # 1 페이지도, 마지막 페이지도 아닐 때
-                prev_next_frame.pack(self.menu.add.button('<', self.get_prev_time_rank_page),align=ALIGN_CENTER)
-                #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
-                prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
-        self.menu.add.button('back', self.rank, font_size = self.font_size)
-        self.menu.mainloop(self.screen,bgfun = self.check_resize_time)
 
     def check_resize_time(self):
         if self.check_resize():
