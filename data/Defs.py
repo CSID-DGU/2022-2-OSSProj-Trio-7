@@ -20,6 +20,7 @@ class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
     login = "./Image/Login.png"
     main = "./Image/main.png"
+    characterSelect = "./Image/characterSelect_background.png"
     start = "./Image/StartImage.png"
     how_to_play = "./Image/howtoplay.png"
     about = "./Image/AboutPage.jpg"
