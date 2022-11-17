@@ -38,7 +38,7 @@
 			"3": [
 				"map1",
 				3,
-				350,
+				300,
 				"./Image/background/police_background.png",
 				"./Sound/bgm/bensound-theduel.wav",
 				1,
@@ -91,7 +91,7 @@
 			"3": [
 				"map2",
 				3,
-				350,
+				300,
 				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bensound-theduel.wav",
 				1,
@@ -144,7 +144,7 @@
 			"3": [
 				"map3",
 				3,
-				350,
+				300,
 				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bensound-theduel.wav",
 				1,

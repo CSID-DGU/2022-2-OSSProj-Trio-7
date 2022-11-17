@@ -27,7 +27,7 @@ from data.Defs import User
 
 class InfiniteGame:
 
-    def __init__(self, character, mode, mapimg, target1img, target2img, target3img, target4img):
+    def __init__(self, character, choosed_chracter, mode, mapimg, target1img, target2img, target3img, target4img):
         # 1. 게임초기화
         pygame.init()
 
@@ -42,7 +42,10 @@ class InfiniteGame:
 
         # 3. 게임 내 필요한 설정
         self.clock = pygame.time.Clock()  # 이걸로 FPS설정함
+
         self.mode = mode  # Game mode = score/time
+        self.choosed_chracter = choosed_chracter
+
         self.menu = pygame_menu.Menu('게임이 끝났습니다!', self.size[0], self.size[1],
                                      theme=pygame_menu.themes.THEME_DEFAULT)
 
@@ -363,8 +366,8 @@ class InfiniteGame:
         User.coin = User.coin + self.coin
         print(User.coin)
         self.database = Database()
-        self.database.set_coin()                     
-        self.menu.mainloop(self.screen) #bgfun=self.check_resize_end)
+        self.database.set_coin()
+        self.menu.mainloop(self.screen)  # bgfun=self.check_resize_end)
         pygame.display.flip()
 
     def register_ranking(self):  # 랭크 기록
@@ -399,7 +402,7 @@ class InfiniteGame:
         game = menu.gameselectMenu.GameselectMenu(self.screen)
 
         while True:
-            game.show(self.screen)
+            game.show(self.screen, self.choosed_chracter)
             pygame.display.flip()
 
     # Continue 클릭 시

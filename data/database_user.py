@@ -120,15 +120,15 @@ class Database:
         check_coin = data[1]  # user_id는 인덱스 0에, user_coin 인덱스 1에 저장되어 있음
         return check_coin
     
-    def get_userId(self): # 스토리라인 삽입을 위한 이름 가져오는 함수
+    def get_nickname(self): # 스토리라인 삽입을 위한 이름 가져오는 함수
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT user_id,user_coin FROM users2 WHERE user_id=%s"
+        sql = "SELECT user_id, user_nickname FROM users1 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        name = data[0]  # user_id는 인덱스 0에, user_coin 인덱스 1에 저장되어 있음
+        name = data[1]  # user_id는 인덱스 0에, user_coin 인덱스 1에 저장되어 있음
         return name
 
 
