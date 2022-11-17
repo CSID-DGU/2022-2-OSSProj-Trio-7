@@ -6,6 +6,7 @@ from sys import version
 
 class User:
     user_id = ""
+    user_nickname = ""
     coin = 0
     character = 0
     buy_character = 0
@@ -187,7 +188,7 @@ class Default(enum.Enum):
         "sound": "./Sound/Item/speedup.wav",
         "velocity": 5,
         "speedup": {
-            "spawn_rate": 0.004,
+            "spawn_rate": 0.002,
             "frames": [
                 "./Image/catthema/item/item_milk.png",
                 "./Image/catthema/item/item_milk.png",
@@ -198,7 +199,7 @@ class Default(enum.Enum):
             ]
         },
         "powerup": {
-            "spawn_rate": 0.004,
+            "spawn_rate": 0.002,
             "duration": 10.0,
             "frames": [
                 "./Image/catthema/item/item_fish.png",
@@ -210,7 +211,7 @@ class Default(enum.Enum):
             ]
         },
         "bomb": {
-            "spawn_rate": 0.004,
+            "spawn_rate": 0.002,
             "interval": 1.0,
             "power": 1000,
             "frames": [
@@ -315,8 +316,10 @@ class Default(enum.Enum):
         "open_source": {
 
             "SOUNDS": {
-                "MATRIXXX_ CC0 1.0": "https://freesound.org/people/MATRIXXX_/sounds/441373/", # shooting from a weapon
-                "simoneyoh3998 CC0 1.0": "https://freesound.org/people/simoneyoh3998/sounds/500673/", #explosion of a bomb of normal length
+                # shooting from a weapon
+                "MATRIXXX_ CC0 1.0": "https://freesound.org/people/MATRIXXX_/sounds/441373/",
+                # explosion of a bomb of normal length
+                "simoneyoh3998 CC0 1.0": "https://freesound.org/people/simoneyoh3998/sounds/500673/",
                 "jalastram CC BY 3.0": "https://freesound.org/people/jalastram/sounds/317769/",
                 "befig CC BY 3.0": "https://freesound.org/people/befig/sounds/455530/",
                 "Royalty Free Music from Bensound": "www.bensound.com"

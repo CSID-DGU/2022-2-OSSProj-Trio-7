@@ -7,6 +7,16 @@ from data.Defs import User
 
 class Database:
 
+    def __init__(self): 
+        self.dct_db = pymysql.connect(
+        db="sys",
+        host="dkssik12.ch80vdihvl1x.ap-northeast-2.rds.amazonaws.com",
+        port = 3306,
+        user="gamego",
+        passwd="pygamemaking",
+        charset = 'utf8'
+        )
+
         self.salt = bcrypt.gensalt()
 
     def id_not_exists(self, input_id):
@@ -39,6 +49,9 @@ class Database:
         return check_password
 
 
+
+    def add_id(self, user_id): #아이디 추가
+
         curs = self.dct_db.cursor()
         # users테이블에서 user_id 필드에 %s의 값을 삽입
         sql = "INSERT INTO users1 (user_id) VALUES (%s)"
@@ -52,9 +65,23 @@ class Database:
         self.dct_db.commit()
         curs.close()
 
+    def add_ninkname(self, user_nickname, user_id): #닉네임 추가
+        curs = self.dct_db.cursor()
+        sql = "UPDATE users1 SET user_nickname=%s WHERE user_id=%s"
+        curs.execute(sql,(user_nickname, user_id))
+        self.dct_db.commit()
+
     def add_pw(self, user_pw, user_id):  # 비밀번호 & coin 초기값 추가 * 캐릭터 초기값은 1로(캐릭터 숫자로 표현)
         initial_coin = 0  # 가입시, 보유한 coin 0으로 설정
         initial_character = 0
+
+        hashed_pw = bcrypt.hashpw(user_pw.encode(
+            'utf-8'), bcrypt.gensalt()).decode('utf-8')
+        # print(hashed_pw, "입력값")
+        curs = self.dct_db.cursor()
+        sql = "UPDATE users1 SET user_password=%s WHERE user_id=%s"
+        curs.execute(sql, (hashed_pw, user_id))
+        # print(hashed_pw, "라라")
 
         self.dct_db.commit()
         curs = self.dct_db.cursor()
@@ -98,10 +125,23 @@ class Database:
         curs.close()
         check_coin = data[1]  # user_id는 인덱스 0에, user_coin 인덱스 1에 저장되어 있음
         return check_coin
+    
+    def get_userId(self): # 스토리라인 삽입을 위한 이름 가져오는 함수
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        # user_id와 user_character열만 선택
+        sql = "SELECT user_id,user_coin FROM users2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        name = data[0]  # user_id는 인덱스 0에, user_coin 인덱스 1에 저장되어 있음
+        return name
+
 
     def set_coin(self):
         self.id = User.user_id
         self.coin = User.coin
+        print(self.coin)
         curs = self.dct_db.cursor()
         sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
         curs.execute(sql, (self.coin, self.id))
