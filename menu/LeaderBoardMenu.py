@@ -135,13 +135,13 @@ class LeaderBoardMenu:
             table = self.menu.add.table(table_id='my_table', font_size = self.font_size-self.font_option)
             table.default_cell_padding = Menus.table_padding.value
             table.default_row_background_color = Color.GRAY.value
-            table.add_row(['Rank', 'ID', 'Time', 'Date'],
+            table.add_row(['Rank', 'nickname', 'Time', 'Date'],
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             
             for i in range(10): # 한 페이지에 10개씩 조회 가능
                 if(tens*10+i == len(time_data)): break
-                name = str(time_data[tens*10+i]['ID'])
-                time = '{0:>05s}'.format(str(time_data[tens*10+i]['time']))
+                name = str(time_data[tens*10+i]['nickname'])
+                time = float(time_data[tens*10+i]['time'])
                 date = str(time_data[tens*10+i]['date'])
                 table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성
@@ -161,12 +161,17 @@ class LeaderBoardMenu:
                 #prev_next_frame.pack(self.menu.add.horizontal_margin(Menus.margin_200.value),align=ALIGN_CENTER)
                 prev_next_frame.pack(self.menu.add.button('>', self.get_next_time_rank_page),align=ALIGN_CENTER)
         self.menu.add.button('back', self.rank,font_size = self.font_size)
-        self.menu.mainloop(self.screen,bgfun = self.check_resize_score)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize_time)
 
     def check_resize_score(self):
         if self.check_resize() :
             #self.menu.disable()
             self.get_current_score_rank_page(self.tens)
+    
+    def check_resize_time(self):
+        if self.check_resize() :
+            #self.menu.disable()
+            self.get_current_time_rank_page(self.tens)
 
     # 이번 달 easy 모드 랭킹에서 다음 페이지 보기
     def get_next_score_rank_page(self):
@@ -199,13 +204,13 @@ class LeaderBoardMenu:
             table = self.menu.add.table(table_id='my_table', font_size=self.font_size-self.font_option)
             table.default_cell_padding = Menus.table_padding.value
             table.default_row_background_color = Color.GRAY.value
-            table.add_row(['Rank', 'ID', 'Time', 'Date'],
+            table.add_row(['Rank', 'nickname', 'Time', 'Date'],
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
           
             for i in range(10): # 한 페이지에 10개씩 조회 가능
                 if(tens*10+i == len(time_data)): break
-                name = str(time_data[tens*10+i]['ID'])
-                time = '{0:>05s}'.format(str(time_data[tens*10+i]['time']))
+                name = str(time_data[tens*10+i]['nickname'])
+                time = float(time_data[tens*10+i]['time'])
                 date = str(time_data[tens*10+i]['date'])
                 table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.GRAY.value)
             prev_next_frame = self.menu.add.frame_h(300, 60) # 가로 300, 세로 60의 프레임 생성

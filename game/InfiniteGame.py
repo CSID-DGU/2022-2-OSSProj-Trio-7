@@ -470,7 +470,7 @@ class InfiniteGame:
     class ScoreMode(Mode):  # 이지 모드
         @staticmethod
         def update_difficulty(game):
-            play_time = (time.time() - game.start_time)  # 게임 진행 시간
+            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
             if (game.mob_gen_rate < 0.215):  # 최대값 제한
                 # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
                 game.mob_gen_rate = play_time//10/10 + 0.015
@@ -483,7 +483,7 @@ class InfiniteGame:
     class TimeMode(Mode):  # time 모드
         @staticmethod
         def update_difficulty(game):
-            play_time = (time.time() - game.start_time)  # 게임 진행 시간
+            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
             if (game.mob_gen_rate < 0.215):  # 최대값 제한
                 # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
                 game.mob_gen_rate = play_time//10/10 + 0.015
