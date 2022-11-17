@@ -24,7 +24,7 @@ from data.Defs import User
 from data.database_user import *
 from data.Stage import Stage
 import time
-from data.StoryManager import StoryManager
+from data.StoryManager import *
 
 
 class StageGame:
@@ -100,27 +100,26 @@ class StageGame:
         self.menu.add.image(self.infowindow_image, scale=Scales.default.value)
         infowindow = pygame.image.load(self.infowindow_image)
         infowindow = pygame.transform.scale(infowindow, self.size)
-        self.screen.blit(infowindow, [0, 0])
-        font = pygame.font.Font(Default.font.value, self.size[0]//21)
-        info_stage_test = font.render("stage {} ".format(
-            self.stage.stage), True, Color.WHITE.value)
-        info_score_text = font.render("목표점수는 {} 입니다. 보스를 처치하세요.".format(
-            self.goal_score), True, Color.WHITE.value)
-        self.screen.blit(
-            info_stage_test, (self.size[0]*0.35, self.size[1]*0.35))
-        self.screen.blit(
-            info_score_text, (self.size[0]*0.15, self.size[1]*0.45))
-        self.screen.blit(pygame.font.Font(None, 30).render(
-            "Loading...", True, (150, 150, 150), (0, 0, 0)), (400, 510))
+
+        self.screen.blit(infowindow, [0,0])
+        font = pygame.font.Font(Default.font.value, self.size[0]//25)
+        info_stage_test = font.render("stage {} ".format(self.stage.stage), True, Color.WHITE.value) 
+        info_score_text = font.render("보스 등장 점수는 {} 입니다. 보스를 처치하세요.".format(self.goal_score), True, Color.WHITE.value)
+        self.screen.blit(info_stage_test,(self.size[0]*0.35,self.size[1]*0.35)) 
+        self.screen.blit(info_score_text,(self.size[0]*0.15,self.size[1]*0.45))
+        self.screen.blit(pygame.font.Font(None, 30).render("Loading...", True, (150,150,150), (0,0,0)), (400, 510))
         pygame.display.flip()
-        time.sleep(3)  # 3초뒤에 스토리라인 전개.
-        ################################################################################################################################
-        StoryManager(self.storyInfo)
-        #####################################################################################################################
+        time.sleep(3) # 3초뒤에 스토리라인 전개.
+        
+        
+        self.size = StoryManager(self.storyInfo).get_currentSize()
+        
         self.main()
 
     def main(self):
-        print(" ch_vol ", Default.sound.value['sfx']['volume'])
+        
+        print(" ch_vol " ,Default.sound.value['sfx']['volume'])
+
         from menu.gameselectMenu import soundset
         # 메인 이벤트
         pygame.mixer.init()

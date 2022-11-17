@@ -90,15 +90,18 @@ class Character(Object):
         size = game.size
         # 캐릭터 사이즈/위치 초기화
         self.on_resize(game)
-        self.set_XY((size[0]/4-(self.sx/2), size[1]-self.sy))
+        self.set_XY((size[0]/2-(self.sx/2), size[1]//2))
         # 폭탄/발사체 관련 변수 초기화
         self.bomb_count = 0
         self.fire_count = Default.character.value["missile"]["min"]
         self.missiles_fired = []
+        self.gungs_fired = []
+        self.gung_count = 0
         # 발사속도, 폭탄 사용 간격, 충돌 후 무적기간 판단을 위해 시간 초기화
         self.last_fired = 0.0
         self.last_bomb = 0.0
         self.last_crashed = 0.0
+        self.last_gung = 0.0
         # 깜빡임 애니메이션 카운터 초기화
         self.blink_count = 0.0
         # 유도탄 발사 여부 초기화(발사체를 최대치 이상으로 증가시켰을 때 True)
@@ -106,30 +109,10 @@ class Character(Object):
         # 이동/발사 속도 초기화
         self.is_boosted = False
         self.velocity = self.org_velocity
+        self.is_gunged = False
         self.fire_interval = self.org_fire_interval
+        
 
-# pvp게임 시작 시 캐릭터 초기화를 위해 필수적으로 실행
-    def pvp_reinitialize2(self, game):
-        size = game.size
-        # 캐릭터 사이즈/위치 초기화
-        self.on_resize(game)
-        self.set_XY(((size[0]/4)*3-(self.sx/2), size[1]-self.sy))
-        # 폭탄/발사체 관련 변수 초기화
-        self.bomb_count = 0
-        self.fire_count = Default.character.value["missile"]["min"]
-        self.missiles_fired = []
-        # 발사속도, 폭탄 사용 간격, 충돌 후 무적기간 판단을 위해 시간 초기화
-        self.last_fired = 0.0
-        self.last_bomb = 0.0
-        self.last_crashed = 0.0
-        # 깜빡임 애니메이션 카운터 초기화
-        self.blink_count = 0.0
-        # 유도탄 발사 여부 초기화(발사체를 최대치 이상으로 증가시켰을 때 True)
-        self.auto_target = False
-        # 이동/발사 속도 초기화
-        self.is_boosted = False
-        self.velocity = self.org_velocity
-        self.fire_interval = self.org_fire_interval
 
     # 게임 실행 중 입력 키에 따라 캐릭터 이동, 발사 등의 액션을 수행
     def update(self, game):
@@ -226,7 +209,8 @@ class Character(Object):
                 self.is_gunged = False
 
 
-# pvp player1게임 실행 중 입력 키에 따라 캐릭터 이동, 발사 등의 액션을 수행
+
+# pvp player 1 게임 실행 중 입력 키에 따라 캐릭터 이동, 발사 등의 액션을 수행
 
 
     def pvp_update1(self, game):
@@ -236,81 +220,10 @@ class Character(Object):
         key_pressed = pygame.key.get_pressed()
         # 캐릭터 이동(방향키)
         # 캐릭터가 창 밖으로 이동할 수 없도록 boundary 값과 비교
-        if key_pressed[pygame.K_a]:
+        if key_pressed[pygame.K_LEFT]:
             self.x -= self.velocity
             if self.x < 0:
                 self.x = 0
-        if key_pressed[pygame.K_d]:
-            self.x += self.velocity
-            if self.x >= self.boundary[0]/2 - self.sx:
-                self.x = self.boundary[0]/2 - self.sx
-        if key_pressed[pygame.K_w]:
-            self.y -= self.velocity
-            if self.y < 0:
-                self.y = 0
-        if key_pressed[pygame.K_s]:
-            self.y += self.velocity
-            if self.y >= self.boundary[1] - self.sy:
-                self.y = self.boundary[1] - self.sy
-        if key_pressed[pygame.K_SPACE]:
-            if time.time() - self.last_fired > self.fire_interval:
-                self.shoot()
-                if self.auto_target:
-                    self.shoot_targeted(game)
-        '''if key_pressed[pygame.K_a]:
-            if self.bomb_count > 0:
-                if time.time() - self.last_bomb > Default.item.value["bomb"]["interval"]:
-                    self.use_bomb(game)
-                    self.bomb_count-=1'''
-        # 속도 증가 아이템을 얻고 일정 시간 이후 능력치를 다시 원래대로 초기화
-        if self.is_boosted == True:
-            if time.time() - self.boosted > Default.item.value["powerup"]["duration"]:
-                self.velocity = self.org_velocity
-                self.fire_interval = self.org_fire_interval
-                self.is_boosted = False
-        # 무적상태인 경우 깜빡임 효과 적용
-        if self.is_collidable == False:
-            time_passed = time.time() - self.last_crashed
-            self.blink_count += Default.animation.value["blink"]["speed"]
-            if game.life_player1 > 0:
-                if (self.blink_count >= Default.animation.value["blink"]["frame"]):
-                    if (self.is_transparent == False):
-                        self.img = self.img_trans
-                        self.blink_count = 0.0
-                        self.is_transparent = True
-                    else:
-                        self.img = self.img_copy
-                        self.blink_count = 0.0
-                        self.is_transparent = False
-                if time_passed > Default.character.value["invincible_period"]:
-                    self.is_collidable = True
-                    if (self.is_transparent):
-                        self.img = self.img_copy
-                        self.is_transparent = False
-        # 캐릭터 rect 위치 업데이트
-        self.update_rect((self.x, self.y))
-        # 화면 밖으로 나간 미사일 삭제
-        for missile in list(self.missiles_fired):
-            missile.update(game)
-            if missile.y < -missile.sy:
-                if missile in self.missiles_fired:
-                    self.missiles_fired.remove(missile)
-
-
-# pvp player 2 게임 실행 중 입력 키에 따라 캐릭터 이동, 발사 등의 액션을 수행
-
-
-    def pvp_update2(self, game):
-        if (game.size[0] != self.boundary[0]) or (game.size[1] != self.boundary[1]):
-            self.on_resize(game)
-        # 키 입력 감지
-        key_pressed = pygame.key.get_pressed()
-        # 캐릭터 이동(방향키)
-        # 캐릭터가 창 밖으로 이동할 수 없도록 boundary 값과 비교
-        if key_pressed[pygame.K_LEFT]:
-            self.x -= self.velocity
-            if self.x < self.boundary[0]/2:
-                self.x = self.boundary[0]/2
         if key_pressed[pygame.K_RIGHT]:
             self.x += self.velocity
             if self.x >= self.boundary[0] - self.sx:
@@ -321,43 +234,61 @@ class Character(Object):
                 self.y = 0
         if key_pressed[pygame.K_DOWN]:
             self.y += self.velocity
-            if self.y >= self.boundary[1] - self.sy:
-                self.y = self.boundary[1] - self.sy
-        if key_pressed[pygame.K_m]:
+            if self.y >= self.boundary[1] - self.sy*3:
+                self.y = self.boundary[1] - self.sy*3
+        if key_pressed[pygame.K_SPACE]:
             if time.time() - self.last_fired > self.fire_interval:
                 self.shoot()
                 if self.auto_target:
                     self.shoot_targeted(game)
-        '''if key_pressed[pygame.K_a]:
+        if key_pressed[pygame.K_a]: # 폭탄 이벤트
             if self.bomb_count > 0:
                 if time.time() - self.last_bomb > Default.item.value["bomb"]["interval"]:
                     self.use_bomb(game)
-                    self.bomb_count-=1'''
-        # 속도 증가 아이템을 얻고 일정 시간 이후 능력치를 다시 원래대로 초기화
-        if self.is_boosted == True:
-            if time.time() - self.boosted > Default.item.value["powerup"]["duration"]:
-                self.velocity = self.org_velocity
-                self.fire_interval = self.org_fire_interval
-                self.is_boosted = False
-        # 무적상태인 경우 깜빡임 효과 적용
-        if self.is_collidable == False:
-            time_passed = time.time() - self.last_crashed
-            self.blink_count += Default.animation.value["blink"]["speed"]
-            if game.life_player2 > 0:
-                if (self.blink_count >= Default.animation.value["blink"]["frame"]):
-                    if (self.is_transparent == False):
-                        self.img = self.img_trans
-                        self.blink_count = 0.0
-                        self.is_transparent = True
-                    else:
-                        self.img = self.img_copy
-                        self.blink_count = 0.0
-                        self.is_transparent = False
-                if time_passed > Default.character.value["invincible_period"]:
-                    self.is_collidable = True
-                    if (self.is_transparent):
-                        self.img = self.img_copy
-                        self.is_transparent = False
+                    self.bomb_count-=1
+        # 궁극기 실행 키
+        if key_pressed[pygame.K_s]:
+            if self.gung_count > 0:
+                if self.is_gunged == False:
+                    self.use_gung(game)
+                    self.gung_count -= 1
+        # 궁극기가 화면을 벗어나 is_gunged == False 될 때
+        if self.is_gunged == False:
+            self.gung_sfx.stop()
+            self.missile_img = self.org_missile_img
+        
+        # 궁극기가 화면 밖으로 나가면 궁극기 종료
+        for gung in list(self.gungs_fired):
+            gung.update(game)
+            if gung.y < -gung.sy:
+                self.is_gunged = False
+        
+
+        # # 속도 증가 아이템을 얻고 일정 시간 이후 능력치를 다시 원래대로 초기화
+        # if self.is_boosted == True:
+        #     if time.time() - self.boosted > Default.item.value["powerup"]["duration"]:
+        #         self.velocity = self.org_velocity
+        #         self.fire_interval = self.org_fire_interval
+        #         self.is_boosted = False
+        # # 무적상태인 경우 깜빡임 효과 적용
+        # if self.is_collidable == False:
+        #     time_passed = time.time() - self.last_crashed
+        #     self.blink_count += Default.animation.value["blink"]["speed"]
+        #     if game.life_player2 > 0:
+        #         if (self.blink_count >= Default.animation.value["blink"]["frame"]):
+        #             if (self.is_transparent == False):
+        #                 self.img = self.img_trans
+        #                 self.blink_count = 0.0
+        #                 self.is_transparent = True
+        #             else:
+        #                 self.img = self.img_copy
+        #                 self.blink_count = 0.0
+        #                 self.is_transparent = False
+        #         if time_passed > Default.character.value["invincible_period"]:
+        #             self.is_collidable = True
+        #             if (self.is_transparent):
+        #                 self.img = self.img_copy
+        #                 self.is_transparent = False
         # 캐릭터 rect 위치 업데이트
         self.update_rect((self.x, self.y))
         # 화면 밖으로 나간 미사일 삭제

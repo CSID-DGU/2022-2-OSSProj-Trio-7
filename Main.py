@@ -10,7 +10,7 @@ from data.Defs import *
 from data.Defs import User
 from menu.CharacterSelectMenu import *
 from menu.gameselectMenu import *
-from game.pvpGame import *
+from game.TutorialGame import *
 
 
 class Display:
@@ -103,7 +103,7 @@ class Login:
         self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button('   로그인   ', self.login_page)
         self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button(' 게임소개 ', self.pvp_page)
+        b3 = self.menu.add.button(' 게임소개 ', self.tutorial_page)
         self.menu.add.vertical_margin(10)
         b4 = self.menu.add.button('     종료     ', pygame_menu.events.EXIT)
 
@@ -216,10 +216,10 @@ class Login:
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  back  ', self.show_signup)
 
-    def pvp_page(self):  # 2인 플레이어
+    def tutorial_page(self):  # 2인 플레이어
         print(self.pvpcharacter_data[2].name)
-        pvpgame = pvp(self.pvpcharacter_data,
-                      self.pvpcharacter_data[0], self.pvpcharacter_data[1], self.mode)
+        pvpgame = tutorial(self.pvpcharacter_data,
+                      self.pvpcharacter_data[0], self.mode)
         pvpgame.pvp_info()
         '''while True:
             pvpgame.main()'''
