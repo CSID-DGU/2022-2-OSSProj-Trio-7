@@ -1,9 +1,11 @@
-import pygame, time
+import pygame
+import time
 from data.database_user import *
 
 
 class StoryManager():
     def __init__(self, stageinfo):
+        print("stageinfo", stageinfo)
         self.db = Database()
         self.mapinfo = stageinfo
         # 게임창 설정
@@ -19,11 +21,14 @@ class StoryManager():
         self.test_sound = pygame.mixer.Sound("./Sound/message.wav")
 
         # bg init
+
         bg_y = 0 # 배경이동을 위한 변수
         if self.mapinfo == "map1":
+
             bg = pygame.image.load("./Image/background/police_background.png")
-        elif self.mapinfo == "map2":
-            bg = pygame.image.load("./Image/background/firefighter_background.png")
+        elif self.mapinfo == "firefighter":
+            bg = pygame.image.load(
+                "./Image/background/firefighter_background.png")
         else:
             bg = pygame.image.load("./Image/background/doctor_background.png")
 
@@ -31,6 +36,7 @@ class StoryManager():
 
         # dialogue init
         font = pygame.font.SysFont("malgungothic", 20)
+
         self.texts1 = ["시민 : 도둑이 나타났다!!", '도둑 두목 : 날 잡을 수 있으면 잡아보시지!', '경찰 : 도둑을 어서 체포하자!', '경찰 : %s! 함께 현장으로 가자!'%(self.db.get_nickname())]
         self.texts2 = ["시민 : 불이야~! 불이났다!!", "거대한 불 : 모든 것을 태워버리겠다!", "소방관 : 어서 화재를 진압하자!", "소방관 : %s! 함께 현장으로 가자!"%(self.db.get_nickname())]
         self.texts3 = ["시민 : 의사선생님 몸이 너무 아파요!", "슈퍼 바이러스 : 날 치료할 수 있으면 해보시지!", "의사 : 어서 환자를 치료하자!", "의사 : %s! 함께 치료를 진행하자!"%(self.db.get_nickname())]
@@ -42,11 +48,12 @@ class StoryManager():
         else:
             text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts3]
         
+
         index = -1
         self.space_released = True
 
         while True:
-            
+
             clock.tick(60)
             
             # 화면 흰색으로 채우기
@@ -80,14 +87,15 @@ class StoryManager():
                         text_box = pygame.Rect(0, self.size[1]*0.80, self.size[0], 165)
             
             keys = pygame.key.get_pressed()
-            
+
             if keys[pygame.K_SPACE] and space_released:
                 space_released = False
-                index = (index + 1) #if (index + 1) != len(text_renders) else 0
-                self.test_sound.play() # 정의한 소리 한번 재생
+                # if (index + 1) != len(text_renders) else 0
+                index = (index + 1)
+                self.test_sound.play()  # 정의한 소리 한번 재생
             elif not keys[pygame.K_SPACE]:
                 space_released = True
-            
+
             if index != -1:
                 pygame.draw.rect(self.screen, (0, 0, 0, 0), text_box, 0)
                 if index == len(text_renders):
@@ -95,15 +103,19 @@ class StoryManager():
                     time.sleep(2)
                     return
                 else:
+
                     self.screen.blit(text_renders[index], (40, self.size[1]*0.85))
                     
                 
 
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-            
+
             pygame.display.update()
+
     def get_currentSize(self):
         return self.size
             
+
