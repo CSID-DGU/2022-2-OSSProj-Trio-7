@@ -36,14 +36,8 @@ class Database:
         curs.execute(sql, id)  # 입력받은 id 서버로 전송
         data = curs.fetchone()  # 입력받은 id와 일치하는 행 하나 선택
         curs.close()
-        # https://velog.io/@castleq90/bcrypt%EB%B9%84%ED%81%AC%EB%A6%BD%ED%8A%B8
         check_password = bcrypt.checkpw(input_password.encode(
             'utf-8'), data['user_password'].encode('utf-8'))
-        '''check_password=False
-        if(input_password == data['user_password'].encode('utf-8')):
-            check_password = True
-        print(input_password, "입력값") #이 방식을 사용할 경우, 껐다 키면 salt값이 변경되어 비밀번호가 틀렸다고 나옴'''
-        # print( data['user_password'].encode('utf-8'), "데이터베이스")
         return check_password
 
 
@@ -108,7 +102,19 @@ class Database:
         curs.close()
         check_char = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
         return check_char
-
+    '''
+    def show_doctorchar(self):  # 선택한 캐릭터 보여주는 함수
+        self.id = User.user_id
+        self.char = User.character
+        curs = self.dct_db.cursor()
+        # user_id와 user_character열만 선택
+        sql = "SELECT user_id,user_character FROM doctor_users2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        check_doctorchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        return check_doctorchar
+    '''
     def show_mycoin(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()

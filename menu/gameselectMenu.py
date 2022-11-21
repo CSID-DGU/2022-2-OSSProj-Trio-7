@@ -1,3 +1,4 @@
+
 from email.policy import default
 from pickle import TRUE
 from button import *
@@ -31,30 +32,6 @@ class GameselectMenu:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
 
-        '''
-        self.map1 = button(self.board_width, self.board_height,
-                           0.2, 0.4, 0.25, 0.35, "Image/background/police_background.png")
-        self.map2 = button(self.board_width, self.board_height,
-                           0.5, 0.4, 0.25, 0.35, "Image/background/firefighter_background.png")
-        self.map3 = button(self.board_width, self.board_height,
-                           0.8, 0.4, 0.25, 0.35, "Image/background/doctor_background.png")
-
-        self.level_map1 = button(self.board_width, self.board_height,
-                                 0.2, 0.65, 0.2, 0.05, "Image/catthema/level1.png")
-        self.level_map2 = button(self.board_width, self.board_height,
-                                 0.5, 0.65, 0.2, 0.05, "Image/catthema/level1.png")
-        self.level_map3 = button(self.board_width, self.board_height,
-                                 0.8, 0.65, 0.2, 0.05, "Image/catthema/level1.png")
-        
-        
-        self.mode_map1 = button(self.board_width, self.board_height,
-                                0.2, 0.65, 0.2, 0.05, "Image/catthema/EASY.png") # score로 바꾸기
-        self.mode_map2 = button(self.board_width, self.board_height,
-                                0.5, 0.65, 0.2, 0.05, "Image/catthema/EASY.png") # score로 바꾸기
-        self.mode_map3 = button(self.board_width, self.board_height,
-                                0.8, 0.65, 0.2, 0.05, "Image/catthema/EASY.png") # score로 바꾸기
-        '''
-
         self.rankpage = button(self.board_height, self.board_height,
                                0.766, 0.05, 0.1, 0.05, "Image/catthema/RANK.png")
         self.mypage = button(self.board_height, self.board_height,
@@ -80,14 +57,14 @@ class GameselectMenu:
 
         self.infiniteMode = button(self.board_width, self.board_height,
                                    0.7, 0.4, 0.35, 0.45, "Image/infiniteMode.png")
-        '''
-        self.buttonlist2 = [self.barcol, self.map1, self.map2, self.map3, self.mode_map1, self.mode_map2, self.mode_map3,
-                            self.rankpage, self.mypage, self.gamemode, self.store, self.setting, self.logout, self.help, self.logo]  # inf mode
-        '''
+       
         self.stage_level_button = button(self.board_width, self.board_height,
                                          0.3, 0.75, 0.35, 0.05, "Image/catthema/level1.png")
 
-        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.stage_level_button,
+        self.infinite_level_button = button(self.board_width, self.board_height,
+                                         0.7, 0.75, 0.35, 0.05, "Image/catthema/EASY.png") # 기준
+
+        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.stage_level_button, self.infinite_level_button,
                            self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
 
 
@@ -108,12 +85,15 @@ class GameselectMenu:
 
         self.stage_level = "1"
 
+        self.infinite_level = 'score'
+
         self.sound = "on"
        
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
 
         self.temp1 = self.stage_level_button.image
+        self.temp2 = self.infinite_level_button.image
 
         self.stage_data = StageDataManager.loadStageData()  # 스테이지 데이터
         self.character_data = CharacterDataManager.load()  # 캐릭터 데이터
@@ -154,6 +134,16 @@ class GameselectMenu:
                         self.stage_level_button.image = "Image/catthema/level1.png"
                 else:
                     self.stage_level_button.image = self.temp1
+                pygame.display.update()
+            
+            if event.type == pygame.MOUSEMOTION:  # 마우스모션
+                if self.infinite_level_button.isOver(pos):
+                    if self.infinite_level == "score":
+                        self.infinite_level_button.image = "Image/catthema/HARD.png" # 기준
+                    elif self.infinite_level == "time":
+                        self.infinite_level_button.image = "Image/catthema/EASY.png" # 기준
+                else:
+                    self.infinite_level_button.image = self.temp2
                 pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
@@ -208,6 +198,16 @@ class GameselectMenu:
                         self.stage_level = "1"  # 바뀐 레벨로 저장.
                 pygame.display.update()
 
+                if self.infinite_level_button.isOver(pos):
+                    if self.infinite_level == "score":
+                        self.temp2 = "Image/catthema/HARD.png"  # 이미지 바꾸기
+                        self.infinite_level = "time"  # 바뀐 레벨로 저장.
+
+                    elif self.infinite_level == "time":
+                        self.temp2 = "Image/catthema/EASY.png"  # 이미지 바꾸기
+                        self.infinite_level = "score"  # 바뀐 레벨로 저장.
+                pygame.display.update()
+
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     self.stage_map = InfiniteGame.ScoreMode()
@@ -215,6 +215,7 @@ class GameselectMenu:
                         import menu.FailPlay
                         menu.FailPlay.FailPlay(self.screen).show()
                     else:
+
                         '''                        
                         self.map1.image = "Image/catthema/map1.png"
                     pygame.display.update()
