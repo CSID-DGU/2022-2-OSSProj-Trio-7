@@ -8,7 +8,7 @@ import pygame_menu
 from data.database_user import *
 from data.Defs import *
 from data.Defs import User
-from menu.characterSelectMenu import CharacterSelect
+from menu.CharacterSelectMenu import CharacterSelect
 from menu.gameselectMenu import *
 from game.TutorialGame import *
 
@@ -103,7 +103,7 @@ class Login:
         self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button('   로그인   ', self.login_page)
         self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button(' 게임소개 ', self.tutorial_page)
+        b3 = self.menu.add.button(' 튜토리얼 ', self.tutorial_page)
         self.menu.add.vertical_margin(10)
         b4 = self.menu.add.button('     종료     ', pygame_menu.events.EXIT)
 
