@@ -8,7 +8,7 @@ import pygame_menu
 from data.database_user import *
 from data.Defs import *
 from data.Defs import User
-from menu.CharacterSelectMenu import *
+from menu.characterSelectMenu import CharacterSelect
 from menu.gameselectMenu import *
 from game.TutorialGame import *
 
@@ -203,7 +203,7 @@ class Login:
 
     def login_success(self):
         # Main(screen).show()
-        game = CharacterSelectMenu(self.screen)
+        game = CharacterSelect(self.screen)
 
         while True:
             game.show(self.screen)
@@ -219,7 +219,7 @@ class Login:
     def tutorial_page(self):  # 2인 플레이어
         print(self.pvpcharacter_data[2].name)
         pvpgame = tutorial(self.pvpcharacter_data,
-                      self.pvpcharacter_data[0], self.mode)
+                           self.pvpcharacter_data[0], self.mode)
         pvpgame.pvp_info()
         '''while True:
             pvpgame.main()'''

@@ -14,6 +14,7 @@ from data.Defs import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu import *
+
 from menu.HelpMenu import *
 
 global soundset
@@ -60,11 +61,14 @@ class GameselectMenu:
         self.mypage = button(self.board_height, self.board_height,
                              0.5, 0.05, 0.1, 0.05, "Image/catthema/MYPAGE.png")
         self.store = button(self.board_height, self.board_height,
-                            0.333, 0.05, 0.1, 0.05, "Image/catthema/STORE.png")
+                            0.2, 0.05, 0.1, 0.05, "Image/catthema/STORE.png")
         self.logout = button(self.board_height, self.board_height,
                              0.9, 0.05, 0.1, 0.05, "Image/catthema/logout.png")
         self.help = button(self.board_height, self.board_height,
                            0.633, 0.05, 0.1, 0.05, "Image/catthema/help.png")
+
+        self.returnpage = button(self.board_height, self.board_height,  # 직업 선택페이지로 되돌아가기
+                                 0.35, 0.05, 0.15, 0.05, "Image/menu/return.png")
 
         self.setting = button(self.board_height, self.board_height, 0.1,
                               0.05, 0.05, 0.05, "Image/catthema/on.png")  # sound on/off
@@ -87,9 +91,8 @@ class GameselectMenu:
         self.stage_level_button = button(self.board_width, self.board_height,
                                          0.3, 0.75, 0.35, 0.05, "Image/catthema/level1.png")
 
-        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.stage_level_button,
+        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.returnpage, self.stage_level_button,
                            self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
-
 
         self.attchar = ["./Image/policeCharacters/policeStage_monster.png",
                         "./Image/fireCharacters/FireStage_monster.png", "./Image/doctorCharacters/doctorStage_monster.png"]
@@ -109,7 +112,7 @@ class GameselectMenu:
         self.stage_level = "1"
 
         self.sound = "on"
-       
+
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
 
@@ -357,6 +360,14 @@ class GameselectMenu:
                 import Main
                 Main.Login(self.screen).show()
 
+            if self.returnpage.isOver(pos):  # 직업 선택 화면으로 되돌아가는 페이지
+                from menu.characterSelectMenu import CharacterSelect
+                game = CharacterSelect(self.screen)
+
+                while True:
+                    game.show(self.screen)
+                    pygame.display.flip()
+
             if self.setting.isOver(pos):
                 if self.sound == "on":
                     self.setting.image = "Image/catthema/off.png"
@@ -373,8 +384,8 @@ class GameselectMenu:
                     Default.sound.value['sfx']['volume'] = 0.1
                     self.character_data = CharacterDataManager.load()  # volume 적용
 
-
     # 화면 크기 조정 감지 및 비율 고정
+
     def check_resize(self, screen):
         if (self.size != screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size()  # 변경된 사이즈
