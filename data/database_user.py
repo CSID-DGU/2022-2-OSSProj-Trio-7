@@ -196,9 +196,9 @@ class Database:
         now = datetime.now()
 
         if mode == "time":  # time mode
-            sql = "UPDATE current_time_score SET time=%f, date=%s WHERE nickname=%s" # %f 
+            sql = "UPDATE current_time_score SET time=%s, date=%s, nickname = %s WHERE ID=%s"  
 
-        curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.nickname))
+        curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.nickname, self.id))
         self.dct_db.commit()
         curs.close()
 
@@ -223,7 +223,7 @@ class Database:
         curs = self.dct_db.cursor()
 
         if mode == "time":
-            sql = "SELECT time FROM current_time_score WHERE nickname=%s"
+            sql = "SELECT time FROM current_time_score WHERE ID=%s"
     
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -260,7 +260,7 @@ class Database:
 
     def rank_not_time_exists(self, input_id, mode):
         if mode == 'time':
-            sql = "SELECT * FROM current_time_score WHERE nickname=%s"
+            sql = "SELECT * FROM current_time_score WHERE ID=%s"
 
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         curs.execute(sql, input_id)
@@ -293,9 +293,9 @@ class Database:
         self.id = User.user_id
 
         if mode == "time":
-            sql = "INSERT INTO current_time_score(nickname, time, date) VALUES (%s,%s,%s)"
+            sql = "INSERT INTO current_time_score(ID,time, date,nickname) VALUES (%s,%s,%s,%s)"
 
-        curs.execute(sql, (self.nickname, new_time, now.strftime('%Y-%m-%d')))
+        curs.execute(sql, (self.id, new_time, now.strftime('%Y-%m-%d'),self.nickname))
         self.dct_db.commit()
         curs.close()
         print("suc")
