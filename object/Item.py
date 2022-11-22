@@ -134,7 +134,7 @@ class PowerUp(Item):
     def __init__(self, animation):
         super().__init__(animation.frames, animation.frames_trans, "powerup")
 
-    # 캐릭터와 충돌 시  바로 실행
+    # 캐릭터와 충돌 시  바로 실행 -> 무기 구입시 캐릭터의 기본 능력으로 설정
     def use(self, game):
         if self.is_collidable == True:
             self.sfx.play()
@@ -149,7 +149,7 @@ class PowerUp(Item):
 
 
 class SpeedUp(Item):
-    # 스피드업 아이템: 획득 시 캐릭터 이동/발사 속도 증가
+    # 스피드업 아이템: 획득 시 캐릭터 이동/발사 속도 증가 -> 무기 구입시 캐릭터의 기본 능력으로 설정
     def __init__(self, animation):
         super().__init__(animation.frames, animation.frames_trans, "speedup")
 
