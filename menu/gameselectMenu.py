@@ -69,7 +69,7 @@ class GameselectMenu:
         #                   self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
         
         self.mode_map1 = button(self.board_width, self.board_height, 
-                                0.7, 0.75, 0.35, 0.05, "Image/catthema/EASY.png")
+                                0.7, 0.75, 0.35, 0.05, "Image/catthema/SCORE.png")
         
         self.inf_mode_map1 = 0
         
@@ -196,14 +196,15 @@ class GameselectMenu:
                         self.stage_level = "1"  # 바뀐 레벨로 저장.
                 pygame.display.update()
 
-            if self.mode_map1.isOver(pos):
-                if self.inf_mode_map1 == 0 :
-                    self.inf_mode_map1 = 1
-                    self.mode_map1.image="Image/catthema/HARD.png"
-                else :
-                    self.inf_mode_map1 = 0
-                    self.mode_map1.image="Image/catthema/EASY.png"
-            pygame.display.update()
+            if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
+                if self.mode_map1.isOver(pos):
+                    if self.inf_mode_map1 == 0 :
+                        self.inf_mode_map1 = 1
+                        self.mode_map1.image="Image/catthema/TIME.png"
+                    else :
+                        self.inf_mode_map1 = 0
+                        self.mode_map1.image="Image/catthema/SCORE.png"
+                pygame.display.update()
             
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
