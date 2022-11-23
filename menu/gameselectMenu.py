@@ -65,21 +65,14 @@ class GameselectMenu:
        
         self.stage_level_button = button(self.board_width, self.board_height,
                                          0.3, 0.75, 0.35, 0.05, "Image/catthema/level1.png")
-
-        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.returnpage, self.stage_level_button,
-                           self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
-
-
-        #self.infinite_level_button = button(self.board_width, self.board_height,
-        #                                 0.7, 0.75, 0.35, 0.05, "Image/catthema/EASY.png") # 기준
-
-        #self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.stage_level_button, self.infinite_level_button,
-        #                   self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
         
         self.mode_map1 = button(self.board_width, self.board_height, 
                                 0.7, 0.75, 0.35, 0.05, "Image/catthema/SCORE.png")
         
         self.inf_mode_map1 = 0
+
+        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.returnpage,self.stage_level_button, self.mode_map1,
+                           self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
         
         self.attchar = ["./Image/policeCharacters/policeStage_monster.png",
                         "./Image/fireCharacters/FireStage_monster.png", "./Image/doctorCharacters/doctorStage_monster.png"]
