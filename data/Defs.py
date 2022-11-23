@@ -234,15 +234,37 @@ class Default(enum.Enum):
                 "./Image/catthema/item/item_heart.png"
             ]
         },
-        "coin": {
+        "100won": {
             "spawn_rate": 0.002,
             "frames": [
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png"
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png"
+            ]
+        },
+        "500won": {
+            "spawn_rate": 0.001,
+            "frames": [
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png"
+            ]
+        },
+        "1000won": {
+            "spawn_rate": 0.001,
+            "frames": [
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png"
             ]
         }
     }

@@ -199,11 +199,32 @@ class InfiniteGame:
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 기본값 0.002
-            if random.random() < Default.item.value["coin"]["spawn_rate"]:
-                if (Default.item.value["coin"]["spawn_rate"] < 0.3):
-                    Default.item.value["coin"]["spawn_rate"] += 0.0003
-                new_item = Coin(self.animation.animations["coin"])
+            # 100coin 기본값 0.002
+            if random.random() < Default.item.value["100won"]["spawn_rate"]:
+                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
+                    Default.item.value["100won"]["spawn_rate"] += 0.0003
+                new_item = Coin(
+                    self.animation.animations["Coin100WonAnim"], "100won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 500coin 기본값 0.001
+            if random.random() < Default.item.value["500won"]["spawn_rate"]:
+                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
+                    Default.item.value["500won"]["spawn_rate"] += 0.0003
+                new_item = Coin(
+                    self.animation.animations["Coin500WonAnim"], "500won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 1000coin 기본값 0.001
+            if random.random() < Default.item.value["1000won"]["spawn_rate"]:
+                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
+                    Default.item.value["1000won"]["spawn_rate"] += 0.0002
+                new_item = Coin(
+                    self.animation.animations["Coin1000WonAnim"], "1000won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
@@ -377,15 +398,17 @@ class InfiniteGame:
         print(self.user)
         print(current_score)
         if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
-            if self.database.rank_not_score_exists(self.user, "score") is True:  # 기록 없는 경우
+            # 기록 없는 경우
+            if self.database.rank_not_score_exists(self.user, "score") is True:
                 self.database.update_score2("score", current_score)  # 기록추가
                 print("enter")
             else:
                 if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
                     self.database.update_score(
                         'score', current_score)  # 새로운 점수가 더 높으면 기록
-        elif (isinstance(self.mode, InfiniteGame.TimeMode)):  
-            if self.database.rank_not_time_exists(self.user, "time") is True:  # 기록 없는 경우
+        elif (isinstance(self.mode, InfiniteGame.TimeMode)):
+            # 기록 없는 경우
+            if self.database.rank_not_time_exists(self.user, "time") is True:
                 self.database.update_time2("time", current_time)
             else:
                 if (self.database.high_time("time") <= current_time):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
