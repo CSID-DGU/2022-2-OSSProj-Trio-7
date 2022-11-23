@@ -101,24 +101,28 @@ class StageGame:
         infowindow = pygame.image.load(self.infowindow_image)
         infowindow = pygame.transform.scale(infowindow, self.size)
 
-        self.screen.blit(infowindow, [0,0])
+        self.screen.blit(infowindow, [0, 0])
         font = pygame.font.Font(Default.font.value, self.size[0]//25)
-        info_stage_test = font.render("stage {} ".format(self.stage.stage), True, Color.WHITE.value) 
-        info_score_text = font.render("보스 등장 점수는 {} 입니다. 보스를 처치하세요.".format(self.goal_score), True, Color.WHITE.value)
-        self.screen.blit(info_stage_test,(self.size[0]*0.35,self.size[1]*0.35)) 
-        self.screen.blit(info_score_text,(self.size[0]*0.15,self.size[1]*0.45))
-        self.screen.blit(pygame.font.Font(None, 30).render("Loading...", True, (150,150,150), (0,0,0)), (400, 510))
+        info_stage_test = font.render("stage {} ".format(
+            self.stage.stage), True, Color.WHITE.value)
+        info_score_text = font.render("보스 등장 점수는 {} 입니다. 보스를 처치하세요.".format(
+            self.goal_score), True, Color.WHITE.value)
+        self.screen.blit(
+            info_stage_test, (self.size[0]*0.35, self.size[1]*0.35))
+        self.screen.blit(
+            info_score_text, (self.size[0]*0.15, self.size[1]*0.45))
+        self.screen.blit(pygame.font.Font(None, 30).render(
+            "Loading...", True, (150, 150, 150), (0, 0, 0)), (400, 510))
         pygame.display.flip()
-        time.sleep(3) # 3초뒤에 스토리라인 전개.
-        
-        
+        time.sleep(3)  # 3초뒤에 스토리라인 전개.
+
         self.size = StoryManager(self.storyInfo).get_currentSize()
-        
+
         self.main()
 
     def main(self):
-        
-        print(" ch_vol " ,Default.sound.value['sfx']['volume'])
+
+        print(" ch_vol ", Default.sound.value['sfx']['volume'])
 
         from menu.gameselectMenu import soundset
         # 메인 이벤트
@@ -209,14 +213,38 @@ class StageGame:
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            if random.random() < Default.item.value["coin"]["spawn_rate"]:
-                new_item = Coin(self.animation.animations["coin"])
+            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+                new_item = SpeedUp(self.animation.animations["speedup"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-                new_item = SpeedUp(self.animation.animations["speedup"])
+            # 100coin 기본값 0.002
+            if random.random() < Default.item.value["100won"]["spawn_rate"]:
+                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
+                    Default.item.value["100won"]["spawn_rate"] += 0.0003
+                new_item = Coin(
+                    self.animation.animations["Coin100WonAnim"], "100won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 500coin 기본값 0.001
+            if random.random() < Default.item.value["500won"]["spawn_rate"]:
+                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
+                    Default.item.value["500won"]["spawn_rate"] += 0.0003
+                new_item = Coin(
+                    self.animation.animations["Coin500WonAnim"], "500won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 1000coin 기본값 0.001
+            if random.random() < Default.item.value["1000won"]["spawn_rate"]:
+                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
+                    Default.item.value["1000won"]["spawn_rate"] += 0.0002
+                new_item = Coin(
+                    self.animation.animations["Coin1000WonAnim"], "1000won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
