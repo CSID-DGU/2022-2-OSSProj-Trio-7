@@ -1,10 +1,10 @@
 from button import *
 import pygame
 import pygame_menu
-from menu.gameselectMenu import *
+from menu.gameselectMenu import GameselectMenu
 
 
-class CharacterSelectMenu:
+class CharacterSelect:
     def __init__(self, screen):
         self.size = screen.get_size()
         self.screen = screen
