@@ -36,14 +36,8 @@ class Database:
         curs.execute(sql, id)  # 입력받은 id 서버로 전송
         data = curs.fetchone()  # 입력받은 id와 일치하는 행 하나 선택
         curs.close()
-        # https://velog.io/@castleq90/bcrypt%EB%B9%84%ED%81%AC%EB%A6%BD%ED%8A%B8
         check_password = bcrypt.checkpw(input_password.encode(
             'utf-8'), data['user_password'].encode('utf-8'))
-        '''check_password=False
-        if(input_password == data['user_password'].encode('utf-8')):
-            check_password = True
-        print(input_password, "입력값") #이 방식을 사용할 경우, 껐다 키면 salt값이 변경되어 비밀번호가 틀렸다고 나옴'''
-        # print( data['user_password'].encode('utf-8'), "데이터베이스")
         return check_password
 
 
@@ -108,7 +102,19 @@ class Database:
         curs.close()
         check_char = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
         return check_char
-
+    '''
+    def show_doctorchar(self):  # 선택한 캐릭터 보여주는 함수
+        self.id = User.user_id
+        self.char = User.character
+        curs = self.dct_db.cursor()
+        # user_id와 user_character열만 선택
+        sql = "SELECT user_id,user_character FROM doctor_users2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        check_doctorchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        return check_doctorchar
+    '''
     def show_mycoin(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
@@ -177,9 +183,9 @@ class Database:
         now = datetime.now()
 
         if mode == "score":  # score mode
-            sql = "UPDATE current_score_score SET score=%s, date=%s WHERE nickname=%s"
+            sql = "UPDATE current_score_score SET score=%s, date=%s, nickname = %s WHERE ID=%s"
 
-        curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.nickname))
+        curs.execute(sql, (new_score, now.strftime('%Y-%m-%d'), self.nickname, self.id))
         self.dct_db.commit()
         curs.close()
 
@@ -190,9 +196,9 @@ class Database:
         now = datetime.now()
 
         if mode == "time":  # time mode
-            sql = "UPDATE current_time_score SET time=%f, date=%s WHERE nickname=%s" # %f 
+            sql = "UPDATE current_time_score SET time=%s, date=%s, nickname = %s WHERE ID=%s"  
 
-        curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.nickname))
+        curs.execute(sql, (new_time, now.strftime('%Y-%m-%d'), self.nickname, self.id))
         self.dct_db.commit()
         curs.close()
 
@@ -203,7 +209,7 @@ class Database:
         curs = self.dct_db.cursor()
 
         if mode == "score":
-            sql = "SELECT score FROM current_score_score WHERE nickname=%s"
+            sql = "SELECT score FROM current_score_score WHERE ID=%s"
 
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -217,7 +223,7 @@ class Database:
         curs = self.dct_db.cursor()
 
         if mode == "time":
-            sql = "SELECT time FROM current_time_score WHERE nickname=%s"
+            sql = "SELECT time FROM current_time_score WHERE ID=%s"
     
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -241,7 +247,7 @@ class Database:
     # 유저 랭킹 기록 있는지 확인.
     def rank_not_score_exists(self, input_id, mode):
         if mode == 'score':
-            sql = "SELECT * FROM current_score_score WHERE nickname=%s"
+            sql = "SELECT * FROM current_score_score WHERE ID=%s"
 
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         curs.execute(sql, input_id)
@@ -254,7 +260,7 @@ class Database:
 
     def rank_not_time_exists(self, input_id, mode):
         if mode == 'time':
-            sql = "SELECT * FROM current_time_score WHERE nickname=%s"
+            sql = "SELECT * FROM current_time_score WHERE ID=%s"
 
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         curs.execute(sql, input_id)
@@ -273,9 +279,9 @@ class Database:
         self.id = User.user_id
 
         if mode == "score":
-            sql = "INSERT INTO current_score_score(nickname, score, date) VALUES (%s,%s,%s)"
+            sql = "INSERT INTO current_score_score(ID, score, date, nickname ) VALUES (%s,%s,%s, %s)"
 
-        curs.execute(sql, (self.nickname, new_score, now.strftime('%Y-%m-%d')))
+        curs.execute(sql, (self.id, new_score, now.strftime('%Y-%m-%d'), self.nickname))
         self.dct_db.commit()
         curs.close()
         print("suc")
@@ -287,9 +293,9 @@ class Database:
         self.id = User.user_id
 
         if mode == "time":
-            sql = "INSERT INTO current_time_score(nickname, time, date) VALUES (%s,%s,%s)"
+            sql = "INSERT INTO current_time_score(ID,time, date,nickname) VALUES (%s,%s,%s,%s)"
 
-        curs.execute(sql, (self.nickname, new_time, now.strftime('%Y-%m-%d')))
+        curs.execute(sql, (self.id, new_time, now.strftime('%Y-%m-%d'),self.nickname))
         self.dct_db.commit()
         curs.close()
         print("suc")
