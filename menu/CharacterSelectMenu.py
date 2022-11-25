@@ -23,13 +23,12 @@ class CharacterSelect:
 
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            # 버튼 가독성 올리기 위해서 버튼 배경색 설정 : 노란색
-            widget_background_color=(255, 171, 0),
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(0, 0, 0),  # 선택됐을때 글씨색 설정 (white)
-            widget_font_color=(255, 255, 255),  # 기본 글씨색 설정 (black)
-            title_background_color=(255, 171, 0),
-            title_font_color=(255, 255, 255),
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
