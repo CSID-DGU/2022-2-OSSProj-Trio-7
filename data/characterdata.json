@@ -15,13 +15,27 @@
             "price": 0
         },
         {
-            "name": "doctor",
-            "img_path": "./Image/doctorCharacters/doctor.png",
+            "name": "police",
+            "img_path": "./Image/policeCharacters/policeOfficer.png",
             "velocity": 13,
-            "missile_img": "./Image/Weapon/pill.png",
+            "missile_img": "./Image/Weapon/handcuffs.png",
             "missile_size": {
-                "x": 40,
-                "y": 40
+                "x": 50,
+                "y": 50
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.7,
+            "price": 0
+        },
+        {
+            "name": "police",
+            "img_path": "./Image/policeCharacters/policeOfficer.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/handcuffs.png",
+            "missile_size": {
+                "x": 50,
+                "y": 50
             },
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
             "missile_power": 300,
@@ -41,6 +55,76 @@
             "missile_power": 300,
             "fire_interval": 0.5,
             "price": 100
+        },
+        {
+            "name": "firefighter",
+            "img_path": "./Image/fireCharacters/firefighter.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/waterCannon.png",
+            "missile_size": {
+                "x": 35,
+                "y": 55
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.5,
+            "price": 100
+        },
+        {
+            "name": "firefighter",
+            "img_path": "./Image/fireCharacters/firefighter.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/waterCannon.png",
+            "missile_size": {
+                "x": 35,
+                "y": 55
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.5,
+            "price": 100
+        },
+        {
+            "name": "doctor",
+            "img_path": "./Image/doctorCharacters/doctor.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/pill.png",
+            "missile_size": {
+                "x": 40,
+                "y": 40
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.7,
+            "price": 0
+        },
+        {
+            "name": "doctor",
+            "img_path": "./Image/doctorCharacters/doctor.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/pill.png",
+            "missile_size": {
+                "x": 40,
+                "y": 40
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.7,
+            "price": 0
+        },
+        {
+            "name": "doctor",
+            "img_path": "./Image/doctorCharacters/doctor.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/pill.png",
+            "missile_size": {
+                "x": 40,
+                "y": 40
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.7,
+            "price": 0
         },
         {
             "name": "Kongchi",

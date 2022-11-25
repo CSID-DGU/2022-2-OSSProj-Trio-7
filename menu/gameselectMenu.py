@@ -15,7 +15,7 @@ from data.Defs import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu import *
-
+from data.database_user import *
 from menu.HelpMenu import *
 
 global soundset
@@ -143,42 +143,57 @@ class GameselectMenu:
                 pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
-                self.check = Database().check_char_lock()
+                self.database = Database()
+                self.pcheck = Database().check_pchar_lock()
+                self.fcheck = Database().check_fchar_lock()
+                self.dcheck = Database().check_dchar_lock()
+
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    print(choosed_chracter)
                     if choosed_chracter == "police":  # 경찰관 맵
+                        print('show_pmychar')
+                        User.pcharacter = self.database.show_pmychar()
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
-                        if self.check:
+                        if self.pcheck:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map, "police").main_info()
+                                self.character_data, self.character_data[User.pcharacter], self.stage_map, "police").main_info()
                         pygame.display.update()
-
-                    elif choosed_chracter == "firefighter":  # 소방관 맵
+               
+                if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    if choosed_chracter == "firefighter":  # 경찰관 맵
+                        print('show_fmychar')
+                        User.fcharacter = self.database.show_fmychar()
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["burning house"][self.stage_level])
 
-                        if self.check:
+                        if self.fcheck:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map, "firefighter").main_info()
+                                self.character_data, self.character_data[User.fcharacter], self.stage_map, "firefighter").main_info()
                         pygame.display.update()
-                    else:  # 의사 맵
+
+                if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    if choosed_chracter == "doctor":  # 경찰관 맵
+                        print('show_dmychar')
+                        User.dcharacter = self.database.show_dmychar()
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["hospital"][self.stage_level])
 
-                        if self.check:
+                        if self.dcheck:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map, "doctor").main_info()
+                                self.character_data, self.character_data[User.dcharacter], self.stage_map, "doctor").main_info()
                         pygame.display.update()
+
 
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
@@ -212,13 +227,13 @@ class GameselectMenu:
                         menu.FailPlay.FailPlay(self.screen).show()
                     else: 
                         if choosed_chracter == "police":  # 경찰관 맵
-                            InfiniteGame(self.character_data[User.character], "police", self.stage_map,
+                            InfiniteGame(self.character_data[User.pcharacter], "police", self.stage_map,
                                          "Image/background/police_background.png", self.police_attackTarget[0], self.police_attackTarget[1], self.police_attackTarget[2], self.police_attackTarget[3]).main()
                         elif choosed_chracter == "firefighter":  # 소방관 맵
-                            InfiniteGame(self.character_data[User.character], "firefighter", self.stage_map,
+                            InfiniteGame(self.character_data[User.fcharacter], "firefighter", self.stage_map,
                                          "Image/background/firefighter_background.png", self.firefighter_attackTarget[0], self.firefighter_attackTarget[1], self.firefighter_attackTarget[2], self.firefighter_attackTarget[3]).main()
                         else:  # 의사 맵
-                            InfiniteGame(self.character_data[User.character], "doctor", self.stage_map,
+                            InfiniteGame(self.character_data[User.dcharacter], "doctor", self.stage_map,
                                          "Image/background/doctor_background.png", self.doctor_attackTarget[0], self.doctor_attackTarget[1], self.doctor_attackTarget[2], self.doctor_attackTarget[3]).main()
                 pygame.display.update()
 
@@ -239,7 +254,7 @@ class GameselectMenu:
                 Main.Login(self.screen).show()
 
             if self.returnpage.isOver(pos):  # 직업 선택 화면으로 되돌아가는 페이지
-                from menu.characterSelectMenu import CharacterSelect
+                from menu.CharacterSelectMenu import CharacterSelect
                 game = CharacterSelect(self.screen)
 
                 while True:

@@ -129,9 +129,8 @@ class Login:
                     print(self.id)
                     User.user_id = self.id
                     User.user_nickname = self.nickname
-                    User.character = self.database.show_mychar()
                     User.coin = self.database.show_mycoin()
-                    Database().char_lock()
+                    # Database().dchar_lock()
                     self.login_success()
 
                 else:
@@ -204,7 +203,7 @@ class Login:
     def login_success(self):
         # Main(screen).show()
         game = CharacterSelect(self.screen)
-
+    
         while True:
             game.show(self.screen)
             pygame.display.flip()
@@ -221,10 +220,6 @@ class Login:
         pvpgame = tutorial(self.pvpcharacter_data,
                            self.pvpcharacter_data[0], self.mode)
         pvpgame.pvp_info()
-        '''while True:
-            pvpgame.main()'''
-
-        #self.menu.add.button('  back  ', self.first_page)
 
     def main(self):
         while True:
