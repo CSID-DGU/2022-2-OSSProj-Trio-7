@@ -69,8 +69,9 @@ class Login:
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.1)
 
+        # 상단바
         self.menu = pygame_menu.Menu(
-            '직업 슈팅 게임', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+            '', self.size[0], self.size[1], theme=self.mytheme)
         self.first_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 

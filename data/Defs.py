@@ -18,7 +18,7 @@ class User:
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
-    login = "./Image/Login.png"
+    login = "./Image/main.png"
     main = "./Image/main.png"
     characterSelect = "./Image/characterSelect_background.png"
     start = "./Image/StartImage.png"
@@ -58,7 +58,7 @@ class Images(enum.Enum):
     info_stage_5 = "./Image/Info_stage_5.png"
     info_stage_6 = "./Image/Info_stage_6.png"
     info_items = "./Image/Info_items.png"
-    info_controls = "./Image/Info_controls.jpg"
+    info_controls = "./Image/Info_controls.png"
 
     cat1 = "./Image/catthema/cat1_front.png"
     cat2 = "./Image/catthema/cat2_front.png"
