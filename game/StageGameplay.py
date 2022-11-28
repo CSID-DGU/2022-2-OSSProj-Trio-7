@@ -195,26 +195,20 @@ class StageGame:
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
 
-            if random.random() < Default.item.value["powerup"]["spawn_rate"]:
-                new_item = PowerUp(self.animation.animations["powerup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
-
+            # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
+                if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0001
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
+                if (Default.item.value["health"]["spawn_rate"] < 0.3):
+                    Default.item.value["health"]["spawn_rate"] += 0.0001
                 new_item = Health(self.animation.animations["health"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
-
-            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-                new_item = SpeedUp(self.animation.animations["speedup"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
@@ -222,7 +216,7 @@ class StageGame:
             # 100coin 기본값 0.002
             if random.random() < Default.item.value["100won"]["spawn_rate"]:
                 if (Default.item.value["100won"]["spawn_rate"] < 0.3):
-                    Default.item.value["100won"]["spawn_rate"] += 0.0003
+                    Default.item.value["100won"]["spawn_rate"] += 0.0001
                 new_item = Coin(
                     self.animation.animations["Coin100WonAnim"], "100won")
                 new_item.set_XY(
@@ -232,19 +226,28 @@ class StageGame:
             # 500coin 기본값 0.001
             if random.random() < Default.item.value["500won"]["spawn_rate"]:
                 if (Default.item.value["500won"]["spawn_rate"] < 0.3):
-                    Default.item.value["500won"]["spawn_rate"] += 0.0003
+                    Default.item.value["500won"]["spawn_rate"] += 0.0001
                 new_item = Coin(
                     self.animation.animations["Coin500WonAnim"], "500won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 1000coin 기본값 0.001
+            # 1000coin 기본값 0.0005
             if random.random() < Default.item.value["1000won"]["spawn_rate"]:
                 if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
-                    Default.item.value["1000won"]["spawn_rate"] += 0.0002
+                    Default.item.value["1000won"]["spawn_rate"] += 0.0001
                 new_item = Coin(
                     self.animation.animations["Coin1000WonAnim"], "1000won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 기본값 0.002
+            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+                if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
+                    Default.item.value["speedup"]["spawn_rate"] += 0.0001
+                new_item = SpeedUp(self.animation.animations["speedup"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
