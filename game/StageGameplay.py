@@ -83,7 +83,7 @@ class StageGame:
         self.board_height = self.changed_screen_size[1]  # y
         import button
         self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/catthema/stop.png")
+            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
 
         # 4-1. 보스 스테이지를 위한 변수 초기화
         self.is_boss_stage = stage.is_boss_stage
