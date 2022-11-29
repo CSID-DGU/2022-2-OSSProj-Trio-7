@@ -138,6 +138,7 @@ class Database:
         data = curs.fetchone()
         curs.close()
         check_fchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        print(check_fchar)
         return check_fchar
     
     def show_dmychar(self):  # 선택한 캐릭터 보여주는 함수

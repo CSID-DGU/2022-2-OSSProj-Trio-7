@@ -19,6 +19,9 @@ class User:
     time_score = 0.0
     cat_lock = [False, False, False]
 
+    police_lock = [True, True, True]
+    firefighter_lock = [True, True, True]
+    doctor_lock = [True, True, True]
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
@@ -68,6 +71,14 @@ class Images(enum.Enum):
     cat2 = "./Image/catthema/cat2_front.png"
     cat3 = "./Image/catthema/cat3_front.png"
     cat4 = "./Image/catthema/cat4_front.png"
+
+    police1 = "./Image/policeCharacters/policeOfficer.png"
+    
+    firefighter1 = "./Image/fireCharacters/firefighter.png"
+
+    doctor1 = "./Image/doctorCharacters/doctor.png"
+
+
 
     win = "./Image/catthema/win.png"
     lose = "./Image/catthema/lose.png"
