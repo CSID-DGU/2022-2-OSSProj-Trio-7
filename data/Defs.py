@@ -30,7 +30,7 @@ class Images(enum.Enum):
     enemy_cactus = "./Image/Catus.png"
     missile_missile2 = "./Image/MISSILE_2.png"
     weapon_target_missile = "./Image/Weapon/spaceMissiles_012.png"
-
+    pausedInfo = "./Image/thema/pauseInfo.png"
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
