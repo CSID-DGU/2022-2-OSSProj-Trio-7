@@ -76,6 +76,7 @@ class Images(enum.Enum):
     failbuy_cat3 = "./Image/catthema/failbuy_cat3.png"
     failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
 
+    JobInfo = "./Image/JobInfo.png"
 
 class Scales(enum.Enum):
     large = (2, 2)
