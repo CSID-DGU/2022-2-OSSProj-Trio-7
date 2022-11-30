@@ -16,13 +16,17 @@ from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu import *
-
+from data.database_user import *
 from menu.HelpMenu import *
+from menu.Mypage_p import *
+from menu.Mypage_f import *
+from menu.Mypage_d import *
+
 
 global soundset
 soundset = 0.1
 
-global choosed_chracter  # 사용자가 선택한 캐릭터
+global choosed_character  # 사용자가 선택한 캐릭터
 
 
 class GameselectMenu:
@@ -99,7 +103,6 @@ class GameselectMenu:
         self.inf_mode = 0
 
         self.temp1 = self.stage_level_button.image
-        #self.temp2 = self.infinite_level_button.image
 
         self.stage_data = StageDataManager.loadStageData()  # 스테이지 데이터
         self.character_data = CharacterDataManager.load()  # 캐릭터 데이터
@@ -110,7 +113,7 @@ class GameselectMenu:
     def show(self, screen, character):
         global soundset
         self.check_resize(screen)
-        choosed_chracter = character
+        choosed_character = character
 
         # if self.modestate == "stage":  # stage mode
 
@@ -133,73 +136,85 @@ class GameselectMenu:
             if event.type == pygame.MOUSEMOTION:  # 마우스모션
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
-                        self.stage_level_button.image = "Image/menu/level2.png"
+                        self.stage_level_button.image = "Image/thema/level2.png"
                     elif self.stage_level == "2":
-                        self.stage_level_button.image = "Image/menu/level3.png"
+                        self.stage_level_button.image = "Image/thema/level3.png"
                     elif self.stage_level == "3":
-                        self.stage_level_button.image = "Image/menu/level1.png"
+                        self.stage_level_button.image = "Image/thema/level1.png"
                 else:
                     self.stage_level_button.image = self.temp1
                 pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
-                self.check = Database().check_char_lock()
-                if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                    if choosed_chracter == "police":  # 경찰관 맵
-                        # 무기 선택 상점을 추가============================================================================================
-                        page = WeaponSelect(self.screen)
-                        while True:
-                            game.show(self.screen)
-                            pygame.display.flip()
+                self.database = Database()
+                self.pcheck = Database().check_pchar_lock()
+                self.fcheck = Database().check_fchar_lock()
+                self.dcheck = Database().check_dchar_lock()
 
+                if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+
+                    print(choosed_character)
+                    if choosed_character == "police":  # 경찰관 맵
+                        print('show_pmychar')
+                        User.pcharacter = self.database.show_pmychar()
+
+                   
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
-                        if self.check:
+                        if self.pcheck:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map, "police").main_info()
+                                self.character_data, self.character_data[User.pcharacter], self.stage_map, "police").main_info()
                         pygame.display.update()
-
-                    elif choosed_chracter == "firefighter":  # 소방관 맵
+               
+                if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    if choosed_character == "firefighter":  # 경찰관 맵
+                        print('show_fmychar')
+                        User.fcharacter = self.database.show_fmychar()
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["burning house"][self.stage_level])
 
-                        if self.check:
+                        if self.fcheck:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map, "firefighter").main_info()
+                                self.character_data, self.character_data[User.fcharacter], self.stage_map, "firefighter").main_info()
                         pygame.display.update()
-                    else:  # 의사 맵
+
+                if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    if choosed_character == "doctor":  # 경찰관 맵
+                        print('show_dmychar')
+                        User.dcharacter = self.database.show_dmychar()
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["hospital"][self.stage_level])
 
-                        if self.check:
+                        if self.dcheck:
                             import menu.FailPlay
                             menu.FailPlay.FailPlay(self.screen).show()
                         else:
                             StageGame(
-                                self.character_data, self.character_data[User.character], self.stage_map, "doctor").main_info()
+                                self.character_data, self.character_data[User.dcharacter], self.stage_map, "doctor").main_info()
                         pygame.display.update()
+
 
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
-                        self.temp1 = "Image/menu/level2.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/thema/level2.png"  # 이미지 바꾸기
                         self.stage_level = "2"  # 바뀐 레벨로 저장.
 
                     elif self.stage_level == "2":
-                        self.temp1 = "Image/menu/level3.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/thema/level3.png"  # 이미지 바꾸기
                         self.stage_level = "3"  # 바뀐 레벨로 저장.
 
                     elif self.stage_level == "3":
-                        self.temp1 = "Image/menu/level1.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/thema/level1.png"  # 이미지 바꾸기
                         self.stage_level = "1"  # 바뀐 레벨로 저장.
                 pygame.display.update()
-
+                
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.mode_map1.isOver(pos):
                     if self.inf_mode_map1 == 0:
@@ -210,21 +225,43 @@ class GameselectMenu:
                         self.mode_map1.image = "Image/catthema/SCORE.png"
                 pygame.display.update()
 
+
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-                    self.stage_map = self.mode[self.inf_mode_map1][1]
-                    if self.check:
+                    self.stage_map=self.mode[self.inf_mode_map1][1]
+                    User.pcharacter = self.database.show_pmychar()
+                    if self.pcheck:
                         import menu.FailPlay
                         menu.FailPlay.FailPlay(self.screen).show()
-                    else:
-                        if choosed_chracter == "police":  # 경찰관 맵
-                            InfiniteGame(self.character_data[User.character], "police", self.stage_map,
+                    else: 
+                        if choosed_character == "police":  # 경찰관 맵
+                            InfiniteGame(self.character_data[User.pcharacter], "police", self.stage_map,
                                          "Image/background/police_background.png", self.police_attackTarget[0], self.police_attackTarget[1], self.police_attackTarget[2], self.police_attackTarget[3]).main()
-                        elif choosed_chracter == "firefighter":  # 소방관 맵
-                            InfiniteGame(self.character_data[User.character], "firefighter", self.stage_map,
+                pygame.display.update()
+            
+
+                if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    self.stage_map=self.mode[self.inf_mode_map1][1]
+                    User.fcharacter = self.database.show_fmychar()
+                    if self.fcheck:
+                        import menu.FailPlay
+                        menu.FailPlay.FailPlay(self.screen).show()
+                    else: 
+                        if choosed_character == "firefighter":  # 소방관 맵
+                            InfiniteGame(self.character_data[User.fcharacter], "firefighter", self.stage_map,
                                          "Image/background/firefighter_background.png", self.firefighter_attackTarget[0], self.firefighter_attackTarget[1], self.firefighter_attackTarget[2], self.firefighter_attackTarget[3]).main()
-                        else:  # 의사 맵
-                            InfiniteGame(self.character_data[User.character], "doctor", self.stage_map,
+                pygame.display.update()
+
+           
+                if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+                    self.stage_map=self.mode[self.inf_mode_map1][1]
+                    User.dcharacter = self.database.show_dmychar() # 캐릭터 분류하는 필수 함수
+                    if self.dcheck:
+                        import menu.FailPlay
+                        menu.FailPlay.FailPlay(self.screen).show()
+                    else: 
+                        if choosed_character == "doctor":  # 소방관 맵
+                            InfiniteGame(self.character_data[User.dcharacter], "doctor", self.stage_map,
                                          "Image/background/doctor_background.png", self.doctor_attackTarget[0], self.doctor_attackTarget[1], self.doctor_attackTarget[2], self.doctor_attackTarget[3]).main()
                 pygame.display.update()
 

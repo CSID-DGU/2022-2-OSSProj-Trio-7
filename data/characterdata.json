@@ -19,6 +19,7 @@
             "img_path": "./Image/storeItems/police1.png",
             "velocity": 13,
             "missile_img": "./Image/Weapon/handcuffs.png",
+
             "missile_size": {
                 "x": 50,
                 "y": 50
@@ -26,6 +27,7 @@
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
             "missile_power": 300,
             "fire_interval": 0.7,
+
             "price": 8000
         },
         {
@@ -39,8 +41,8 @@
             },
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
             "missile_power": 300,
-            "fire_interval": 0.7,
-            "price": 8000
+            "fire_interval": 0.5,
+            "price": 0
         },
         {
             "name": "firefighter",
@@ -48,8 +50,22 @@
             "velocity": 13,
             "missile_img": "./Image/Weapon/waterCannon.png",
             "missile_size": {
-                "x": 35,
-                "y": 55
+                "x": 50,
+                "y": 50
+            },
+            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+            "missile_power": 300,
+            "fire_interval": 0.5,
+            "price": 100
+        },
+        {
+            "name": "firefighter",
+            "img_path": "./Image/fireCharacters/firefighter.png",
+            "velocity": 13,
+            "missile_img": "./Image/Weapon/waterCannon.png",
+            "missile_size": {
+                "x": 50,
+                "y": 50
             },
             "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
             "missile_power": 300,
