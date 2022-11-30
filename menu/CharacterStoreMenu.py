@@ -109,7 +109,7 @@ class CharacterStoreMenu:
         self.character_imgs2 = []
         self.price = []
         # =====================================================================================================
-        for idx in range(1,4): # 데이버 베이스 정보를 가져올 인덱스 설정
+        for idx in range(1,4): # 데이버 베이스 정보를 가져올 인덱스 설정(유저 id가 인덱스 0에 저장되어 있음)
             print("인덱스 설정")
             char = data[idx] # 해당 인덱스에 저장된 값 (-1 또는 보유시 5로 설정)
 
@@ -184,9 +184,10 @@ class CharacterStoreMenu:
     def buy_character(self, character_info):
         character = character_info
         if character =="firefighter":
+            print("소방관 구매")
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id,fchar1, fchar2, fchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            sql = "SELECT user_id, fchar1, fchar2, fchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
             curs.execute(sql,self.id) 
             data = curs.fetchone()  
             curs.close()
@@ -215,7 +216,7 @@ class CharacterStoreMenu:
             database.buy_char()
             User.coin = Database().show_mycoin()
             #self.show()
-            self.item_description_widget.set_title(title = "Unlocked" )
+            #self.item_description_widget.set_title(title = "Unlocked" )
 
         else:
             print("not enough money")

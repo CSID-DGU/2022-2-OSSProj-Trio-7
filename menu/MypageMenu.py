@@ -53,7 +53,9 @@ class Mypage:
         game=menu.gameselectMenu.GameselectMenu(self.screen)
 
         while True:
+
             game.show(self.screen, 'police')
+
             pygame.display.flip()
 
     #메뉴 구성하고 보이기

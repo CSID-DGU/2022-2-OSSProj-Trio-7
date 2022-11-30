@@ -24,6 +24,7 @@ class StoreDataManager:
                     data = json.loads(json_file.read())
                     if char_info=="fire":
                         for i in data["fire"]:
+                            print("캐릭터 : ", i)
                             characters.append(Character(**i))
                         json_file.close()
                         return characters
@@ -37,6 +38,7 @@ class StoreDataManager:
 
                     if char_info =="doctor":
                         for i in data["doctor"]:
+                            print("캐릭터 : ", i)
                             characters.append(Character(**i))
                         json_file.close()
                         return characters
