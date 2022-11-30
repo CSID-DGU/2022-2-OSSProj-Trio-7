@@ -86,7 +86,7 @@ class InfiniteGame:
         self.board_height = self.changed_screen_size[1]  # y
         import button
         self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/catthema/stop.png")
+            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
 
     def main(self):
         from menu.gameselectMenu import soundset
@@ -184,7 +184,7 @@ class InfiniteGame:
             # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
                 if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
-                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0001
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -193,17 +193,39 @@ class InfiniteGame:
             # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
                 if (Default.item.value["health"]["spawn_rate"] < 0.3):
-                    Default.item.value["health"]["spawn_rate"] += 0.0003
+                    Default.item.value["health"]["spawn_rate"] += 0.0001
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 기본값 0.002
-            if random.random() < Default.item.value["coin"]["spawn_rate"]:
-                if (Default.item.value["coin"]["spawn_rate"] < 0.3):
-                    Default.item.value["coin"]["spawn_rate"] += 0.0003
-                new_item = Coin(self.animation.animations["coin"])
+            # 100coin 기본값 0.003
+            if random.random() < Default.item.value["100won"]["spawn_rate"]:
+                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
+                    Default.item.value["100won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin100WonAnim"], "100won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 500coin 기본값 0.002
+            if random.random() < Default.item.value["500won"]["spawn_rate"]:
+                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
+                    Default.item.value["500won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin500WonAnim"], "500won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 1000coin 기본값 0.001
+            if random.random() < Default.item.value["1000won"]["spawn_rate"]:
+                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
+                    Default.item.value["1000won"]["spawn_rate"] += 0.0001
+
+                new_item = Coin(
+                    self.animation.animations["Coin1000WonAnim"], "1000won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
@@ -377,15 +399,17 @@ class InfiniteGame:
         print(self.user)
         print(current_score)
         if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
-            if self.database.rank_not_score_exists(self.user, "score") is True:  # 기록 없는 경우
+            # 기록 없는 경우
+            if self.database.rank_not_score_exists(self.user, "score") is True:
                 self.database.update_score2("score", current_score)  # 기록추가
                 print("enter")
             else:
                 if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
                     self.database.update_score(
                         'score', current_score)  # 새로운 점수가 더 높으면 기록
-        elif (isinstance(self.mode, InfiniteGame.TimeMode)):  
-            if self.database.rank_not_time_exists(self.user, "time") is True:  # 기록 없는 경우
+        elif (isinstance(self.mode, InfiniteGame.TimeMode)):
+            # 기록 없는 경우
+            if self.database.rank_not_time_exists(self.user, "time") is True:
                 self.database.update_time2("time", current_time)
             else:
                 if (self.database.high_time("time") <= current_time):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
@@ -414,19 +438,20 @@ class InfiniteGame:
     def StopGame(self):
         pygame.mixer.music.pause()
         stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+        self.orange_color = (253, 111, 34)
         stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
         stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Paused', self.size[0], self.size[1],
+        stageclear_theme.title_font_color = (255, 255, 255, 0)
+        stageclear_theme.background_color = (0, 10, 63)
+        stageclear_theme.title_background_color = (255, 171, 0, 0)
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
                                      theme=stageclear_theme)
-        self.menu.add.image(Images.win.value, scale=self.scale)
+        self.menu.add.image(Images.pausedInfo.value, scale=self.scale)
         self.menu.add.label("")
-        self.menu.add.label(
-            'Paused', font_size=self.screen.get_size()[0]*40//720)
-        self.menu.add.button('Continue', self.Continue,
-                             self.menu, font_size=self.font_size)
-        self.menu.add.button("Restart", self.retry, font_size=self.font_size)
-        self.menu.add.button("Home", self.gameselectmenu,
+        self.menu.add.button('Continue', self.Continue, 
+                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button("Restart", self.retry,selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button("Home", self.gameselectmenu, selection_color=self.orange_color,
                              font_size=self.font_size,)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 

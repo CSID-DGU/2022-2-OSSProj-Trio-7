@@ -18,7 +18,7 @@ class User:
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
-    login = "./Image/Login.png"
+    login = "./Image/main.png"
     main = "./Image/main.png"
     characterSelect = "./Image/characterSelect_background.png"
     weaponback = "./Image/weaponSelect/wbackground.png"
@@ -31,7 +31,7 @@ class Images(enum.Enum):
     enemy_cactus = "./Image/Catus.png"
     missile_missile2 = "./Image/MISSILE_2.png"
     weapon_target_missile = "./Image/Weapon/spaceMissiles_012.png"
-
+    pausedInfo = "./Image/thema/pauseInfo.png"
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
@@ -59,7 +59,7 @@ class Images(enum.Enum):
     info_stage_5 = "./Image/Info_stage_5.png"
     info_stage_6 = "./Image/Info_stage_6.png"
     info_items = "./Image/Info_items.png"
-    info_controls = "./Image/Info_controls.jpg"
+    info_controls = "./Image/Info_controls.png"
 
     cat1 = "./Image/catthema/cat1_front.png"
     cat2 = "./Image/catthema/cat2_front.png"
@@ -94,6 +94,7 @@ class Images(enum.Enum):
     fire_w1 = "./Image/storeItems/fire_hose.png"
     fire_w2 = "./Image/storeItems/fire_extinguisher.png"
 
+    JobInfo = "./Image/JobInfo.png"
 
 
 class Scales(enum.Enum):
@@ -253,15 +254,37 @@ class Default(enum.Enum):
                 "./Image/catthema/item/item_heart.png"
             ]
         },
-        "coin": {
+        "100won": {
             "spawn_rate": 0.002,
             "frames": [
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png"
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png"
+            ]
+        },
+        "500won": {
+            "spawn_rate": 0.001,
+            "frames": [
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png"
+            ]
+        },
+        "1000won": {
+            "spawn_rate": 0.0005,
+            "frames": [
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png"
             ]
         }
     }

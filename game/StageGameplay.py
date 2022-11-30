@@ -83,7 +83,7 @@ class StageGame:
         self.board_height = self.changed_screen_size[1]  # y
         import button
         self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/catthema/stop.png")
+            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
 
         # 4-1. 보스 스테이지를 위한 변수 초기화
         self.is_boss_stage = stage.is_boss_stage
@@ -101,24 +101,28 @@ class StageGame:
         infowindow = pygame.image.load(self.infowindow_image)
         infowindow = pygame.transform.scale(infowindow, self.size)
 
-        self.screen.blit(infowindow, [0,0])
+        self.screen.blit(infowindow, [0, 0])
         font = pygame.font.Font(Default.font.value, self.size[0]//25)
-        info_stage_test = font.render("stage {} ".format(self.stage.stage), True, Color.WHITE.value) 
-        info_score_text = font.render("보스 등장 점수는 {} 입니다. 보스를 처치하세요.".format(self.goal_score), True, Color.WHITE.value)
-        self.screen.blit(info_stage_test,(self.size[0]*0.35,self.size[1]*0.35)) 
-        self.screen.blit(info_score_text,(self.size[0]*0.15,self.size[1]*0.45))
-        self.screen.blit(pygame.font.Font(None, 30).render("Loading...", True, (150,150,150), (0,0,0)), (400, 510))
+        info_stage_test = font.render("stage {} ".format(
+            self.stage.stage), True, Color.WHITE.value)
+        info_score_text = font.render("보스 등장 점수는 {} 입니다. 보스를 처치하세요.".format(
+            self.goal_score), True, Color.WHITE.value)
+        self.screen.blit(
+            info_stage_test, (self.size[0]*0.35, self.size[1]*0.35))
+        self.screen.blit(
+            info_score_text, (self.size[0]*0.15, self.size[1]*0.45))
+        self.screen.blit(pygame.font.Font(None, 30).render(
+            "Loading...", True, (150, 150, 150), (0, 0, 0)), (400, 510))
         pygame.display.flip()
-        time.sleep(3) # 3초뒤에 스토리라인 전개.
-        
-        
+        time.sleep(3)  # 3초뒤에 스토리라인 전개.
+
         self.size = StoryManager(self.storyInfo).get_currentSize()
-        
+
         self.main()
 
     def main(self):
-        
-        print(" ch_vol " ,Default.sound.value['sfx']['volume'])
+
+        print(" ch_vol ", Default.sound.value['sfx']['volume'])
 
         from menu.gameselectMenu import soundset
         # 메인 이벤트
@@ -191,35 +195,64 @@ class StageGame:
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
 
-            # if random.random() < Default.item.value["powerup"]["spawn_rate"]:
-            #     new_item = PowerUp(self.animation.animations["powerup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
 
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
+                if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0001
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
+            # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
+                if (Default.item.value["health"]["spawn_rate"] < 0.3):
+                    Default.item.value["health"]["spawn_rate"] += 0.0001
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            if random.random() < Default.item.value["coin"]["spawn_rate"]:
-                new_item = Coin(self.animation.animations["coin"])
+            # 100coin 기본값 0.002
+            if random.random() < Default.item.value["100won"]["spawn_rate"]:
+                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
+                    Default.item.value["100won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin100WonAnim"], "100won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-            #     new_item = SpeedUp(self.animation.animations["speedup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
+
+            # 500coin 기본값 0.001
+            if random.random() < Default.item.value["500won"]["spawn_rate"]:
+                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
+                    Default.item.value["500won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin500WonAnim"], "500won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 1000coin 기본값 0.0005
+            if random.random() < Default.item.value["1000won"]["spawn_rate"]:
+                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
+                    Default.item.value["1000won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin1000WonAnim"], "1000won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 기본값 0.002
+            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+                if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
+                    Default.item.value["speedup"]["spawn_rate"] += 0.0001
+                new_item = SpeedUp(self.animation.animations["speedup"])
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -458,25 +491,27 @@ class StageGame:
         #self.database = Database()
         # self.database.set_coin()
 
-# 일시정지 화면
+    # 일시정지 화면
     def StopGame(self):
         pygame.mixer.music.pause()
         stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+        self.orange_color = (253, 111, 34)
         stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
         stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Paused', self.size[0], self.size[1],
+        stageclear_theme.title_font_color = (255, 255, 255, 0)
+        stageclear_theme.background_color = (0, 10, 63)
+        stageclear_theme.title_background_color = (255, 171, 0, 0)
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
                                      theme=stageclear_theme)
-        self.menu.add.image(Images.win.value, scale=self.scale)
+        self.menu.add.image(Images.pausedInfo.value, scale=self.scale)
         self.menu.add.label("")
-        self.menu.add.label(
-            'Paused', font_size=self.screen.get_size()[0]*40//720)
-        self.menu.add.button('Continue', self.Continue,
-                             self.menu, font_size=self.font_size)
-        self.menu.add.button("Restart", self.retry, font_size=self.font_size)
-        self.menu.add.button("Home", self.gameselectmenu,
+        self.menu.add.button('Continue', self.Continue, 
+                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button("Restart", self.retry,selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button("Home", self.gameselectmenu, selection_color=self.orange_color,
                              font_size=self.font_size,)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
+
 
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
