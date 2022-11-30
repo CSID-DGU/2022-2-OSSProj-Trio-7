@@ -1,4 +1,3 @@
-
 from email.policy import default
 from pickle import TRUE
 from button import *
@@ -136,11 +135,11 @@ class GameselectMenu:
             if event.type == pygame.MOUSEMOTION:  # 마우스모션
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
-                        self.stage_level_button.image = "Image/menu/level2.png"
+                        self.stage_level_button.image = "Image/thema/level2.png"
                     elif self.stage_level == "2":
-                        self.stage_level_button.image = "Image/menu/level3.png"
+                        self.stage_level_button.image = "Image/thema/level3.png"
                     elif self.stage_level == "3":
-                        self.stage_level_button.image = "Image/menu/level1.png"
+                        self.stage_level_button.image = "Image/thema/level1.png"
                 else:
                     self.stage_level_button.image = self.temp1
                 pygame.display.update()
@@ -203,15 +202,15 @@ class GameselectMenu:
 
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
-                        self.temp1 = "Image/menu/level2.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/thema/level2.png"  # 이미지 바꾸기
                         self.stage_level = "2"  # 바뀐 레벨로 저장.
 
                     elif self.stage_level == "2":
-                        self.temp1 = "Image/menu/level3.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/thema/level3.png"  # 이미지 바꾸기
                         self.stage_level = "3"  # 바뀐 레벨로 저장.
 
                     elif self.stage_level == "3":
-                        self.temp1 = "Image/menu/level1.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/thema/level1.png"  # 이미지 바꾸기
                         self.stage_level = "1"  # 바뀐 레벨로 저장.
                 pygame.display.update()
                 
@@ -278,7 +277,8 @@ class GameselectMenu:
                 LeaderBoardMenu(self.screen).rank()
 
             if self.store.isOver(pos):
-                CharacterStoreMenu(self.screen).show()
+                
+                CharacterStoreMenu(self.screen, choosed_character).show()
 
             if self.help.isOver(pos):
                 HelpMenu(self.screen).show()
