@@ -258,7 +258,7 @@ class Default(enum.Enum):
             ]
         },
         "1000won": {
-            "spawn_rate": 0.001,
+            "spawn_rate": 0.0005,
             "frames": [
                 "./Image/Item/1000won.png",
                 "./Image/Item/1000won.png",
