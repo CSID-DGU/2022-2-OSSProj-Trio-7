@@ -78,7 +78,7 @@ class Mypage_f:
             data = curs.fetchone()  
             curs.close()
             self.character_data = CharacterDataManager.load()
-            front_image_path = [Images.firefighter1.value,Images.cat2.value, Images.cat3.value]
+            front_image_path = [Images.fire.value,Images.cat2.value, Images.cat3.value]
             self.fcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
             self.fcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
             for i in range(1,4):

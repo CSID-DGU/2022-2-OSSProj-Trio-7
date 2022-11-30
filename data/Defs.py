@@ -72,11 +72,11 @@ class Images(enum.Enum):
     cat3 = "./Image/catthema/cat3_front.png"
     cat4 = "./Image/catthema/cat4_front.png"
 
-    police1 = "./Image/policeCharacters/policeOfficer.png"
+    police = "./Image/policeCharacters/policeOfficer.png"
     
-    firefighter1 = "./Image/fireCharacters/firefighter.png"
+    fire = "./Image/fireCharacters/firefighter.png"
 
-    doctor1 = "./Image/doctorCharacters/doctor.png"
+    doctor = "./Image/doctorCharacters/doctor.png"
 
 
 
