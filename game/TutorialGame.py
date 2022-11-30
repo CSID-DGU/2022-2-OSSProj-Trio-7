@@ -25,9 +25,8 @@ from object.Object import Object
 from button import *
 
 from object.Character import *
-
 import time
-
+from Main import Login
 
 
 class tutorial:
@@ -60,7 +59,7 @@ class tutorial:
 
         self.goal_time = 120  # play 120초
         self.character1 = character1  # player1 character
-        
+
         self.score = 0  # player1 score
         # self.gung = 0
         # self.bomb = 0
@@ -86,10 +85,19 @@ class tutorial:
         # 방향키
 
         self.direction1 = {None: (0, 0), pygame.K_UP: (0, -2), pygame.K_DOWN: (0, 2),
-                            pygame.K_LEFT: (-2, 0), pygame.K_RIGHT: (2, 0)}
+                           pygame.K_LEFT: (-2, 0), pygame.K_RIGHT: (2, 0)}
         mytheme = pygame_menu.themes.THEME_ORANGE.copy()
         self.menu = pygame_menu.Menu('PVP.', self.size[0], self.size[1],
                                      theme=mytheme)
+
+        # 일시정지 버튼
+        self.changed_screen_size = self.screen.get_size()
+        self.board_width = self.changed_screen_size[0]  # x
+        self.board_height = self.changed_screen_size[1]  # y
+
+        import button
+        self.gotohome = button.button(
+            self.board_width, self.board_height, 0.9, 0.05, 0.2, 0.1, "Image/thema/gotohome.png")
 
     def main(self, screen):
         # 메인 이벤트
@@ -97,10 +105,12 @@ class tutorial:
         pygame.mixer.music.load(self.background_music)
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.1)
-        
+
+        pygame.display.flip()  # 그려왔던데 화면에 업데이트가 됨
+
         # 텍스트 렌더링 여부
-        box_render = False # 메시지 박스 여부
-        mission = False # 미션 클리어 여부
+        box_render = False  # 메시지 박스 여부
+        mission = False  # 미션 클리어 여부
         index = -1
 
         # 튜토리얼 초기화
@@ -110,11 +120,13 @@ class tutorial:
             '훌륭합니다. 이제 a키를 눌러 폭탄을 작동시켜 보세요.',
             '잘하셨습니다. s키를 눌러 궁극기를 사용하세요.',
             '훌륭합니다. 튜토리얼은 모두 완료하였습니다. 이제 게임을 플레이해보세요'
-            ]
+        ]
         self.test_sound = pygame.mixer.Sound("./Sound/message.wav")
-        font = pygame.font.SysFont("malgungothic", 15) 
-        text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts1]
-        text_box = pygame.Rect(0, self.size[1]*0.8, self.size[0], self.size[1]/3)
+        font = pygame.font.SysFont("malgungothic", 15)
+        text_renders = [font.render(text, True, (255, 255, 255))
+                        for text in self.texts1]
+        text_box = pygame.Rect(
+            0, self.size[1]*0.8, self.size[0], self.size[1]/3)
         # print(index)
 
         while self.SB == 0:
@@ -126,19 +138,23 @@ class tutorial:
 
             # pvp 모드를 위한 배경 분리
             background1 = pygame.image.load(self.background_image)
-            
+
             background1 = pygame.transform.scale(
-                background1, (self.size[0], self.size[1])) # 왼쪽
+                background1, (self.size[0], self.size[1]))  # 왼쪽
             # background2 = pygame.transform.scale(
             # background2, (self.size[0]/2, self.size[1])) # 오른쪽
             background1_width = background1.get_width()
             background1_height = background1.get_height()
-            
+
             background1_copy = background1.copy()
-            
 
             self.screen.blit(background1,  [0, 0])
             self.screen.blit(background1, [self.size[0], 0])
+
+            # 화면 사이즈 변경되면 버튼사이즈 바꿔줌.
+            self.gotohome.change(self.screen.get_size()[
+                0], self.screen.get_size()[1])
+            self.gotohome.draw(self.screen, (0, 0, 0))
 
             start_ticks = pygame.time.get_ticks()
 
@@ -162,23 +178,30 @@ class tutorial:
                         width = int(height * (10/13))
 
                     self.size = [width, height]  # 게임의 size 속성 변경
-                    self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)  # 창 크기 세팅
+                    self.screen = pygame.display.set_mode(
+                        self.size, pygame.RESIZABLE)  # 창 크기 세팅
                     # self.check_resize(screen)
                     # self.animation.on_resize(self)
-                    text_box = pygame.Rect(0, self.size[1]*0.8, self.size[0], self.size[1]/3)
+                    text_box = pygame.Rect(
+                        0, self.size[1]*0.8, self.size[0], self.size[1]/3)
                     if box_render:
-                        self.screen.blit(text_renders[index], (40, self.size[1]*0.85))
-            
-            # 몹을 확률적으로 발생시키기 -> 몹 하나가 화면에 가만히 있도록 
+                        self.screen.blit(
+                            text_renders[index], (40, self.size[1]*0.85))
+
+                pos = pygame.mouse.get_pos()  # mouse
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if self.gotohome.isOver(pos):  # 마우스로  버튼 클릭하면
+                        print("home 화면으로 돌아가기")
+                        Login(self.screen)
+
+            # 몹을 확률적으로 발생시키기 -> 몹 하나가 화면에 가만히 있도록
             if (random.random() < self.mob_gen_rate):
                 newMob = Mob(self.mob_image, {
                              "x": 50, "y": 50}, self.mob_velocity, 0)
                 # set mob location randomly
-                
-                
+
                 newMob.set_XY((self.size[0]//2, 0))
                 self.mobList.append(newMob)
-            
 
             # 몹 객체 이동
             # for mob in self.mobList:
@@ -191,22 +214,21 @@ class tutorial:
                 effect.move(self)
 
             # 튜토리얼 초기화
-            
-            
+
             keys = pygame.key.get_pressed()
 
-            # if index == len(text_renders)-1: 
+            # if index == len(text_renders)-1:
             #     print("튜토리얼이 종료됩니다.")
             #     time.sleep(2)
             #     return
 
-            if index ==-1 and keys[pygame.K_RETURN]:  
-                box_render = True # 텍스트 박스 렌더링
-                index+=1
+            if index == -1 and keys[pygame.K_RETURN]:
+                box_render = True  # 텍스트 박스 렌더링
+                index += 1
                 print(index)
                 print(box_render)
 
-            if (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]) and index == 0: # 방향키 미션일 경우
+            if (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]) and index == 0:  # 방향키 미션일 경우
                 self.test_sound.play()
                 box_render = True
                 index += 1
@@ -214,43 +236,43 @@ class tutorial:
 
             if keys[pygame.K_SPACE] and index == 1:
                 self.test_sound.play()
-                index+=1
+                index += 1
                 box_render = True
                 print("두 번째 미션 클리어!")
                 # 폭탄 개수 +=1
-                self.character1.bomb_count+=1
-            
+                self.character1.bomb_count += 1
+
             if keys[pygame.K_a] and index == 2:
                 self.test_sound.play()
-                index+=1
+                index += 1
                 box_render = True
                 print("세 번쨰 미션 클리어!")
                 # 궁극기 개수 +=1
-                self.character1.gung_count+=1
-            
+                self.character1.gung_count += 1
+
             if keys[pygame.K_s] and index == 3:
                 self.test_sound.play()
-                index+=1
+                index += 1
                 box_render = True
                 print("마지막 미션 클리어!")
 
-            if box_render==True: # 박스 렌더링이 true일 경우 화면에 텍스트 박스를 그림
-                pygame.draw.rect(self.screen, (0, 0, 0, 0), text_box, 0) 
-                self.screen.blit(text_renders[index], (self.size[0]*0.02, self.size[1]*0.85)) 
+            if box_render == True:  # 박스 렌더링이 true일 경우 화면에 텍스트 박스를 그림
+                pygame.draw.rect(self.screen, (0, 0, 0, 0), text_box, 0)
+                self.screen.blit(
+                    text_renders[index], (self.size[0]*0.02, self.size[1]*0.85))
                 if index == len(text_renders)-1 and keys[pygame.K_RETURN]:
                     print("튜토리얼이 종료됩니다.")
                     time.sleep(2)
                     return
 
-            if box_render==False :
-                pygame.init() # 화면을 초기화 해버림
+            if box_render == False:
+                pygame.init()  # 화면을 초기화 해버림
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-            #print("update")
-            #pygame.display.update() # 업데이트를 시킬 위치를 지정해야 함
-
+            # print("update")
+            # pygame.display.update() # 업데이트를 시킬 위치를 지정해야 함
 
             # 발사체와 몹 충돌 감지(player1)
             for missile in list(self.character1.get_missiles_fired()):
@@ -288,19 +310,18 @@ class tutorial:
                 if hasattr(i, "crosshair"):
                     if i.locked_on == True:
                         i.crosshair.show(self.screen)
-            
+
             # 궁극기 사용시 그리기
             for gung in self.character1.get_gung_fired():
                 gung.show(self.screen)
-
 
             # 점수와 목숨, 타이머 표시
             font = pygame.font.Font(Default.font.value, self.size[0]//40)
             play_time = time.gmtime(time.time() - self.startTime)
             timer = self.goal_time - play_time.tm_sec
-            time_score_life_text1 = font.render("시간 : {:} 궁극기 : {} 생명: {} 폭탄: {}".format(
-                timer, self.character1.gung_count, self.life_player1, self.character1.bomb_count), True, Color.YELLOW.value)  # 폰트가지고 랜더링 하는데 표시할 내용, True는 글자가 잘 안깨지게 하는 거임 걍 켜두기, 글자의 색깔
-            
+            time_score_life_text1 = font.render("궁극기 : {} 생명: {} 폭탄: {}".format(
+                self.character1.gung_count, self.life_player1, self.character1.bomb_count), True, Color.YELLOW.value)  # 폰트가지고 랜더링 하는데 표시할 내용, True는 글자가 잘 안깨지게 하는 거임 걍 켜두기, 글자의 색깔
+
             # 이미지화 한 텍스트라 이미지를 보여준다고 생각하면 됨
             self.screen.blit(time_score_life_text1, (10, 15))
 
@@ -315,17 +336,16 @@ class tutorial:
                     self.win1, (self.size[0], self.size[1]))
                 self.screen.fill(Color.BLACK.value)
                 self.screen.blit(self.win1,  [0, 0])
-            #print("update")
-            #pygame.display.update()
+            # print("update")
+            # pygame.display.update()
 
             self.character1.pvp_update1(self)
-            
 
             pygame.display.flip()
 
         pygame.mixer.music.stop()
         print("update")
-        #pygame.display.update()
+        # pygame.display.update()
 
 # 충돌 감지 함수
     def check_crash(self, o1, o2):
@@ -340,11 +360,11 @@ class tutorial:
         else:
             return False
 
-    def pvp_info(self):
+    def tutorial_info(self):
         self.check_resize(self.screen)
-        self.infopvp_img = "./Image/catthema/pvp_help.png" # 이미지 수정필요
-        self.menu.add.image(self.infopvp_img, scale=Scales.default.value)
-        infowindow = pygame.image.load(self.infopvp_img)
+        self.infotutorial_img = "./Image/tutorial_help.png"  # 이미지 수정필요
+        self.menu.add.image(self.infotutorial_img, scale=Scales.default.value)
+        infowindow = pygame.image.load(self.infotutorial_img)
         infowindow = pygame.transform.scale(infowindow, self.size)
         self.screen.blit(infowindow, [0, 0])
         pygame.display.flip()
