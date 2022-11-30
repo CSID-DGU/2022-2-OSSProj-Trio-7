@@ -12,6 +12,7 @@ from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
+from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu import *
@@ -37,47 +38,46 @@ class GameselectMenu:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
 
-
         self.rankpage = button(self.board_height, self.board_height,
-                               0.766, 0.05, 0.1, 0.05, "Image/catthema/RANK.png")
+                               0.75, 0.05, 0.15, 0.063, "Image/thema/RANK.png")
         self.mypage = button(self.board_height, self.board_height,
-                             0.5, 0.05, 0.1, 0.05, "Image/catthema/MYPAGE.png")
+                             0.15, 0.05, 0.15, 0.06, "Image/thema/MYPAGE.png")
         self.store = button(self.board_height, self.board_height,
-                            0.2, 0.05, 0.1, 0.05, "Image/catthema/STORE.png")
+                            0.3, 0.05, 0.15, 0.06, "Image/thema/STORE.png")
         self.logout = button(self.board_height, self.board_height,
-                             0.9, 0.05, 0.1, 0.05, "Image/catthema/logout.png")
+                             0.9, 0.05, 0.15, 0.06, "Image/thema/logout.png")
         self.help = button(self.board_height, self.board_height,
-                           0.633, 0.05, 0.1, 0.05, "Image/catthema/help.png")
+                           0.61, 0.05, 0.15, 0.06, "Image/thema/help.png")
 
         self.returnpage = button(self.board_height, self.board_height,  # 직업 선택페이지로 되돌아가기
-                                 0.35, 0.05, 0.15, 0.05, "Image/menu/return.png")
+                                 0.45, 0.05, 0.17, 0.065, "Image/thema/return.png")
 
-        self.setting = button(self.board_height, self.board_height, 0.1,
-                              0.05, 0.05, 0.05, "Image/catthema/on.png")  # sound on/off
+        self.setting = button(self.board_height, self.board_height, 0.05,
+                              0.05, 0.06, 0.06, "Image/thema/on.png")  # sound on/off
 
         self.barcol = button(self.board_height, self.board_height,
-                             0.5, 0.0, 1, 0.2, "Image/catthema/bar.png")
+                             0.5, 0.0, 1, 0.2, "Image/thema/bar.png")
 
         self.logo = button(self.board_height, self.board_height,
-                           0.5, 0.92, 0.5, 0.08, "Image/catthema/logo.png")
+                           0.5, 0.92, 0.4, 0.07, "Image/thema/logo.png")
 
         self.stageMode = button(self.board_width, self.board_height,
                                 0.3, 0.4, 0.35, 0.45, "Image/stageMode.png")
 
         self.infiniteMode = button(self.board_width, self.board_height,
                                    0.7, 0.4, 0.35, 0.45, "Image/infiniteMode.png")
-       
+
         self.stage_level_button = button(self.board_width, self.board_height,
-                                         0.3, 0.75, 0.35, 0.05, "Image/catthema/level1.png")
-        
-        self.mode_map1 = button(self.board_width, self.board_height, 
+                                         0.3, 0.75, 0.35, 0.05, "Image/thema/level1.png")
+
+        self.mode_map1 = button(self.board_width, self.board_height,
                                 0.7, 0.75, 0.35, 0.05, "Image/catthema/SCORE.png")
-        
+
         self.inf_mode_map1 = 0
 
-        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.returnpage,self.stage_level_button, self.mode_map1,
+        self.buttonlist = [self.barcol, self.stageMode, self.infiniteMode, self.returnpage, self.stage_level_button, self.mode_map1,
                            self.rankpage, self.mypage, self.store, self.setting, self.logout, self.help, self.logo]
-        
+
         self.attchar = ["./Image/policeCharacters/policeStage_monster.png",
                         "./Image/fireCharacters/FireStage_monster.png", "./Image/doctorCharacters/doctorStage_monster.png"]
 
@@ -99,7 +99,7 @@ class GameselectMenu:
 
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
-        
+
         self.inf_mode = 0
 
         self.temp1 = self.stage_level_button.image
@@ -136,11 +136,11 @@ class GameselectMenu:
             if event.type == pygame.MOUSEMOTION:  # 마우스모션
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
-                        self.stage_level_button.image = "Image/catthema/level2.png"
+                        self.stage_level_button.image = "Image/menu/level2.png"
                     elif self.stage_level == "2":
-                        self.stage_level_button.image = "Image/catthema/level3.png"
+                        self.stage_level_button.image = "Image/menu/level3.png"
                     elif self.stage_level == "3":
-                        self.stage_level_button.image = "Image/catthema/level1.png"
+                        self.stage_level_button.image = "Image/menu/level1.png"
                 else:
                     self.stage_level_button.image = self.temp1
                 pygame.display.update()
@@ -152,10 +152,13 @@ class GameselectMenu:
                 self.dcheck = Database().check_dchar_lock()
 
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
+
                     print(choosed_character)
                     if choosed_character == "police":  # 경찰관 맵
                         print('show_pmychar')
                         User.pcharacter = self.database.show_pmychar()
+
+                   
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
@@ -200,28 +203,28 @@ class GameselectMenu:
 
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
-                        self.temp1 = "Image/catthema/level2.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/menu/level2.png"  # 이미지 바꾸기
                         self.stage_level = "2"  # 바뀐 레벨로 저장.
 
                     elif self.stage_level == "2":
-                        self.temp1 = "Image/catthema/level3.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/menu/level3.png"  # 이미지 바꾸기
                         self.stage_level = "3"  # 바뀐 레벨로 저장.
 
                     elif self.stage_level == "3":
-                        self.temp1 = "Image/catthema/level1.png"  # 이미지 바꾸기
+                        self.temp1 = "Image/menu/level1.png"  # 이미지 바꾸기
                         self.stage_level = "1"  # 바뀐 레벨로 저장.
                 pygame.display.update()
                 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.mode_map1.isOver(pos):
-                    if self.inf_mode_map1 == 0 :
+                    if self.inf_mode_map1 == 0:
                         self.inf_mode_map1 = 1
-                        self.mode_map1.image="Image/catthema/TIME.png"
-                    else :
+                        self.mode_map1.image = "Image/catthema/TIME.png"
+                    else:
                         self.inf_mode_map1 = 0
-                        self.mode_map1.image="Image/catthema/SCORE.png"
+                        self.mode_map1.image = "Image/catthema/SCORE.png"
                 pygame.display.update()
-            
+
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
@@ -307,6 +310,7 @@ class GameselectMenu:
                     print(soundset)
                     Default.sound.value['sfx']['volume'] = 0.1
                     self.character_data = CharacterDataManager.load()  # volume 적용
+
 
     # 화면 크기 조정 감지 및 비율 고정
 

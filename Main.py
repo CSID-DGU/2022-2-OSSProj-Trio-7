@@ -42,13 +42,12 @@ class Login:
             image_path=Images.main.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            # 버튼 가독성 올리기 위해서 버튼 배경색 설정 : 노란색
-            widget_background_color=(255, 171, 0),
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(0, 0, 0),  # 선택됐을때 글씨색 설정 (white)
-            widget_font_color=(255, 255, 255),  # 기본 글씨색 설정 (black)
-            title_background_color=(255, 171, 0),
-            title_font_color=(255, 255, 255),
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -69,8 +68,9 @@ class Login:
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.1)
 
+        # 상단바
         self.menu = pygame_menu.Menu(
-            '직업 슈팅 게임', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+            '', self.size[0], self.size[1], theme=self.mytheme)
         self.first_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
@@ -110,16 +110,14 @@ class Login:
     def login_page(self):  # 로그인 페이지
         self.menu.clear()
         # login.mytheme.widget_background_color = (0,0,0,0) #투명 배경
-        self.menu.add.text_input('ID : ', maxchar=100, onchange=self.get_id)
+        self.menu.add.text_input('아이디 : ', maxchar=100, onchange=self.get_id)
         self.menu.add.text_input(
-            'PASSWORD : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
+            '비밀번호 : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
         self.menu.add.text_input(
-            'NICKNAME : ', maxchar=100, onchange=self.get_nickname)
-        b1 = self.menu.add.button('  Login  ', self.login)
-        b2 = self.menu.add.button('  Back  ', self.first_page)
-        b3 = self.menu.add.button('  Quit  ', pygame_menu.events.EXIT)
-
-        #mytheme.widget_background_color = (150, 213, 252)
+            '닉네임 : ', maxchar=100, onchange=self.get_nickname)
+        b1 = self.menu.add.button('  로그인  ', self.login)
+        b2 = self.menu.add.button('  이전 화면  ', self.first_page)
+        b3 = self.menu.add.button('  게임 종료  ', pygame_menu.events.EXIT)
 
     def login(self):
         if self.id:
@@ -148,16 +146,16 @@ class Login:
     def password_fail(self):
         self.menu.clear()
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("ID or Password Incorrect", selectable=False)
+        self.menu.add.label("아이디 혹은 비밀번호 불일치", selectable=False)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('  back  ', self.login_page)
+        self.menu.add.button('  이전 화면  ', self.login_page)
 
     def login_fail(self):
         self.menu.clear()
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("ID or Password Incorrect", selectable=False)
+        self.menu.add.label("아이디 혹은 비밀번호 불일치", selectable=False)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('  back  ', self.login_page)
+        self.menu.add.button('  이전 화면  ', self.login_page)
 
     # 아이디 input값으로 변경
 
@@ -189,19 +187,16 @@ class Login:
 
     def show_signup(self):
         self.menu.clear()
-        # mytheme.widget_background_color = (0,0,0,0) #투명 배경
-        # 현재의 문제점 : enter를 눌러야만 저장됨.
-        self.menu.add.text_input('ID : ', maxchar=15, onreturn=self.save_id)
+        self.menu.add.text_input('아이디 : ', maxchar=15, onreturn=self.save_id)
         self.menu.add.text_input(
-            'PASSWORD : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
+            '비밀번호 : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
         self.menu.add.text_input(
-            'NICKNAME : ', maxchar=15, onreturn=self.save_nickname)
-        self.menu.add.button('  Sign Up  ', self.login_page)
-        self.menu.add.button('  back  ', self.first_page)
-        self.menu.add.button('  Quit   ', pygame_menu.events.EXIT)
+            '닉네임 : ', maxchar=15, onreturn=self.save_nickname)
+        self.menu.add.button('  로그인  ', self.login_page)
+        self.menu.add.button('  이전 화면  ', self.first_page)
+        self.menu.add.button('  게임 종료   ', pygame_menu.events.EXIT)
 
     def login_success(self):
-        # Main(screen).show()
         game = CharacterSelect(self.screen)
     
         while True:
@@ -211,15 +206,16 @@ class Login:
     def signup_fail(self):
         self.menu.clear()
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("    ID Already Exists     ", selectable=False)
+        self.menu.add.label("  아이디 이미 존재   ", selectable=False)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('  back  ', self.show_signup)
+        self.menu.add.button('  이전 화면  ', self.show_signup)
 
-    def tutorial_page(self):  # 2인 플레이어
-        print(self.pvpcharacter_data[2].name)
+    def tutorial_page(self):
         pvpgame = tutorial(self.pvpcharacter_data,
                            self.pvpcharacter_data[0], self.mode)
-        pvpgame.pvp_info()
+
+        pvpgame.tutorial_info()
+
 
     def main(self):
         while True:

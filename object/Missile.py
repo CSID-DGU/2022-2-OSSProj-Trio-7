@@ -80,13 +80,13 @@ class TargetedMissile(Missile):
                 self.vel = direction.normalize() * self.velocity
 
     # 화면에 있는 적들 중에서 가장 근접한 타깃 탐색
-    # 보스가 있으면 일반 몹 대신 보스만 조준
+    # # 보스가 있으면 일반 몹 대신 보스만 조준
     def find_target(self, game):
         if hasattr(game, "stage"):
             if game.stage.is_boss_stage:
                 self.target_type = "BOSS"
                 return game.boss
-            elif len(game.mobList) > 0:
+            if len(game.mobList) > 0:
                 targets = game.character.check_for_targets(game)
                 if len(targets) > 0:
                     target = targets[0]

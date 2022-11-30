@@ -2,7 +2,7 @@ from button import *
 import pygame
 import pygame_menu
 from menu.gameselectMenu import GameselectMenu
-
+from menu.JobInfo import *
 
 class CharacterSelect:
     def __init__(self, screen):
@@ -23,13 +23,12 @@ class CharacterSelect:
 
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            # 버튼 가독성 올리기 위해서 버튼 배경색 설정 : 노란색
-            widget_background_color=(255, 171, 0),
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(0, 0, 0),  # 선택됐을때 글씨색 설정 (white)
-            widget_font_color=(255, 255, 255),  # 기본 글씨색 설정 (black)
-            title_background_color=(255, 171, 0),
-            title_font_color=(255, 255, 255),
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -40,7 +39,7 @@ class CharacterSelect:
         self.mytheme.background_color = main_image
 
         self.menu = pygame_menu.Menu(
-            '직업을 선택하세요', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
         self.first_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
@@ -84,6 +83,13 @@ class CharacterSelect:
             game.show(self.screen, "doctor")
             pygame.display.flip()
 
+    def show_jobinfo(self):
+        game = JobInfo(self.screen)
+        
+        while True:
+            game.show(self.screen)
+            pygame.display.flip()
+
     def first_page(self):
         self.menu.clear()
         b1 = self.menu.add.button(' 경찰관  ', self.show_policMap)
@@ -91,3 +97,5 @@ class CharacterSelect:
         b2 = self.menu.add.button(' 소방관 ', self.show_firefighterMap)
         self.menu.add.vertical_margin(10)
         b3 = self.menu.add.button('   의사   ', self.show_doctorMap)
+        self.menu.add.vertical_margin(10)
+        b4 = self.menu.add.button('   직업이 궁금하나요?   ', self.show_jobinfo)
