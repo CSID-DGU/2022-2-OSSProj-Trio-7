@@ -11,6 +11,7 @@ from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
+from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu import *
@@ -160,6 +161,12 @@ class GameselectMenu:
                 self.check = Database().check_char_lock()
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     if choosed_chracter == "police":  # 경찰관 맵
+                        # 무기 선택 상점을 추가============================================================================================
+                        page = WeaponSelect(self.screen)
+                        while True:
+                            game.show(self.screen)
+                            pygame.display.flip()
+
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
@@ -348,7 +355,7 @@ class GameselectMenu:
                 LeaderBoardMenu(self.screen).rank()
 
             if self.store.isOver(pos):
-                CharacterStoreMenu(self.screen).show()
+                CharacterStoreMenu(self.screen, choosed_chracter).show()
 
             if self.help.isOver(pos):
                 HelpMenu(self.screen).show()

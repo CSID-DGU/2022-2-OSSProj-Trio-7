@@ -191,11 +191,11 @@ class StageGame:
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
 
-            if random.random() < Default.item.value["powerup"]["spawn_rate"]:
-                new_item = PowerUp(self.animation.animations["powerup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
+            # if random.random() < Default.item.value["powerup"]["spawn_rate"]:
+            #     new_item = PowerUp(self.animation.animations["powerup"])
+            #     new_item.set_XY(
+            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
+            #     self.item_list.append(new_item)
 
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
                 new_item = Bomb(self.animation.animations["bomb"])
@@ -215,11 +215,11 @@ class StageGame:
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
+            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+            #     new_item = SpeedUp(self.animation.animations["speedup"])
+            #     new_item.set_XY(
+            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
+            #     self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)
