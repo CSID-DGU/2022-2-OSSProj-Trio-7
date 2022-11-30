@@ -97,7 +97,7 @@ class tutorial:
 
         import button
         self.gotohome = button.button(
-            self.board_width, self.board_height, 0.9, 0.05, 0.2, 0.1, "Image/menu/gotohome.png")
+            self.board_width, self.board_height, 0.9, 0.05, 0.2, 0.1, "Image/thema/gotohome.png")
 
     def main(self, screen):
         # 메인 이벤트
@@ -360,11 +360,11 @@ class tutorial:
         else:
             return False
 
-    def pvp_info(self):
+    def tutorial_info(self):
         self.check_resize(self.screen)
-        self.infopvp_img = "./Image/catthema/pvp_help.png"  # 이미지 수정필요
-        self.menu.add.image(self.infopvp_img, scale=Scales.default.value)
-        infowindow = pygame.image.load(self.infopvp_img)
+        self.infotutorial_img = "./Image/tutorial_help.png"  # 이미지 수정필요
+        self.menu.add.image(self.infotutorial_img, scale=Scales.default.value)
+        infowindow = pygame.image.load(self.infotutorial_img)
         infowindow = pygame.transform.scale(infowindow, self.size)
         self.screen.blit(infowindow, [0, 0])
         pygame.display.flip()

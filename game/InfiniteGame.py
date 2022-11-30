@@ -86,7 +86,7 @@ class InfiniteGame:
         self.board_height = self.changed_screen_size[1]  # y
         import button
         self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/catthema/stop.png")
+            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
 
     def main(self):
         from menu.gameselectMenu import soundset
@@ -437,19 +437,20 @@ class InfiniteGame:
     def StopGame(self):
         pygame.mixer.music.pause()
         stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+        self.orange_color = (253, 111, 34)
         stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
         stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Paused', self.size[0], self.size[1],
+        stageclear_theme.title_font_color = (255, 255, 255, 0)
+        stageclear_theme.background_color = (0, 10, 63)
+        stageclear_theme.title_background_color = (255, 171, 0, 0)
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
                                      theme=stageclear_theme)
-        self.menu.add.image(Images.win.value, scale=self.scale)
+        self.menu.add.image(Images.pausedInfo.value, scale=self.scale)
         self.menu.add.label("")
-        self.menu.add.label(
-            'Paused', font_size=self.screen.get_size()[0]*40//720)
-        self.menu.add.button('Continue', self.Continue,
-                             self.menu, font_size=self.font_size)
-        self.menu.add.button("Restart", self.retry, font_size=self.font_size)
-        self.menu.add.button("Home", self.gameselectmenu,
+        self.menu.add.button('Continue', self.Continue, 
+                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button("Restart", self.retry,selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button("Home", self.gameselectmenu, selection_color=self.orange_color,
                              font_size=self.font_size,)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
