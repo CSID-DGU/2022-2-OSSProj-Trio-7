@@ -169,7 +169,7 @@ class HelpMenu:
     def items(self):
         self.menu.clear()
         self.menu.add.image(Images.info_items.value, scale=(
-            self.size[0]*0.0008, self.size[1]*0.0008))
+            self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.button('         이전         ', self.show,
                              selection_color=self.orange_color, font_size=self.font_size)
 
