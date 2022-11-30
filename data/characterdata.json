@@ -59,8 +59,8 @@
             "price": 100
         },
         {
-            "name": "firefighter",
-            "img_path": "./Image/fireCharacters/firefighter.png",
+            "name": "firefighter1",
+            "img_path": "./Image/storeItems/firefighter1.png",
             "velocity": 13,
             "missile_img": "./Image/Weapon/waterCannon.png",
             "missile_size": {
@@ -73,22 +73,7 @@
             "price": 100
         },
         {
-            "name": "fire1",
-            "img_path": "./Image/storeItems/firefighter1.png",
-            "velocity": 13,
-            "missile_img": "/Image/Weapon/waterCannon.png",
-            "missile_size": {
-                "x": 50,
-                "y": 50
-            },
-            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 300,
-            "fire_interval": 0.7,
-            "price": 8000
-        },
-        
-        {
-            "name": "fire2",
+            "name": "firefighter2",
             "img_path": "./Image/storeItems/firefighter2.png",
             "velocity": 13,
             "missile_img": "/Image/Weapon/waterCannon.png",
@@ -101,6 +86,7 @@
             "fire_interval": 0.7,
             "price": 8000
         },
+        
         {
             "name": "doctor",
             "img_path": "./Image/doctorCharacters/doctor.png",

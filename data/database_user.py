@@ -432,7 +432,7 @@ class Database:
         data = curs.fetchone()
         curs.close()
         # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.fcharacter+1]
+        check = data[User.fcharacter-2]
         if check == 0:  # 캐릭터가 잠겨 있으면 true
             return True
         return False  # 그렇지 않으면 false
@@ -446,7 +446,7 @@ class Database:
         data = curs.fetchone()
         curs.close()
         # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.dcharacter+1]
+        check = data[User.dcharacter-5]
         if check == 0:  # 캐릭터가 잠겨 있으면 true
             return True
         return False  # 그렇지 않으면 false

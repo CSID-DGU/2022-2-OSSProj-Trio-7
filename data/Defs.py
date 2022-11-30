@@ -9,8 +9,8 @@ class User:
     user_nickname = ""
     coin = 0
     pcharacter = 0
-    fcharacter = 0
-    dcharacter = 0
+    fcharacter = 3
+    dcharacter = 6
     buy_pcharacter = 0
     buy_fcharacter = 0
     buy_dcharacter = 0
@@ -19,9 +19,9 @@ class User:
     time_score = 0.0
     cat_lock = [False, False, False]
 
-    police_lock = [True, True, True]
-    firefighter_lock = [True, True, True]
-    doctor_lock = [True, True, True]
+    police_lock = [False, False, False]
+    firefighter_lock = [False, False, False]
+    doctor_lock = [False, False, False]
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
@@ -73,13 +73,6 @@ class Images(enum.Enum):
     cat3 = "./Image/catthema/cat3_front.png"
     cat4 = "./Image/catthema/cat4_front.png"
 
-    police = "./Image/policeCharacters/policeOfficer.png"
-    
-    fire = "./Image/fireCharacters/firefighter.png"
-
-    doctor = "./Image/doctorCharacters/doctor.png"
-
-
 
     win = "./Image/catthema/win.png"
     lose = "./Image/catthema/lose.png"
@@ -98,7 +91,7 @@ class Images(enum.Enum):
     fire = "./Image/fireCharacters/firefighter.png"
     fire1 = "./Image/storeItems/firefighter1.png"
     fire2 = "./Image/storeItems/firefighter2.png"
-    doctor = "./Image/dotorCharacters/doctor.png"
+    doctor = "./Image/doctorCharacters/doctor.png"
     doctor1 = "./Image/storeItems/doctor1.png"
     doctor2 = "./Image/storeItems/doctor2.png"
 
