@@ -78,6 +78,7 @@ class Images(enum.Enum):
 
 
     help = "./Image/help.png";
+    stop = "./Image/stop.png";
 
 class Scales(enum.Enum):
     large = (2, 2)
