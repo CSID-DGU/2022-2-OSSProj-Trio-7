@@ -2,7 +2,7 @@ from button import *
 import pygame
 import pygame_menu
 from menu.gameselectMenu import GameselectMenu
-
+from menu.JobInfo import *
 
 class CharacterSelect:
     def __init__(self, screen):
@@ -83,6 +83,13 @@ class CharacterSelect:
             game.show(self.screen, "doctor")
             pygame.display.flip()
 
+    def show_jobinfo(self):
+        game = JobInfo(self.screen)
+        
+        while True:
+            game.show(self.screen)
+            pygame.display.flip()
+
     def first_page(self):
         self.menu.clear()
         b1 = self.menu.add.button(' 경찰관  ', self.show_policMap)
@@ -90,3 +97,5 @@ class CharacterSelect:
         b2 = self.menu.add.button(' 소방관 ', self.show_firefighterMap)
         self.menu.add.vertical_margin(10)
         b3 = self.menu.add.button('   의사   ', self.show_doctorMap)
+        self.menu.add.vertical_margin(10)
+        b4 = self.menu.add.button('   직업이 궁금하나요?   ', self.show_jobinfo)

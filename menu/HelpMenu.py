@@ -13,6 +13,7 @@ class HelpMenu:
     def __init__(self, screen):
         self.size = screen.get_size()
         self.screen = screen
+
         self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 38 // 720  # 글씨크기
 
@@ -39,6 +40,7 @@ class HelpMenu:
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
     # 메인 메뉴로 돌아가기
+
     def to_menu(self):
         self.menu.disable()
 

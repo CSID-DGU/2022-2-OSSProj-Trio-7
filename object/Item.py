@@ -162,7 +162,7 @@ class PowerUp(Item):
 
 
 class SpeedUp(Item):
-    # 스피드업 아이템: 획득 시 캐릭터 이동/발사 속도 증가
+    # 스피드업 아이템: 획득 시 캐릭터 이동/발사 속도 증가 
     def __init__(self, animation):
         super().__init__(animation.frames, animation.frames_trans, "speedup")
 
