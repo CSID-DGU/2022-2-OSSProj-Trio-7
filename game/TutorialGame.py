@@ -217,11 +217,7 @@ class tutorial:
 
             keys = pygame.key.get_pressed()
 
-<<<<<<< HEAD
-            if index ==-1 and keys[pygame.K_RETURN]:  
-                box_render = True # 텍스트 박스 렌더링
-                index+=1
-=======
+
             # if index == len(text_renders)-1:
             #     print("튜토리얼이 종료됩니다.")
             #     time.sleep(2)
@@ -230,7 +226,7 @@ class tutorial:
             if index == -1 and keys[pygame.K_RETURN]:
                 box_render = True  # 텍스트 박스 렌더링
                 index += 1
->>>>>>> 88618ad8f1c6bdaca8e82e75f6b43911734b0199
+
                 print(index)
                 print(box_render)
 
