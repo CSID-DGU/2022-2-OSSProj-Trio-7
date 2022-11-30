@@ -494,23 +494,42 @@ class StageGame:
     # 일시정지 화면
     def StopGame(self):
         pygame.mixer.music.pause()
-        stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
+
         self.orange_color = (253, 111, 34)
-        stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = (255, 255, 255, 0)
-        stageclear_theme.background_color = (0, 10, 63)
-        stageclear_theme.title_background_color = (255, 171, 0, 0)
-        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
-                                     theme=stageclear_theme)
-        self.menu.add.image(Images.pausedInfo.value, scale=self.scale)
-        self.menu.add.label("")
-        self.menu.add.button('Continue', self.Continue, 
-                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
-        self.menu.add.button("Restart", self.retry,selection_color=self.orange_color, font_size=self.font_size)
-        self.menu.add.button("Home", self.gameselectmenu, selection_color=self.orange_color,
-                             font_size=self.font_size,)
+        self.font_size = self.size[0] * 38 // 720  # 글씨크기
+
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+
+        main_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.stop.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+
+        self.mytheme.background_color = main_image
+
+        self.menu = pygame_menu.Menu(
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+
+        self.stop_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
+
+    def stop_page(self):
+        self.menu.clear()
+        b1 = self.menu.add.button('   계속하기   ', self.Continue, 
+                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        b3 = self.menu.add.button("모드 선택화면으로", self.gameselectmenu, selection_color=self.orange_color,
+                             font_size=self.font_size,)
 
 
     # 화면 크기 조정 감지 및 비율 고정
