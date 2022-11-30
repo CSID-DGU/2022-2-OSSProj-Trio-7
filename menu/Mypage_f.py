@@ -1,5 +1,3 @@
-
-
 from select import select
 import pygame
 import pygame_menu
@@ -14,7 +12,7 @@ from pygame_menu.utils import make_surface
 from data.StoreDataManager import *
 
 # 캐릭터 선택 메뉴
-class Mypage:
+class Mypage_f:
     image_widget: 'pygame_menu.widgets.Image'
     item_description_widget: 'pygame_menu.widgets.Label'
 
@@ -43,7 +41,7 @@ class Mypage:
         #캐릭터 데이터를 json에서 불러온다
         self.character_data = CharacterDataManager.load()
 
-        self.show(character='police')
+        self.show(character='firefighter')
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
         
            
@@ -53,7 +51,7 @@ class Mypage:
         game=menu.gameselectMenu.GameselectMenu(self.screen)
 
         while True:
-            game.show(self.screen, 'police')
+            game.show(self.screen, 'firefighter')
             pygame.display.flip()
 
     #메뉴 구성하고 보이기
@@ -69,13 +67,14 @@ class Mypage:
         self.menu.add.label("Best Time : %s"%User.time_score)
         self.menu.add.label("My coin : %d "%User.coin)
         #캐릭터 선택 메뉴 구성
-        if choosed_chracter == "police":
-            Database().pchar_lock()
-            pcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
+        if choosed_chracter == "firefighter":
+            Database().fchar_lock()
+            print('000')
+            fcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
 
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id,pchar1,pchar2,pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            sql = "SELECT user_id, fchar1,fchar2,fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
             curs.execute(sql,self.id) 
             data = curs.fetchone()  
             curs.close()
@@ -83,64 +82,64 @@ class Mypage:
             char2 = data[2]
             char3 = data[3]
             char4 = data[4]'''
-            self.pcharacter_data = StoreDataManager.load("police")
-            front_image_path = [Images.police.value,Images.police1.value, Images.police2.value]
-            self.pcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
-            self.pcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
-            for i in range(1,4):
-                pchar = data[i]
-                
-                if(pchar > -1): 
+            self.fcharacter_data = CharacterDataManager.load()
+            front_image_path = [Images.fire.value,Images.fire1.value, Images.fire2.value]
+            self.fcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
+            self.fcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
+            for i in range(3,6):
+                fchar = data[i-3]
+    
+                if(fchar != -1): 
                     default_image = pygame_menu.BaseImage(
-                    image_path=front_image_path[i-1]
+                    image_path=front_image_path[i-3]
                     ).scale(0.5, 0.5)
                     #print("이미지경로",front_image_path[i-1])
-                    pcharacters.append((self.pcharacter_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
-                    self.pcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
+                    fcharacters.append((self.fcharacter_data[i].name, i))  # 3부터 #보유하고 있는 캐릭터 이름만 저장
+                    self.fcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
                     ).scale(0.5, 0.5)
         
-                    self.pcharacter_imgs2.append(default_image.copy())
+                    self.fcharacter_imgs2.append(default_image.copy())
             #print(self.price)    
             #print("이미지리스트",self.character_imgs)
-            self.pcharacter_selector = self.menu.add.selector(
+            self.fcharacter_selector = self.menu.add.selector(
                 title='Character :\t',
-                items=pcharacters,
+                items=fcharacters,
                 onchange=self.on_selector_change #이미지 수정 코드
             )
             self.image_widget = self.menu.add.image(
-                image_path=self.pcharacter_imgs[0],
+                image_path=self.fcharacter_imgs[0],
                 padding=(25, 0, 0, 0)  # top, right, bottom, left
             )
             self.status = ""
-            if User.pcharacter == 0:
+            if User.fcharacter == 3:
                 self.status = "Selected"
             else:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
             self.mytheme.widget_background_color = (150, 213, 252)
-            self.menu.add.button("SELECT",self.select_pcharacter)
+            self.menu.add.button("SELECT",self.select_fcharacter)
             self.menu.add.vertical_margin(5)
             self.menu.add.button("    BACK    ",self.to_menu)
-            self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
+            self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_background_color = (0,0,0,0)
 
-    def select_pcharacter(self):
-        selected_idx = self.pcharacter_selector.get_value()[0][1]
-        if User.police_lock[selected_idx] == False:
+    def select_fcharacter(self):
+        selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
+        if User.firefighter_lock[selected_idx] == False:
             User.pcharacter = selected_idx
             database = Database()
-            database.set_pchar()
+            database.set_fchar()
             self.menu.clear()
-            self.show('police')
+            self.show('firefighter')
         else:
             print("character locked")
             import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.pcharacter_data[selected_idx].name).show()
+            menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
 
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1]
@@ -155,19 +154,19 @@ class Mypage:
             import menu.CharacterLock
             menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
             
-    def select_dcharacter(self): #게임 시작 함수
+    def select_fcharacter(self): #게임 시작 함수
         # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
-        selected_idx = self.dcharacter_selector.get_value()[0][1]
-        if User.doctor_lock[selected_idx] == False:
-            User.dcharacter = selected_idx
+        selected_idx = self.fcharacter_selector.get_value()[0][1]
+        if User.firefighter_lock[selected_idx-3] == False:
+            User.fcharacter = selected_idx
             database = Database()
-            database.set_dchar()
+            database.set_fchar()
             self.menu.clear()
-            self.show()
+            self.show("firefighter")
         else:
             print("character locked")
             import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
+            menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
 
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
@@ -197,15 +196,15 @@ class Mypage:
     # 캐릭터 선택 시 캐릭터 이미지 및 능력치 위젯 업데이트
     def update_from_selection(self, selected_value, **kwargs) -> None:
         self.status2 = ""
-        if User.pcharacter == selected_value:
+        if User.fcharacter == selected_value:
             self.status2 = "Selected"
-        elif User.police_lock[selected_value] == False:
+        elif User.firefighter_lock[selected_value-3] == False:
             self.status2 = "Unlocked"
         else:
             self.status2 = "Locked"
 
         self.current = selected_value
-        self.image_widget.set_image(self.pcharacter_imgs2[selected_value])
+        self.image_widget.set_image(self.fcharacter_imgs2[selected_value-3])
         '''self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
         self.fire_rate.set_value(int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[selected_value].org_fire_interval)*100))
         self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))'''

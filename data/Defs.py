@@ -8,13 +8,20 @@ class User:
     user_id = ""
     user_nickname = ""
     coin = 0
-    character = 0
-    buy_character = 0
-    price = [0, 100, 100, 200]
+    pcharacter = 0
+    fcharacter = 3
+    dcharacter = 6
+    buy_pcharacter = 0
+    buy_fcharacter = 0
+    buy_dcharacter = 0
+    price = [0, 8000, 8000]
     score_score = 0
     time_score = 0.0
-    cat_lock = [False, False, False, False]
+    cat_lock = [False, False, False]
 
+    police_lock = [False, False, False]
+    firefighter_lock = [False, False, False]
+    doctor_lock = [False, False, False]
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
@@ -66,6 +73,7 @@ class Images(enum.Enum):
     cat3 = "./Image/catthema/cat3_front.png"
     cat4 = "./Image/catthema/cat4_front.png"
 
+
     win = "./Image/catthema/win.png"
     lose = "./Image/catthema/lose.png"
 
@@ -83,7 +91,9 @@ class Images(enum.Enum):
     fire = "./Image/fireCharacters/firefighter.png"
     fire1 = "./Image/storeItems/firefighter1.png"
     fire2 = "./Image/storeItems/firefighter2.png"
-    doctor = "./Image/dotorCharacters/doctor.png"
+
+    doctor = "./Image/doctorCharacters/doctor.png"
+
     doctor1 = "./Image/storeItems/doctor1.png"
     doctor2 = "./Image/storeItems/doctor2.png"
 
@@ -96,6 +106,10 @@ class Images(enum.Enum):
 
     JobInfo = "./Image/JobInfo.png"
 
+
+
+    help = "./Image/help.png";
+    stop = "./Image/stop.png";
 
 class Scales(enum.Enum):
     large = (2, 2)
