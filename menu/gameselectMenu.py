@@ -312,6 +312,7 @@ class GameselectMenu:
                     self.character_data = CharacterDataManager.load()  # volume 적용
 
 
+
     # 화면 크기 조정 감지 및 비율 고정
 
     def check_resize(self, screen):

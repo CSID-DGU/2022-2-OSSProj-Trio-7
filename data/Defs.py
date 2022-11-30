@@ -105,6 +105,9 @@ class Images(enum.Enum):
     JobInfo = "./Image/JobInfo.png"
 
 
+    help = "./Image/help.png";
+    stop = "./Image/stop.png";
+
 class Scales(enum.Enum):
     large = (2, 2)
     default = (1, 1)
