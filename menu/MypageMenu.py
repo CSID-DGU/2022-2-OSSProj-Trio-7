@@ -42,7 +42,7 @@ class Mypage:
         #캐릭터 데이터를 json에서 불러온다
         self.character_data = CharacterDataManager.load()
 
-        self.show()
+        self.show(character='police')
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
         
            
@@ -52,12 +52,13 @@ class Mypage:
         game=menu.gameselectMenu.GameselectMenu(self.screen)
 
         while True:
-            game.show(self.screen)
+            game.show(self.screen, 'police')
             pygame.display.flip()
 
     #메뉴 구성하고 보이기
-    def show(self):  
-        Database().char_lock()  
+    def show(self, character):
+        choosed_chracter = character  
+        # Database().char_lock()  
         self.menu.add.label("My ID : %s "%User.user_id)
         self.menu.add.label("My NICKNAME : %s "%User.user_nickname)
         Database().my_score_rank()
@@ -67,100 +68,278 @@ class Mypage:
         self.menu.add.label("Best Time : %s"%User.time_score)
         self.menu.add.label("My coin : %d "%User.coin)
         #캐릭터 선택 메뉴 구성
-        characters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
+        if choosed_chracter == "police":
+            Database().pchar_lock()
+            pcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
 
-        curs = Database().dct_db.cursor()
-        self.id = User.user_id
-        sql = "SELECT user_id,char1,char2,char3,char4 FROM users2 WHERE user_id=%s" #user_id와 user_character열만 선택
-        curs.execute(sql,self.id) 
-        data = curs.fetchone()  
-        curs.close()
-        '''char1 = data[1] # char1의 정보는 첫번째 인덱스에 저장되어 있음
-        char2 = data[2]
-        char3 = data[3]
-        char4 = data[4]'''
-        self.character_data = CharacterDataManager.load()
-        front_image_path = [Images.cat1.value,Images.cat2.value, Images.cat3.value, Images.cat4.value]
-        self.character_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
-        self.character_imgs2 = [] #전체 이미지 들어 있는 파일
-        for i in range(1,5):
-            char = data[i]
-            
-            if(char > -1): 
-                default_image = pygame_menu.BaseImage(
-                image_path=front_image_path[i-1]
-                ).scale(0.5, 0.5)
-                #print("이미지경로",front_image_path[i-1])
-                characters.append((self.character_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
-                self.character_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
+            curs = Database().dct_db.cursor()
+            self.id = User.user_id
+            sql = "SELECT user_id,pchar1,pchar2,pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            curs.execute(sql,self.id) 
+            data = curs.fetchone()  
+            curs.close()
+            '''char1 = data[1] # char1의 정보는 첫번째 인덱스에 저장되어 있음
+            char2 = data[2]
+            char3 = data[3]
+            char4 = data[4]'''
+            self.pcharacter_data = CharacterDataManager.load()
+            front_image_path = [Images.police1.value,Images.cat2.value, Images.cat3.value]
+            self.pcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
+            self.pcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
+            for i in range(1,4):
+                pchar = data[i]
+                
+                if(pchar > -1): 
+                    default_image = pygame_menu.BaseImage(
+                    image_path=front_image_path[i-1]
+                    ).scale(0.5, 0.5)
+                    #print("이미지경로",front_image_path[i-1])
+                    pcharacters.append((self.pcharacter_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
+                    self.pcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
-        for i in range(4): 
-                default_image = pygame_menu.BaseImage(
-                image_path=front_image_path[i]
-                ).scale(0.5, 0.5)
-     
-                self.character_imgs2.append(default_image.copy())
-        #print(self.price)    
-        #print("이미지리스트",self.character_imgs)
-        self.character_selector = self.menu.add.selector(
-            title='Character :\t',
-            items=characters,
-            onchange=self.on_selector_change #이미지 수정 코드
-        )
-        self.image_widget = self.menu.add.image(
-            image_path=self.character_imgs[0],
-            padding=(25, 0, 0, 0)  # top, right, bottom, left
-        )
-        self.status = ""
-        if User.character == 0:
-            self.status = "Selected"
-        else:
-            self.status = "Unlocked"
+            for i in range(3): 
+                    default_image = pygame_menu.BaseImage(
+                    image_path=front_image_path[i]
+                    ).scale(0.5, 0.5)
+        
+                    self.pcharacter_imgs2.append(default_image.copy())
+            #print(self.price)    
+            #print("이미지리스트",self.character_imgs)
+            self.pcharacter_selector = self.menu.add.selector(
+                title='Character :\t',
+                items=pcharacters,
+                onchange=self.on_selector_change #이미지 수정 코드
+            )
+            self.image_widget = self.menu.add.image(
+                image_path=self.pcharacter_imgs[0],
+                padding=(25, 0, 0, 0)  # top, right, bottom, left
+            )
+            self.status = ""
+            if User.pcharacter == 0:
+                self.status = "Selected"
+            else:
+                self.status = "Unlocked"
+
+            self.item_description_widget = self.menu.add.label(title = self.status)
+            self.frame_v = self.menu.add.frame_v(350, 160, margin=(5, 0))
+            # 각 캐릭터의 능력치 표시
+            self.power = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Power",
+                default=int((self.pcharacter_data[0].missile_power/Default.character.value["max_stats"]["power"])*100),
+                progress_text_enabled = False,
+                box_progress_color = Color.RED.value
+            ), ALIGN_RIGHT)
+            self.fire_rate = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Fire Rate",
+                default=int((Default.character.value["max_stats"]["fire_rate"]/self.pcharacter_data[0].org_fire_interval)*100),
+                progress_text_enabled = False,
+                box_progress_color =Color.BLUE.value
+            ), ALIGN_RIGHT)
+            self.velocity = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Mobility",
+                default=int((self.pcharacter_data[0].org_velocity/Default.character.value["max_stats"]["mobility"])*100),
+                progress_text_enabled = False,
+                box_progress_color = Color.GREEN.value
+            ), ALIGN_RIGHT)
+            self.mytheme.widget_background_color = (150, 213, 252)
+            self.menu.add.button("SELECT",self.select_pcharacter)
+            self.menu.add.vertical_margin(5)
+            self.menu.add.button("    BACK    ",self.to_menu)
+            self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
+            self.mytheme.widget_background_color = (0,0,0,0)
+
+        if choosed_chracter == "firefighter":
+            Database().fchar_lock()
+            fcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
+
+            curs = Database().dct_db.cursor()
+            self.id = User.user_id
+            sql = "SELECT user_id,fchar1,fchar2,fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            curs.execute(sql,self.id) 
+            data = curs.fetchone()  
+            curs.close()
+            self.fcharacter_data = CharacterDataManager.load()
+            front_image_path = [Images.cat1.value,Images.cat2.value, Images.cat3.value, Images.cat4.value]
+            self.fcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
+            self.fcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
+            for i in range(1,4):
+                fchar = data[i]
+                
+                if(fchar > -1): 
+                    default_image = pygame_menu.BaseImage(
+                    image_path=front_image_path[i-1]
+                    ).scale(0.5, 0.5)
+                    #print("이미지경로",front_image_path[i-1])
+                    fcharacters.append((self.fcharacter_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
+                    self.fcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
+
+            for i in range(4): 
+                    default_image = pygame_menu.BaseImage(
+                    image_path=front_image_path[i]
+                    ).scale(0.5, 0.5)
+        
+                    self.fcharacter_imgs2.append(default_image.copy())
+            #print(self.price)    
+            #print("이미지리스트",self.character_imgs)
+            self.fcharacter_selector = self.menu.add.selector(
+                title='Character :\t',
+                items=fcharacters,
+                onchange=self.on_selector_change #이미지 수정 코드
+            )
+            self.image_widget = self.menu.add.image(
+                image_path=self.fcharacter_imgs[0],
+                padding=(25, 0, 0, 0)  # top, right, bottom, left
+            )
+            self.status = ""
+            if User.fcharacter == 0:
+                self.status = "Selected"
+            else:
+                self.status = "Unlocked"
 
 
-        self.item_description_widget = self.menu.add.label(title = self.status)
-        self.frame_v = self.menu.add.frame_v(350, 160, margin=(5, 0))
-        # 각 캐릭터의 능력치 표시
-        self.power = self.frame_v.pack(self.menu.add.progress_bar(
-            title="Power",
-            default=int((self.character_data[0].missile_power/Default.character.value["max_stats"]["power"])*100),
-            progress_text_enabled = False,
-            box_progress_color = Color.RED.value
-        ), ALIGN_RIGHT)
-        self.fire_rate = self.frame_v.pack(self.menu.add.progress_bar(
-            title="Fire Rate",
-            default=int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[0].org_fire_interval)*100),
-            progress_text_enabled = False,
-            box_progress_color =Color.BLUE.value
-        ), ALIGN_RIGHT)
-        self.velocity = self.frame_v.pack(self.menu.add.progress_bar(
-            title="Mobility",
-            default=int((self.character_data[0].org_velocity/Default.character.value["max_stats"]["mobility"])*100),
-            progress_text_enabled = False,
-            box_progress_color = Color.GREEN.value
-        ), ALIGN_RIGHT)
-        self.mytheme.widget_background_color = (150, 213, 252)
-        self.menu.add.button("SELECT",self.select_character)
-        self.menu.add.vertical_margin(5)
-        self.menu.add.button("    BACK    ",self.to_menu)
-        self.update_from_selection(int(self.character_selector.get_value()[0][1]))
-        self.mytheme.widget_background_color = (0,0,0,0)
+            self.item_description_widget = self.menu.add.label(title = self.status)
+            self.frame_v = self.menu.add.frame_v(350, 160, margin=(5, 0))
+            # 각 캐릭터의 능력치 표시
+            self.power = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Power",
+                default=int((self.character_data[0].missile_power/Default.character.value["max_stats"]["power"])*100),
+                progress_text_enabled = False,
+                box_progress_color = Color.RED.value
+            ), ALIGN_RIGHT)
+            self.fire_rate = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Fire Rate",
+                default=int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[0].org_fire_interval)*100),
+                progress_text_enabled = False,
+                box_progress_color =Color.BLUE.value
+            ), ALIGN_RIGHT)
+            self.velocity = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Mobility",
+                default=int((self.character_data[0].org_velocity/Default.character.value["max_stats"]["mobility"])*100),
+                progress_text_enabled = False,
+                box_progress_color = Color.GREEN.value
+            ), ALIGN_RIGHT)
+            self.mytheme.widget_background_color = (150, 213, 252)
+            self.menu.add.button("SELECT",self.select_fcharacter)
+            self.menu.add.vertical_margin(5)
+            self.menu.add.button("    BACK    ",self.to_menu)
+            self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
+            self.mytheme.widget_background_color = (0,0,0,0)
 
-    def select_character(self): #게임 시작 함수
-        # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
-        selected_idx = self.character_selector.get_value()[0][1]
-        if User.cat_lock[selected_idx] == False:
-            User.character = selected_idx
+        if choosed_chracter == "doctor":
+            Database().dchar_lock()
+            dcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
+
+            curs = Database().dct_db.cursor()
+            self.id = User.user_id
+            sql = "SELECT user_id,dchar1,dchar2,dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            curs.execute(sql,self.id) 
+            data = curs.fetchone()  
+            curs.close()
+            self.dcharacter_data = CharacterDataManager.load()
+            front_image_path = [Images.cat1.value,Images.cat2.value, Images.cat3.value, Images.cat4.value]
+            self.dcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
+            self.dcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
+            for i in range(1,4):
+                dchar = data[i]
+                
+                if(dchar > -1): 
+                    default_image = pygame_menu.BaseImage(
+                    image_path=front_image_path[i-1]
+                    ).scale(0.5, 0.5)
+                    #print("이미지경로",front_image_path[i-1])
+                    dcharacters.append((self.dcharacter_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
+                    self.dcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
+
+            for i in range(4): 
+                    default_image = pygame_menu.BaseImage(
+                    image_path=front_image_path[i]
+                    ).scale(0.5, 0.5)
+        
+                    self.dcharacter_imgs2.append(default_image.copy())
+            #print(self.price)    
+            #print("이미지리스트",self.character_imgs)
+            self.fcharacter_selector = self.menu.add.selector(
+                title='Character :\t',
+                items=dcharacters,
+                onchange=self.on_selector_change #이미지 수정 코드
+            )
+            self.image_widget = self.menu.add.image(
+                image_path=self.dcharacter_imgs[0],
+                padding=(25, 0, 0, 0)  # top, right, bottom, left
+            )
+            self.status = ""
+            if User.fcharacter == 0:
+                self.status = "Selected"
+            else:
+                self.status = "Unlocked"
+
+            self.item_description_widget = self.menu.add.label(title = self.status)
+            self.frame_v = self.menu.add.frame_v(350, 160, margin=(5, 0))
+            # 각 캐릭터의 능력치 표시
+            self.power = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Power",
+                default=int((self.character_data[0].missile_power/Default.character.value["max_stats"]["power"])*100),
+                progress_text_enabled = False,
+                box_progress_color = Color.RED.value
+            ), ALIGN_RIGHT)
+            self.fire_rate = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Fire Rate",
+                default=int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[0].org_fire_interval)*100),
+                progress_text_enabled = False,
+                box_progress_color =Color.BLUE.value
+            ), ALIGN_RIGHT)
+            self.velocity = self.frame_v.pack(self.menu.add.progress_bar(
+                title="Mobility",
+                default=int((self.character_data[0].org_velocity/Default.character.value["max_stats"]["mobility"])*100),
+                progress_text_enabled = False,
+                box_progress_color = Color.GREEN.value
+            ), ALIGN_RIGHT)
+            self.mytheme.widget_background_color = (150, 213, 252)
+            self.menu.add.button("SELECT",self.select_dcharacter)
+            self.menu.add.vertical_margin(5)
+            self.menu.add.button("    BACK    ",self.to_menu)
+            self.update_from_selection(int(self.dcharacter_selector.get_value()[0][1]))
+            self.mytheme.widget_background_color = (0,0,0,0)
+
+    def select_pcharacter(self):
+        selected_idx = self.pcharacter_selector.get_value()[0][1]
+        if User.police_lock[selected_idx] == False:
+            User.pcharacter = selected_idx
             database = Database()
-            database.set_char()
+            database.set_pchar()
+            self.menu.clear()
+            self.show('police')
+        else:
+            print("character locked")
+            import menu.CharacterLock
+            menu.CharacterLock.Characterlock(self.screen,self.pcharacter_data[selected_idx].name).show()
+
+    def select_fcharacter(self):
+        selected_idx = self.fcharacter_selector.get_value()[0][1]
+        if User.firefighter_lock[selected_idx] == False:
+            User.fcharacter = selected_idx
+            database = Database()
+            database.set_fchar()
+            self.menu.clear()
+            self.show('firefighter')
+        else:
+            print("character locked")
+            import menu.CharacterLock
+            menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
+            
+    def select_dcharacter(self): #게임 시작 함수
+        # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
+        selected_idx = self.dcharacter_selector.get_value()[0][1]
+        if User.doctor_lock[selected_idx] == False:
+            User.dcharacter = selected_idx
+            database = Database()
+            database.set_dchar()
             self.menu.clear()
             self.show()
         else:
             print("character locked")
             import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.character_data[selected_idx].name).show()
-            
-
+            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
 
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
@@ -190,15 +369,15 @@ class Mypage:
     # 캐릭터 선택 시 캐릭터 이미지 및 능력치 위젯 업데이트
     def update_from_selection(self, selected_value, **kwargs) -> None:
         self.status2 = ""
-        if User.character == selected_value:
+        if User.pcharacter == selected_value:
             self.status2 = "Selected"
-        elif User.cat_lock[selected_value] == False:
+        elif User.police_lock[selected_value] == False:
             self.status2 = "Unlocked"
         else:
             self.status2 = "Locked"
 
         self.current = selected_value
-        self.image_widget.set_image(self.character_imgs2[selected_value])
+        self.image_widget.set_image(self.pcharacter_imgs2[selected_value])
         self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
         self.fire_rate.set_value(int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[selected_value].org_fire_interval)*100))
         self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))
