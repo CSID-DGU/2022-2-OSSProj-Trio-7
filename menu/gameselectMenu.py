@@ -239,7 +239,7 @@ class GameselectMenu:
                     Main.Login(self.screen).show()
 
                 if self.returnpage.isOver(pos):  # 직업 선택 화면으로 되돌아가는 페이지
-                    from menu.characterSelectMenu import CharacterSelect
+                    from menu.CharacterSelectMenu import CharacterSelect
                     game = CharacterSelect(self.screen)
 
                     while True:
