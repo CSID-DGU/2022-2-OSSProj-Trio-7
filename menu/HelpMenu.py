@@ -13,34 +13,50 @@ class HelpMenu:
     def __init__(self, screen):
         self.size = screen.get_size()
         self.screen = screen
-        self.font_size = self.size[0] * 38 // 720  # 글씨크기
-        self.mytheme = pygame_menu.themes.THEME_DEFAULT.copy()
-        self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        self.mytheme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        self.mytheme.title_font_color = (255, 255, 255, 0)
-        self.mytheme.background_color = (0, 10, 63)
-        self.mytheme.title_background_color = (255, 171, 0, 0)
-        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
-                                     theme=self.mytheme)
         self.orange_color = (253, 111, 34)
-    # 메인 메뉴로 돌아가기
+        self.font_size = self.size[0] * 38 // 720  # 글씨크기
 
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+
+        main_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.help.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+
+        self.mytheme.background_color = main_image
+
+        self.menu = pygame_menu.Menu(
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+        self.show()
+        self.menu.mainloop(self.screen, bgfun=self.check_resize)
+
+    # 메인 메뉴로 돌아가기
     def to_menu(self):
         self.menu.disable()
 
     # 도움말 메인 메뉴
     def show(self):
         self.menu.clear()
-        self.menu.add.label("   - 도움말 -   ", selectable=False,
-                            font_size=self.font_size)
         self.menu.add.button('     스테이지 모드     ', self.infinite_game_1,
                              selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('     무한 모드     ', self.stage_game_1,
                              selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('   아이템 설명서   ', self.items,
                              selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('   조작법 설명서   ', self.controls,
                              selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('         이전         ', self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
@@ -168,6 +184,7 @@ class HelpMenu:
     # 아이템 설명 페이지
     def items(self):
         self.menu.clear()
+        self.menu.add.vertical_margin(30)
         self.menu.add.image(Images.info_items.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.button('         이전         ', self.show,
@@ -176,6 +193,7 @@ class HelpMenu:
     # 조작법 설명 페이지
     def controls(self):
         self.menu.clear()
+        self.menu.add.vertical_margin(30)
         self.menu.add.image(Images.info_controls.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.button('         이전         ', self.show,

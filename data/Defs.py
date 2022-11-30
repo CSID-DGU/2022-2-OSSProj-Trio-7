@@ -77,6 +77,8 @@ class Images(enum.Enum):
     failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
 
 
+    help = "./Image/help.png";
+
 class Scales(enum.Enum):
     large = (2, 2)
     default = (1, 1)
