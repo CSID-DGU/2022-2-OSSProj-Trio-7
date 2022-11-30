@@ -235,13 +235,8 @@ class GameselectMenu:
                 if self.rankpage.isOver(pos):
                     LeaderBoardMenu(self.screen).rank()
 
-<<<<<<< HEAD
-            if self.store.isOver(pos):
-                CharacterStoreMenu(self.screen, choosed_chracter).show()
-=======
                 if self.store.isOver(pos):
-                    CharacterStoreMenu(self.screen).show()
->>>>>>> 88618ad8f1c6bdaca8e82e75f6b43911734b0199
+                    CharacterStoreMenu(self.screen, choosed_chracter).show()
 
                 if self.help.isOver(pos):
                     HelpMenu(self.screen).show()
