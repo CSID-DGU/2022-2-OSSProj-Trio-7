@@ -231,13 +231,13 @@ class InfiniteGame:
                 self.item_list.append(new_item)
 
             # 기본값 0.002
-            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-                if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-                    Default.item.value["speedup"]["spawn_rate"] += 0.0003
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
+            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
+            #         Default.item.value["speedup"]["spawn_rate"] += 0.0003
+            #     new_item = SpeedUp(self.animation.animations["speedup"])
+            #     new_item.set_XY(
+            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
+            #     self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)
