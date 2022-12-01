@@ -14,7 +14,7 @@ class User:
     buy_pcharacter = 0
     buy_fcharacter = 0
     buy_dcharacter = 0
-    price = [0, 8000, 8000]
+    price = [0, 50, 50]
     score_score = 0
     time_score = 0.0
     cat_lock = [False, False, False]

@@ -71,7 +71,7 @@ class CharacterStoreMenu:
 
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id, fchar1, fchar2, fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택 -> 수정 필요
+            sql = "SELECT user_id, fchar1, fchar2, fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
             curs.execute(sql,self.id) 
             data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
             curs.close()
@@ -80,10 +80,9 @@ class CharacterStoreMenu:
             front_image_path = [Images.police.value, Images.police1.value, Images.police2.value]
             self.character_data = StoreDataManager.load("police")  
     
-
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택 -> 수정 필요
+            sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
             curs.execute(sql,self.id) 
             data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
             curs.close()
@@ -209,7 +208,8 @@ class CharacterStoreMenu:
        
         # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
 
-        selected_idx = self.character_selector.get_value()[0][1]
+        selected_idx = self.character_selector.get_value()[0][1] # 돈이 충분하지 않다 -> 인덱스를 잘못 가져온 것 같음
+        print(selected_idx, self.price[selected_idx])
         if(User.coin >= self.price[selected_idx]):
             User.buy_character = selected_idx
             database = Database()
