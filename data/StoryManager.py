@@ -23,8 +23,7 @@ class StoryManager():
         # bg init
 
         bg_y = 0 # 배경이동을 위한 변수
-        if self.mapinfo == "map1":
-
+        if self.mapinfo == "poilce":
             bg = pygame.image.load("./Image/background/police_background.png")
         elif self.mapinfo == "firefighter":
             bg = pygame.image.load(
@@ -41,9 +40,9 @@ class StoryManager():
         self.texts2 = ["시민 : 불이야~! 불이났다!!", "거대한 불 : 모든 것을 태워버리겠다!", "소방관 : 어서 화재를 진압하자!", "소방관 : %s! 함께 현장으로 가자!"%(self.db.get_nickname())]
         self.texts3 = ["시민 : 의사선생님 몸이 너무 아파요!", "슈퍼 바이러스 : 날 치료할 수 있으면 해보시지!", "의사 : 어서 환자를 치료하자!", "의사 : %s! 함께 치료를 진행하자!"%(self.db.get_nickname())]
         
-        if self.mapinfo == "map1":
+        if self.mapinfo == "police":
             text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts1]
-        elif self.mapinfo == "map2":
+        elif self.mapinfo == "firefighter":
             text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts2]
         else:
             text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts3]

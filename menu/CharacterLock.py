@@ -23,7 +23,7 @@ class Characterlock:
             title_font_color = (255,255,255),
             title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL,
             widget_font_size = self.size[0] * 30 //720)
-        if(character == 'Merry'):
+        if(character == 'police'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.lock_cat2.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         elif(character == 'Haengal'):
              self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.lock_cat3.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
@@ -39,19 +39,27 @@ class Characterlock:
         price= [0,10,10,20]
         curs =database.dct_db.cursor()
         self.id = User.user_id
-        sql = "SELECT user_id,char2,char3,char4,user_coin FROM users2 WHERE user_id=%s" #user_id와 user_coin열만 선택
+        sql = "SELECT user_id,pchar2,pchar3,fchar2,fchar3,dchar2,dchar3,user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_coin열만 선택
         curs.execute(sql,self.id) 
         data = curs.fetchone()  
-        self.coin = data[4]
-        if self.character == "Merry":
+        self.coin = data[7]
+        if self.character == "police":
             selected_idx = 1
-        if self.character == "Haengal":
+        '''
+        elif self.character == "police3":
             selected_idx = 2
-        if self.character == "Kongchi":
-            selected_idx = 3
+        elif self.character == "firefigter2":
+            selected_idx = 4
+        elif self.character == "firefigter2":
+            selected_idx = 5
+        elif self.character == "doctor2":
+            selected_idx = 7
+        elif self.character == "doctor3":
+            selected_idx = 8
+        '''
         #print(selected_idx)
         self.menu.add.vertical_margin(self.size[0]*0.5)
-        if(data[4] >= price[selected_idx]):
+        if(data[7] >= price[selected_idx]):
             self.menu.add.button('unlock', self.unlock_character,font_size =self.size[0] * 30 //720)
         else:
             self.menu.add.label("Not enough money",font_size =self.size[0] * 40 //720)
@@ -103,9 +111,9 @@ class Characterlock:
         #print(selected_idx)
         if(data[4] >= price[selected_idx]):
             print("잠금을 해제합니다.")
-            if self.character == "Merry":
+            if self.character == "police":
                 User.coin = self.coin-10
-                sql = "UPDATE users2 SET char2=%s WHERE user_id = %s"
+                sql = "UPDATE tusers2 SET char2=%s WHERE user_id = %s"
                 curs.execute(sql, (5, self.id))
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-10, self.id))

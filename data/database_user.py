@@ -4,7 +4,6 @@ from datetime import datetime
 import bcrypt
 from data.Defs import User
 
-
 class Database:
     def __init__(self): 
         self.dct_db = pymysql.connect(
@@ -50,7 +49,7 @@ class Database:
         curs = self.dct_db.cursor()
         self.dct_db.commit()
         # users테이블에서 user_id 필드에 %s의 값을 삽입
-        sql = "INSERT INTO users2 (user_id) VALUES (%s)"
+        sql = "INSERT INTO tusers2 (user_id) VALUES (%s)"
         curs.execute(sql, user_id)
         self.dct_db.commit()
         curs.close()
@@ -73,53 +72,92 @@ class Database:
         # print(hashed_pw, "라라")
         self.dct_db.commit()
         curs = self.dct_db.cursor()
-        sql = "UPDATE users2 SET user_coin=%s WHERE user_id=%s"
+        sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id=%s"
         curs.execute(sql, (initial_coin, user_id))  # 코인 초기값 추가
         self.dct_db.commit()
         curs = self.dct_db.cursor()
-        sql = "UPDATE users2 SET user_character=%s WHERE user_id=%s"
+        sql = "UPDATE tusers2 SET user_pcharacter=%s WHERE user_id=%s"
+        curs.execute(sql, (initial_character, user_id))
+        self.dct_db.commit()
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET user_fcharacter=%s WHERE user_id=%s"
+        curs.execute(sql, (initial_character, user_id))
+        self.dct_db.commit()
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET user_dcharacter=%s WHERE user_id=%s"
         curs.execute(sql, (initial_character, user_id))
         self.dct_db.commit()
         curs.close()
 
-    def set_char(self):
+    def set_pchar(self):
         self.id = User.user_id
-        self.char = User.character
+        self.char = User.pcharacter
         curs = self.dct_db.cursor()
-        sql = "UPDATE users2 SET user_character=%s WHERE user_id = %s"
+        sql = "UPDATE tusers2 SET user_pcharacter=%s WHERE user_id = %s"
         curs.execute(sql, (self.char, self.id))
         self.dct_db.commit()
         curs.close()
 
-    def show_mychar(self):  # 선택한 캐릭터 보여주는 함수
+    def set_fchar(self):
         self.id = User.user_id
-        self.char = User.character
+        self.char = User.fcharacter
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET user_fcharacter=%s WHERE user_id = %s"
+        curs.execute(sql, (self.char, self.id))
+        self.dct_db.commit()
+        curs.close()
+
+    def set_dchar(self):
+        self.id = User.user_id
+        self.char = User.dcharacter
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET user_dcharacter=%s WHERE user_id = %s"
+        curs.execute(sql, (self.char, self.id))
+        self.dct_db.commit()
+        curs.close()
+
+    def show_pmychar(self):  # 선택한 캐릭터 보여주는 함수
+        self.id = User.user_id
+        self.char = User.pcharacter
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT user_id,user_character FROM users2 WHERE user_id=%s"
+        sql = "SELECT user_id,user_pcharacter FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        check_char = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
-        return check_char
-    '''
-    def show_doctorchar(self):  # 선택한 캐릭터 보여주는 함수
+        check_pchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        return check_pchar
+    
+    def show_fmychar(self):  # 선택한 캐릭터 보여주는 함수
         self.id = User.user_id
-        self.char = User.character
+        self.char = User.fcharacter
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT user_id,user_character FROM doctor_users2 WHERE user_id=%s"
+        sql = "SELECT user_id,user_fcharacter FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        check_doctorchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
-        return check_doctorchar
-    '''
+        check_fchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        print(check_fchar)
+        return check_fchar
+    
+    def show_dmychar(self):  # 선택한 캐릭터 보여주는 함수
+        self.id = User.user_id
+        self.char = User.dcharacter
+        curs = self.dct_db.cursor()
+        # user_id와 user_character열만 선택
+        sql = "SELECT user_id,user_dcharacter FROM tusers2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        check_dchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        return check_dchar
+    
     def show_mycoin(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 user_character열만 선택
-        sql = "SELECT user_id,user_coin FROM users2 WHERE user_id=%s"
+        sql = "SELECT user_id,user_coin FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
@@ -143,11 +181,12 @@ class Database:
         self.coin = User.coin
         print(self.coin)
         curs = self.dct_db.cursor()
-        sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
+        sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
         curs.execute(sql, (self.coin, self.id))
         self.dct_db.commit()
         curs.close()
 
+    # 상점
     def buy_char(self):
         self.id = User.user_id
         self.buy = User.buy_character
@@ -328,59 +367,86 @@ class Database:
             time_score = data[1]  # user_id는 인덱스 0에, time 인덱스 1에 저장되어 있음
             User.time_score = time_score
 
-    def reduce_char_life(self):  # 게임에서 죽으면 보유하고 있는 캐릭터의 목숨이 줄어들도록 함.
-        self.id = User.user_id
-        self.char = User.character  # cat2는 1, cat3는 2, cat4는 3으로 되어 있음.
-        curs = self.dct_db.cursor()
-        # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
-        sql = "SELECT user_id,char1,char2,char3,char4 FROM users2 WHERE user_id=%s"
-        curs.execute(sql, self.id)
-        data = curs.fetchone()
-        curs.close()
-
-        curs = self.dct_db.cursor()
-        if (data[self.char+1] > 0):  # 목숨이 0이상일때만 1을 줄임.
-            if (self.char == 1):  # 선택한 캐릭터가 cat2면, cat2의 목숨을 1개 줄임.
-                sql = "UPDATE users2 SET char2=%s WHERE user_id = %s"
-                curs.execute(sql, (data[self.char+1]-1, self.id))
-                self.dct_db.commit()
-            if (self.char == 2):  # 선택한 캐릭터가 cat3면, cat3의 목숨을 1개 줄임.
-                sql = "UPDATE users2 SET char3=%s WHERE user_id = %s"
-                curs.execute(sql, (data[self.char+1]-1, self.id))
-                self.dct_db.commit()
-            if (self.char == 3):  # 선택한 캐릭터가 cat4면, cat4의 목숨을 1개 줄임.
-                sql = "UPDATE users2 SET char4=%s WHERE user_id = %s"
-                curs.execute(sql, (data[self.char+1]-1, self.id))
-                self.dct_db.commit()
-            curs.close()
-
-        if (data[self.char+1] == 0):
-            User.cat_lock[self.char] = True
-
     # 데이터베이스 확인을 통해, 캐릭터가 잠겨있는지 안잠겨있는지 확인
-    def char_lock(self):
+    def pchar_lock(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
         # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
-        sql = "SELECT user_id,char2,char3,char4 FROM users2 WHERE user_id=%s"
+        sql = "SELECT user_id,pchar2,pchar3 FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
 
-        for i in range(1, 4):
+        for i in range(1, 3):
             if data[i] == 0:
                 User.cat_lock[i] = True
 
-    def check_char_lock(self):
-        self.char = User.character
+    def fchar_lock(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        sql = "SELECT user_id,char1,char2,char3,char4 FROM users2 WHERE user_id=%s"
+        # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
+        sql = "SELECT user_id,fchar2,fchar3 FROM tusers2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+
+        for i in range(1, 3):
+            if data[i] == 0:
+                User.cat_lock[i] = True
+    
+    def dchar_lock(self):
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
+        sql = "SELECT user_id,dchar2,dchar3 FROM tusers2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+
+        for i in range(1, 3):
+            if data[i] == 0:
+                User.cat_lock[i] = True
+
+
+
+    def check_pchar_lock(self):
+        self.char = User.pcharacter
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        sql = "SELECT user_id,pchar1,pchar2,pchar3 FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
         # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.character+1]
+        check = data[User.pcharacter+1]
+        if check == 0:  # 캐릭터가 잠겨 있으면 true
+            return True
+        return False  # 그렇지 않으면 false
+    
+    def check_fchar_lock(self):
+        self.char = User.fcharacter
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        sql = "SELECT user_id,fchar1,fchar2,fchar3 FROM tusers2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
+        check = data[User.fcharacter-2]
+        if check == 0:  # 캐릭터가 잠겨 있으면 true
+            return True
+        return False  # 그렇지 않으면 false
+    
+    def check_dchar_lock(self):
+        self.char = User.dcharacter
+        self.id = User.user_id
+        curs = self.dct_db.cursor()
+        sql = "SELECT user_id,dchar1,dchar2,dchar3 FROM tusers2 WHERE user_id=%s"
+        curs.execute(sql, self.id)
+        data = curs.fetchone()
+        curs.close()
+        # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
+        check = data[User.dcharacter-5]
         if check == 0:  # 캐릭터가 잠겨 있으면 true
             return True
         return False  # 그렇지 않으면 false

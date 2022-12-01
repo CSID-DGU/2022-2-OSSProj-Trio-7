@@ -1,5 +1,3 @@
-
-
 from select import select
 import pygame
 import pygame_menu
@@ -14,7 +12,7 @@ from pygame_menu.utils import make_surface
 from data.StoreDataManager import *
 
 # 캐릭터 선택 메뉴
-class Mypage:
+class Mypage_p:
     image_widget: 'pygame_menu.widgets.Image'
     item_description_widget: 'pygame_menu.widgets.Label'
 
