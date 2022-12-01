@@ -69,7 +69,7 @@ class StageGame:
         self.k = 0
         self.SB = 0
         self.coin = 0
-        self.infowindow_image = "Image/catthema/{}_dark.png".format(
+        self.infowindow_image = "Image/stageMode_background.png".format(
             self.stage.chapter)
         self.soundvol = 0.1
         self.stage_data = StageDataManager.loadStageData()  # 스테이지 데이터
@@ -103,16 +103,22 @@ class StageGame:
 
         self.screen.blit(infowindow, [0, 0])
         font = pygame.font.Font(Default.font.value, self.size[0]//25)
-        info_stage_test = font.render("stage {} ".format(
-            self.stage.stage), True, Color.WHITE.value)
-        info_score_text = font.render("보스 등장 점수는 {} 입니다. 보스를 처치하세요.".format(
-            self.goal_score), True, Color.WHITE.value)
+        info_stage_test = font.render("[{} 단계]".format(
+            self.stage.stage), True, Color.BLACK.value)
+        info_score_text = font.render("목표점수 {}를 도달하면 보스가 등장합니다!".format(
+            self.goal_score), True, Color.BLACK.value)
+        info_boss_text = font.render("목표점수를 달성해 보스를 잡아보세요!".format(
+            self.goal_score), True, Color.BLACK.value)
+        info_start_text = font.render("로딩이 끝난 후 Enter키를 눌러 시작하세요".format(
+            self.goal_score), True, Color.BLACK.value)
         self.screen.blit(
-            info_stage_test, (self.size[0]*0.35, self.size[1]*0.35))
+            info_stage_test, (self.size[0]*0.45, self.size[1]*0.35))
         self.screen.blit(
             info_score_text, (self.size[0]*0.15, self.size[1]*0.45))
-        self.screen.blit(pygame.font.Font(None, 30).render(
-            "Loading...", True, (150, 150, 150), (0, 0, 0)), (400, 510))
+        self.screen.blit(
+            info_boss_text, (self.size[0]*0.2, self.size[1]*0.55))
+        self.screen.blit(
+            info_start_text, (self.size[0]*0.17, self.size[1]*0.65))
         pygame.display.flip()
         time.sleep(3)  # 3초뒤에 스토리라인 전개.
 
