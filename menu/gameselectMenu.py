@@ -14,7 +14,9 @@ from data.Defs import *
 from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
-from menu.CharacterStoreMenu import *
+from menu.CharacterStoreMenu_p import *
+from menu.CharacterStoreMenu_f import *
+from menu.CharacterStoreMenu_d import *
 from data.database_user import *
 from menu.HelpMenu import *
 from menu.Mypage_p import *
@@ -265,52 +267,56 @@ class GameselectMenu:
                 pygame.display.update()
 
 
-            if self.mypage.isOver(pos):
-                if choosed_character == "police":
-                    Mypage_p(self.screen).show()
-                elif choosed_character == "firefighter":
-                    Mypage_f(self.screen).show()
-                elif choosed_character == "doctor":
-                    Mypage_d(self.screen).show()
+                if self.mypage.isOver(pos):
+                    if choosed_character == "police":
+                        Mypage_p(self.screen).show()
+                    elif choosed_character == "firefighter":
+                        Mypage_f(self.screen).show()
+                    elif choosed_character == "doctor":
+                        Mypage_d(self.screen).show()
 
 
-            if self.rankpage.isOver(pos):
-                LeaderBoardMenu(self.screen).rank()
+                if self.rankpage.isOver(pos):
+                    LeaderBoardMenu(self.screen).rank()
 
-            if self.store.isOver(pos):
-                
-                CharacterStoreMenu(self.screen, choosed_character).show()
+                if self.store.isOver(pos):
+                    if choosed_character=="police":
+                        CharacterStoreMenu_p(self.screen, choosed_character).show()
+                    if choosed_character=="firefighter":
+                        CharacterStoreMenu_f(self.screen, choosed_character).show()
+                    if choosed_character=="doctor":
+                        CharacterStoreMenu_d(self.screen, choosed_character).show()
 
-            if self.help.isOver(pos):
-                HelpMenu(self.screen).show()
+                if self.help.isOver(pos):
+                    HelpMenu(self.screen).show()
 
-            if self.logout.isOver(pos):
-                import Main
-                Main.Login(self.screen).show()
+                if self.logout.isOver(pos):
+                    import Main
+                    Main.Login(self.screen).show()
 
-            if self.returnpage.isOver(pos):  # 직업 선택 화면으로 되돌아가는 페이지
-                from menu.CharacterSelectMenu import CharacterSelect
-                game = CharacterSelect(self.screen)
+                if self.returnpage.isOver(pos):  # 직업 선택 화면으로 되돌아가는 페이지
+                    from menu.CharacterSelectMenu import CharacterSelect
+                    game = CharacterSelect(self.screen)
 
-                while True:
-                    game.show(self.screen)
-                    pygame.display.flip()
+                    while True:
+                        game.show(self.screen)
+                        pygame.display.flip()
 
-            if self.setting.isOver(pos):
-                if self.sound == "on":
-                    self.setting.image = "Image/catthema/off.png"
-                    self.sound = "off"
-                    soundset = 0
-                    print(soundset)
-                    Default.sound.value['sfx']['volume'] = 0
-                    self.character_data = CharacterDataManager.load()  # volume 적용
-                else:
-                    self.setting.image = "Image/catthema/on.png"
-                    self.sound = "on"
-                    soundset = 0.1
-                    print(soundset)
-                    Default.sound.value['sfx']['volume'] = 0.1
-                    self.character_data = CharacterDataManager.load()  # volume 적용
+                if self.setting.isOver(pos):
+                    if self.sound == "on":
+                        self.setting.image = "Image/catthema/off.png"
+                        self.sound = "off"
+                        soundset = 0
+                        print(soundset)
+                        Default.sound.value['sfx']['volume'] = 0
+                        self.character_data = CharacterDataManager.load()  # volume 적용
+                    else:
+                        self.setting.image = "Image/catthema/on.png"
+                        self.sound = "on"
+                        soundset = 0.1
+                        print(soundset)
+                        Default.sound.value['sfx']['volume'] = 0.1
+                        self.character_data = CharacterDataManager.load()  # volume 적용
 
 
 
