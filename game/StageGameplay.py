@@ -103,13 +103,13 @@ class StageGame:
 
         self.screen.blit(infowindow, [0, 0])
         font = pygame.font.Font(Default.font.value, self.size[0]//25)
-        info_stage_test = font.render("[{} 단계]".format(
+        info_stage_test = font.render(" [{} 단계 ]".format(
             self.stage.stage), True, Color.BLACK.value)
         info_score_text = font.render("목표점수 {}를 도달하면 보스가 등장합니다!".format(
             self.goal_score), True, Color.BLACK.value)
         info_boss_text = font.render("목표점수를 달성해 보스를 잡아보세요!".format(
             self.goal_score), True, Color.BLACK.value)
-        info_start_text = font.render("로딩이 끝난 후 Enter키를 눌러 시작하세요".format(
+        info_start_text = font.render("로딩이 끝난 후 SPACE키를 눌러 시작하세요".format(
             self.goal_score), True, Color.BLACK.value)
         self.screen.blit(
             info_stage_test, (self.size[0]*0.45, self.size[1]*0.35))
@@ -118,7 +118,7 @@ class StageGame:
         self.screen.blit(
             info_boss_text, (self.size[0]*0.2, self.size[1]*0.55))
         self.screen.blit(
-            info_start_text, (self.size[0]*0.17, self.size[1]*0.65))
+            info_start_text, (self.size[0]*0.15, self.size[1]*0.65))
         pygame.display.flip()
         time.sleep(3)  # 3초뒤에 스토리라인 전개.
 
