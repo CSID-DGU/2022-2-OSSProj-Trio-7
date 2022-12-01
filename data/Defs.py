@@ -8,18 +8,27 @@ class User:
     user_id = ""
     user_nickname = ""
     coin = 0
-    character = 0
-    buy_character = 0
-    price = [0, 100, 100, 200]
-    easy_score = 0
-    hard_score = 0
-    cat_lock = [False, False, False, False]
+    pcharacter = 0
+    fcharacter = 3
+    dcharacter = 6
+    buy_pcharacter = 0
+    buy_fcharacter = 0
+    buy_dcharacter = 0
+    price = [0, 8000, 8000]
+    score_score = 0
+    time_score = 0.0
+    cat_lock = [False, False, False]
 
+    police_lock = [False, False, False]
+    firefighter_lock = [False, False, False]
+    doctor_lock = [False, False, False]
 
 class Images(enum.Enum):
     lock = "./Image/catthema/lock.jpg"
-    login = "./Image/Login.png"
+    login = "./Image/main.png"
     main = "./Image/main.png"
+    characterSelect = "./Image/characterSelect_background.png"
+    weaponback = "./Image/weaponSelect/wbackground.png"
     start = "./Image/StartImage.png"
     how_to_play = "./Image/howtoplay.png"
     about = "./Image/AboutPage.jpg"
@@ -29,7 +38,7 @@ class Images(enum.Enum):
     enemy_cactus = "./Image/Catus.png"
     missile_missile2 = "./Image/MISSILE_2.png"
     weapon_target_missile = "./Image/Weapon/spaceMissiles_012.png"
-
+    pausedInfo = "./Image/thema/pauseInfo.png"
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
@@ -57,12 +66,13 @@ class Images(enum.Enum):
     info_stage_5 = "./Image/Info_stage_5.png"
     info_stage_6 = "./Image/Info_stage_6.png"
     info_items = "./Image/Info_items.png"
-    info_controls = "./Image/Info_controls.jpg"
+    info_controls = "./Image/Info_controls.png"
 
     cat1 = "./Image/catthema/cat1_front.png"
     cat2 = "./Image/catthema/cat2_front.png"
     cat3 = "./Image/catthema/cat3_front.png"
     cat4 = "./Image/catthema/cat4_front.png"
+
 
     win = "./Image/catthema/win.png"
     lose = "./Image/catthema/lose.png"
@@ -75,6 +85,28 @@ class Images(enum.Enum):
     failbuy_cat3 = "./Image/catthema/failbuy_cat3.png"
     failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
 
+    police = "./Image/policeCharacters/policeOfficer.png"
+    police1 = "./Image/storeItems/police1.png"
+    police2 = "./Image/storeItems/police2.png"
+    fire = "./Image/fireCharacters/firefighter.png"
+    fire1 = "./Image/storeItems/firefighter1.png"
+    fire2 = "./Image/storeItems/firefighter2.png"
+    doctor = "./Image/doctorCharacters/doctor.png"
+    doctor1 = "./Image/storeItems/doctor1.png"
+    doctor2 = "./Image/storeItems/doctor2.png"
+
+    doctor_w1 = "./Image/storeItems/syringe.png"
+    doctor_w2 = "./Image/storeItems/stethoscope.png"
+    police_w1 = "./Image/storeItems/baton.png"
+    police_w2 = "./Image/storeItems/stun_gun.png"
+    fire_w1 = "./Image/storeItems/fire_hose.png"
+    fire_w2 = "./Image/storeItems/fire_extinguisher.png"
+
+    JobInfo = "./Image/JobInfo.png"
+
+
+    help = "./Image/help.png";
+    stop = "./Image/stop.png";
 
 class Scales(enum.Enum):
     large = (2, 2)
@@ -233,15 +265,37 @@ class Default(enum.Enum):
                 "./Image/catthema/item/item_heart.png"
             ]
         },
-        "coin": {
+        "100won": {
             "spawn_rate": 0.002,
             "frames": [
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png",
-                "./Image/catthema/item/item_coin.png"
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png",
+                "./Image/Item/100won.png"
+            ]
+        },
+        "500won": {
+            "spawn_rate": 0.001,
+            "frames": [
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png",
+                "./Image/Item/500won.png"
+            ]
+        },
+        "1000won": {
+            "spawn_rate": 0.0005,
+            "frames": [
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png",
+                "./Image/Item/1000won.png"
             ]
         }
     }

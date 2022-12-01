@@ -27,7 +27,7 @@ from data.Defs import User
 
 class InfiniteGame:
 
-    def __init__(self, character, mode, mapimg, target1img, target2img, target3img, target4img):
+    def __init__(self, character, choosed_chracter, mode, mapimg, target1img, target2img, target3img, target4img):
         # 1. 게임초기화
         pygame.init()
 
@@ -42,7 +42,10 @@ class InfiniteGame:
 
         # 3. 게임 내 필요한 설정
         self.clock = pygame.time.Clock()  # 이걸로 FPS설정함
-        self.mode = mode  # Game mode = hard/easy
+
+        self.mode = mode  # Game mode = score/time
+        self.choosed_chracter = choosed_chracter
+
         self.menu = pygame_menu.Menu('게임이 끝났습니다!', self.size[0], self.size[1],
                                      theme=pygame_menu.themes.THEME_DEFAULT)
 
@@ -83,7 +86,7 @@ class InfiniteGame:
         self.board_height = self.changed_screen_size[1]  # y
         import button
         self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/catthema/stop.png")
+            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
 
     def main(self):
         from menu.gameselectMenu import soundset
@@ -181,7 +184,7 @@ class InfiniteGame:
             # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
                 if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
-                    Default.item.value["bomb"]["spawn_rate"] += 0.0003
+                    Default.item.value["bomb"]["spawn_rate"] += 0.0001
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -190,29 +193,51 @@ class InfiniteGame:
             # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
                 if (Default.item.value["health"]["spawn_rate"] < 0.3):
-                    Default.item.value["health"]["spawn_rate"] += 0.0003
+                    Default.item.value["health"]["spawn_rate"] += 0.0001
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 기본값 0.002
-            if random.random() < Default.item.value["coin"]["spawn_rate"]:
-                if (Default.item.value["coin"]["spawn_rate"] < 0.3):
-                    Default.item.value["coin"]["spawn_rate"] += 0.0003
-                new_item = Coin(self.animation.animations["coin"])
+            # 100coin 기본값 0.003
+            if random.random() < Default.item.value["100won"]["spawn_rate"]:
+                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
+                    Default.item.value["100won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin100WonAnim"], "100won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 500coin 기본값 0.002
+            if random.random() < Default.item.value["500won"]["spawn_rate"]:
+                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
+                    Default.item.value["500won"]["spawn_rate"] += 0.0001
+                new_item = Coin(
+                    self.animation.animations["Coin500WonAnim"], "500won")
+                new_item.set_XY(
+                    (random.randrange(0, self.size[0]-new_item.sx), 0))
+                self.item_list.append(new_item)
+
+            # 1000coin 기본값 0.001
+            if random.random() < Default.item.value["1000won"]["spawn_rate"]:
+                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
+                    Default.item.value["1000won"]["spawn_rate"] += 0.0001
+
+                new_item = Coin(
+                    self.animation.animations["Coin1000WonAnim"], "1000won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
             # 기본값 0.002
-            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-                if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-                    Default.item.value["speedup"]["spawn_rate"] += 0.0003
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
+            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
+            #         Default.item.value["speedup"]["spawn_rate"] += 0.0003
+            #     new_item = SpeedUp(self.animation.animations["speedup"])
+            #     new_item.set_XY(
+            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
+            #     self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -300,7 +325,7 @@ class InfiniteGame:
             self.screen.blit(score_life_text, (10, 5))
 
             # 현재 흘러간 시간
-            play_time = (time.time() - self.start_time)
+            play_time = float(time.time() - self.start_time)
             time_text = font.render("Time : {:.2f}".format(
                 play_time), True, Color.YELLOW.value)
             self.screen.blit(time_text, (self.size[0]//2, 5))
@@ -339,6 +364,7 @@ class InfiniteGame:
         pygame.mixer.music.stop()
 
     def show_ranking_register_screen(self):
+        play_time = time.time() - self.start_time
         pygame.mixer.music.stop()
         ranking_register_screen = pygame_menu.themes.THEME_DEFAULT.copy()
         ranking_register_screen.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
@@ -349,6 +375,8 @@ class InfiniteGame:
         self.menu.add.image(Images.lose.value, scale=self.scale)
         self.menu.add.label("Score : {}".format(
             self.score), font_size=self.font_size)
+        self.menu.add.label("Time : {:.2f}".format(
+            play_time), font_size=self.font_size)
         # 랭킹화면으로 넘어가도록 설정했음.
         self.menu.add.button(
             'Ranking', self.show_register_result, font_size=self.font_size)
@@ -360,28 +388,32 @@ class InfiniteGame:
         User.coin = User.coin + self.coin
         print(User.coin)
         self.database = Database()
-        self.database.set_coin()                     
-        self.menu.mainloop(self.screen) #bgfun=self.check_resize_end)
+        self.database.set_coin()
+        self.menu.mainloop(self.screen)  # bgfun=self.check_resize_end)
         pygame.display.flip()
 
     def register_ranking(self):  # 랭크 기록
         current_score = self.score  # 현재 게임 기록
+        play_time = time.time() - self.start_time
+        current_time = play_time
         print(self.user)
         print(current_score)
-        if (isinstance(self.mode, InfiniteGame.EasyMode)):  # easy mode
-            if self.database.rank_not_exists(self.user, "easy") is True:  # 기록 없는 경우
-                self.database.update_score2("easy", current_score)  # 기록추가
+        if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
+            # 기록 없는 경우
+            if self.database.rank_not_score_exists(self.user, "score") is True:
+                self.database.update_score2("score", current_score)  # 기록추가
                 print("enter")
             else:
-                if (self.database.high_score("easy") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
+                if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
                     self.database.update_score(
-                        'easy', current_score)  # 새로운 점수가 더 높으면 기록
-        else:  # hard mode
-            if self.database.rank_not_exists(self.user, "hard") is True:  # 기록 없는 경우
-                self.database.update_score2("hard", current_score)
+                        'score', current_score)  # 새로운 점수가 더 높으면 기록
+        elif (isinstance(self.mode, InfiniteGame.TimeMode)):
+            # 기록 없는 경우
+            if self.database.rank_not_time_exists(self.user, "time") is True:
+                self.database.update_time2("time", current_time)
             else:
-                if (self.database.high_score("hard") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
-                    self.database.update_score('hard', current_score)
+                if (self.database.high_time("time") <= current_time):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
+                    self.database.update_time('time', current_time)
 
     # 랭킹 등록 결과 화면
 
@@ -394,7 +426,7 @@ class InfiniteGame:
         game = menu.gameselectMenu.GameselectMenu(self.screen)
 
         while True:
-            game.show(self.screen)
+            game.show(self.screen, self.choosed_chracter)
             pygame.display.flip()
 
     # Continue 클릭 시
@@ -405,22 +437,41 @@ class InfiniteGame:
     # 일시정지 화면
     def StopGame(self):
         pygame.mixer.music.pause()
-        stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-        stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Paused', self.size[0], self.size[1],
-                                     theme=stageclear_theme)
-        self.menu.add.image(Images.win.value, scale=self.scale)
-        self.menu.add.label("")
-        self.menu.add.label(
-            'Paused', font_size=self.screen.get_size()[0]*40//720)
-        self.menu.add.button('Continue', self.Continue,
-                             self.menu, font_size=self.font_size)
-        self.menu.add.button("Restart", self.retry, font_size=self.font_size)
-        self.menu.add.button("Home", self.gameselectmenu,
-                             font_size=self.font_size,)
+        self.orange_color = (253, 111, 34)
+        self.font_size = self.size[0] * 38 // 720  # 글씨크기
+
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+
+        main_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.stop.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+
+        self.mytheme.background_color = main_image
+
+        self.menu = pygame_menu.Menu(
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+
+        self.stop_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
+
+    def stop_page(self):
+        self.menu.clear()
+        b1 = self.menu.add.button('   계속하기   ', self.Continue, 
+                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        b3 = self.menu.add.button("모드 선택화면으로", self.gameselectmenu, selection_color=self.orange_color,
+                             font_size=self.font_size,)
 
     def check_resize_end(self):
         if self.check_resize():
@@ -462,10 +513,10 @@ class InfiniteGame:
         def update_difficulty():
             pass
 
-    class EasyMode(Mode):  # 이지 모드
+    class ScoreMode(Mode):  # 이지 모드
         @staticmethod
         def update_difficulty(game):
-            play_time = (time.time() - game.start_time)  # 게임 진행 시간
+            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
             if (game.mob_gen_rate < 0.215):  # 최대값 제한
                 # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
                 game.mob_gen_rate = play_time//10/10 + 0.015
@@ -475,15 +526,15 @@ class InfiniteGame:
                 # 10초마다 mob_velocity(몹 이동 속도) 1 증가 (기본 2)
                 game.mob_velocity = play_time//10*1 + 2
 
-    class HardMode(Mode):  # 하드 모드
+    class TimeMode(Mode):  # time 모드
         @staticmethod
         def update_difficulty(game):
-            play_time = (time.time() - game.start_time)  # 게임 진행 시간
-            if (game.mob_gen_rate < 0.315):  # 최대값 제한
+            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
+            if (game.mob_gen_rate < 0.215):  # 최대값 제한
                 # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
                 game.mob_gen_rate = play_time//10/10 + 0.015
             if (game.dy < 20):  # 최대값 제한
                 game.dy = play_time//5*2 + 2  # 5초마다 dy(배경 이동 속도) 2 증가 (기본 2)
-            if (game.mob_velocity < 6):  # 최대값 제한
+            if (game.mob_velocity < 3):  # 최대값 제한
                 # 10초마다 mob_velocity(몹 이동 속도) 2 증가 (기본 2)
-                game.mob_velocity = play_time//10*2 + 2
+                game.mob_velocity = play_time//10*1 + 2

@@ -103,16 +103,29 @@ class Bomb(Item):
 
 class Coin(Item):
     # 코인 아이템: 획득 시 보유하고 있는 코인 증가
-    def __init__(self, animation):
+    def __init__(self, animation, price):
         super().__init__(animation.frames, animation.frames_trans, "coin")
+        self.kind = price
 
     # 캐릭터와 충돌 시  바로 실행
     def use(self, game):
         if self.is_collidable == True:
             self.sfx.play()
-            game.coin += 1
-            self.is_collidable = False
-            game.item_list.remove(self)
+            if self.kind == "100won":
+                game.coin += 100
+                print("100원")
+                self.is_collidable = False
+                game.item_list.remove(self)
+            if self.kind == "500won":
+                print("500원")
+                game.coin += 500
+                self.is_collidable = False
+                game.item_list.remove(self)
+            if self.kind == "1000won":
+                print("1000원")
+                game.coin += 1000
+                self.is_collidable = False
+                game.item_list.remove(self)
 
 
 class Health(Item):
@@ -149,7 +162,7 @@ class PowerUp(Item):
 
 
 class SpeedUp(Item):
-    # 스피드업 아이템: 획득 시 캐릭터 이동/발사 속도 증가
+    # 스피드업 아이템: 획득 시 캐릭터 이동/발사 속도 증가 
     def __init__(self, animation):
         super().__init__(animation.frames, animation.frames_trans, "speedup")
 

@@ -39,7 +39,7 @@ class PvpCharacterDataManager:
     def save(characters):
         char_dict = {"Characters":characters}
         json_str = json.dumps(char_dict,indent=4,default=Character.json_dump_obj)
-        json_file = open("./data/characterdata.json", "w")
+        json_file = open("./data/characterdata.json", "w") 
         json_file.write(json_str)
         json_file.close()
 
