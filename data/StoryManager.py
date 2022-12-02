@@ -47,7 +47,6 @@ class StoryManager():
         else:
             text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts3]
         
-
         index = -1
         self.space_released = True
 
@@ -102,7 +101,6 @@ class StoryManager():
                     time.sleep(2)
                     return
                 else:
-
                     self.screen.blit(text_renders[index], (40, self.size[1]*0.85))
                     
                 
