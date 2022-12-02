@@ -14,7 +14,7 @@ class User:
     buy_pcharacter = 0
     buy_fcharacter = 0
     buy_dcharacter = 0
-    price = [0, 8000, 8000]
+    price = [0, 0, 8000, 8000]
     score_score = 0
     time_score = 0.0
     cat_lock = [False, False, False]
@@ -91,6 +91,7 @@ class Images(enum.Enum):
     fire = "./Image/fireCharacters/firefighter.png"
     fire1 = "./Image/storeItems/firefighter1.png"
     fire2 = "./Image/storeItems/firefighter2.png"
+
     doctor = "./Image/doctorCharacters/doctor.png"
     doctor1 = "./Image/storeItems/doctor1.png"
     doctor2 = "./Image/storeItems/doctor2.png"
@@ -103,6 +104,7 @@ class Images(enum.Enum):
     fire_w2 = "./Image/storeItems/fire_extinguisher.png"
 
     JobInfo = "./Image/JobInfo.png"
+
 
 
     help = "./Image/help.png";

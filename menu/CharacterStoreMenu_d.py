@@ -1,5 +1,4 @@
 
-
 from os import name
 from tokenize import String
 from turtle import title
@@ -17,15 +16,15 @@ from pygame_menu.utils import make_surface
 from object.Character import *
 
 # 캐릭터 선택 메뉴
-class CharacterStoreMenu:
+class CharacterStoreMenu_d:
     image_widget: 'pygame_menu.widgets.Image'
     item_description_widget: 'pygame_menu.widgets.Label'
 
-    def __init__(self, screen, character):
+    def __init__(self, screen, character_info):
         # 화면 받고 화면 크기 값 받기
         self.screen = screen
         self.size = screen.get_size()
-        self.character = character
+        self.character = character_info
 
         #menu_image = pygame_menu.baseimage.BaseImage(image_path='./Image/Login.png',drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
@@ -47,7 +46,7 @@ class CharacterStoreMenu:
         #캐릭터 데이터를 json에서 불러온다
         #self.character_data = CharacterDataManager.load()
 
-        self.show(self.character)
+        self.show()
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
 
     def to_menu(self):
@@ -55,49 +54,21 @@ class CharacterStoreMenu:
             game=menu.gameselectMenu.GameselectMenu(self.screen)
 
             while True:
-                game.show(self.screen)
+                game.show(self.screen, self.character)
                 pygame.display.flip()
 
     #메뉴 구성하고 보이기
-    def show(self, character_info):  # 원래 character_info를 가져와서 직업에 따라 상점 구현하려고 함.
-        self.character = character_info
-        # front_image_path = [ Images.fire.value, Images.fire1.value, Images.fire2.value, Images.police.value, Images.police1.value,
-        # Images.police2.value, Images.doctor.value, Images.doctor1.value, Images.doctor2.value]
-        # self.character_data = CharacterDataManager.load()
-        
-        if self.character == "firefighter":
-            front_image_path = [ Images.fire.value, Images.fire1.value, Images.fire2.value]
-            self.character_data = StoreDataManager.load("fire")
+    def show(self):  # 원래 character_info를 가져와서 직업에 따라 상점 구현하려고 함.
 
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, fchar1, fchar2, fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택 -> 수정 필요
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
-            curs.close()
+        front_image_path = [Images.doctor.value, Images.doctor1.value, Images.doctor2.value]
+        self.character_data = StoreDataManager.load("doctor")
 
-        if self.character == "police":
-            front_image_path = [Images.police.value, Images.police1.value, Images.police2.value]
-            self.character_data = StoreDataManager.load("police")  
-    
-
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택 -> 수정 필요
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
-            curs.close()
-
-        if self.character == "doctor":
-            front_image_path = [Images.doctor.value, Images.doctor1.value, Images.doctor2.value]
-            self.character_data = StoreDataManager.load("doctor")
-
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, dchar1, dchar2, dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택 -> 수정 필요
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
-            curs.close()
+        curs = Database().dct_db.cursor()
+        self.id = User.user_id
+        sql = "SELECT user_id, dchar1, dchar2, dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+        curs.execute(sql,self.id) 
+        data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
+        curs.close()
 
         User.coin = Database().show_mycoin()
         self.menu.add.label("My coin : %d "%User.coin)
@@ -108,9 +79,8 @@ class CharacterStoreMenu:
         self.character_imgs = []
         self.character_imgs2 = []
         self.price = []
-        # =====================================================================================================
+
         for idx in range(1,4): # 데이버 베이스 정보를 가져올 인덱스 설정
-            print("인덱스 설정")
             char = data[idx] # 해당 인덱스에 저장된 값 (-1 또는 보유시 5로 설정)
 
             if(char == -1): # 보유하지 않다면 (기본캐릭터는 상점에 나오지 않음)
@@ -133,7 +103,7 @@ class CharacterStoreMenu:
                     self.character_imgs2.append(default_image.copy())
 
             for i in range(0,3):
-                self.price.append(User.price[i]) 
+                self.price.append(User.price[i+1])
                 
             self.character_selector = self.menu.add.selector(
                 title='Character :\t',
@@ -171,39 +141,29 @@ class CharacterStoreMenu:
             # self.mytheme.widget_background_color = (150, 213, 252)
             #self.item_description_widget = self.show_price
             
-            self.menu.add.button("Buy", self.buy_character(self.character))
+            print("버튼 추가")
+            self.menu.add.button("Buy", self.buy_character) # 버튼 추가시 기능 한번 실행됨.
             self.menu.add.vertical_margin(10)
+            print(("뒤로가기 버튼 추가"))
             self.menu.add.button("    BACK    ",self.to_menu)
-            self.lock(self.character)
+            self.lock()
 
+            
             self.update_from_selection(int(self.character_selector.get_value()[0][1]))
             self.mytheme.widget_background_color = (0,0,0,0)
         
 
 
-    def buy_character(self, character_info):
-        character = character_info
-        if character =="firefighter":
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id,fchar1, fchar2, fchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  
-            curs.close()
-        if character =="police":
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, pchar1, pchar2, pchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  
-            curs.close()
-        if character =="doctor":
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, dchar1, dchar2, dchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  
-            curs.close()
+    def buy_character(self):
+
+        print("아이템을 구매합니다.")
+
+        curs = Database().dct_db.cursor()
+        self.id = User.user_id
+        sql = "SELECT user_id, dchar1, dchar2, dchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+        curs.execute(sql,self.id) 
+        data = curs.fetchone()  
+        curs.close()
         
        
         # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
@@ -218,34 +178,20 @@ class CharacterStoreMenu:
             self.item_description_widget.set_title(title = "Unlocked" )
 
         else:
-            print("not enough money")
+            print("not enough money") # 돈이 부족할 경우 AttributeError가 발생함.
             import menu.CharacterBuy
             menu.CharacterBuy.CharacterBuy(self.screen,self.character_data[selected_idx].name).show()    
 
     #잠금 표시
-    def lock(self, character_info):
-        character = character_info
-        if character== "firefighter":
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, fchar1, fchar2, fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  
-            curs.close()
-        if character == "doctor":
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, dchar1, dchar2, dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  
-            curs.close()
-        if character == "police":
-            curs = Database().dct_db.cursor()
-            self.id = User.user_id
-            sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
-            curs.execute(sql,self.id) 
-            data = curs.fetchone()  
-            curs.close()
+    def lock(self):
+
+        curs = Database().dct_db.cursor()
+        self.id = User.user_id
+        sql = "SELECT user_id, dchar1, dchar2, dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+        curs.execute(sql,self.id) 
+        data = curs.fetchone()  
+        curs.close()
+ 
 
         selected_idx = self.character_selector.get_value()[0][1]
         #self.item_description_widget.set_title(title = "Unlocked" if data[selected_idx] == True else "Locked")
