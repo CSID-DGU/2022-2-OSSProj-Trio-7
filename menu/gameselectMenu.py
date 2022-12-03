@@ -277,11 +277,10 @@ class GameselectMenu:
                     LeaderBoardMenu(self.screen).rank()
 
                 if self.store.isOver(pos):
-                    
                     CharacterStoreMenu(self.screen, choosed_character).show()
 
                 if self.help.isOver(pos):
-                    HelpMenu(self.screen).show()
+                    HelpMenu(self.screen, choosed_character).show()
 
                 if self.logout.isOver(pos):
                     import Main
