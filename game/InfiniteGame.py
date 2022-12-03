@@ -339,8 +339,6 @@ class InfiniteGame:
                 self.show_ranking_register_screen()
                 return
 
-            # self.mode.update_difficulty(self)
-
         # While 빠져나오면 랭킹등록 스크린 실행
         self.register_ranking()
         self.show_ranking_register_screen()
@@ -504,8 +502,8 @@ class InfiniteGame:
 
     # 재시도 버튼 클릭 시 실행
     def retry(self):
-        InfiniteGame(self.character, self.mode,
-                     self.background_image, self.mob_image).main()
+        InfiniteGame(self.character, self.choosed_chracter, self.mode,
+                     self.background_image,self.target1_image,self.target2_image,self.target3_image,self.target4_image).main()
         self.menu.disable()
 
     # 난이도를 나누는 모드 클래스 (상속하여 사용)
