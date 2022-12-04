@@ -24,7 +24,6 @@ from pygame_menu.utils import make_surface
 from data.database_user import *
 from data.Defs import User
 
-
 class InfiniteGame:
 
     def __init__(self, character, choosed_chracter, mode, mapimg, target1img, target2img, target3img, target4img):
@@ -65,6 +64,7 @@ class InfiniteGame:
         self.target3_image = target3img
         self.target4_image = target4img
         self.background_image = mapimg
+        from menu.gameselectMenu import soundset
         if(choosed_chracter == "police"):
             self.background_music = "./Sound/bgm/bgm_police.mp3"
         if(choosed_chracter == "firefighter"):
@@ -90,16 +90,31 @@ class InfiniteGame:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
         import button
-        # self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png")  # sound on/off
+        self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png")
+
         self.stop = button.button(self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
         self.sound = "on"
+
     def main(self):
         from menu.gameselectMenu import soundset
         # 메인 이벤트
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(soundset)
+
+        # 현재 소리 on/off 상태
+        if  Default.sound.value['sfx']['volume'] == 0.1:
+            self.setting.image = "Image/thema/on.png"
+            pygame.mixer.music.set_volume(0.1)
+        else :
+            pass
+
+        if  Default.sound.value['sfx']['volume'] == 0:
+            self.setting.image = "Image/thema/off.png"
+            pygame.mixer.music.set_volume(0)
+        else :
+            pass
+        
         background1_y = 0  # 배경 움직임을 위한 변수
         while self.SB == 0:
             # fps 제한을 위해 한 loop에 한번 반드시 호출해야합니다.
@@ -135,22 +150,27 @@ class InfiniteGame:
                         self.SB = 1
                     if event.key == pygame.K_z:  # 테스트용
                         self.score += 30
+                        
                 pos = pygame.mouse.get_pos()  # mouse
+
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.stop.isOver(pos):  # 마우스로 일시정지 버튼 클릭하면
                         self.StopGame()
 
-                    from menu.gameselectMenu import soundset
                     if self.setting.isOver(pos):
                         if soundset == 0.1:
                             self.setting.image = "Image/thema/off.png"
                             soundset = 0
+                            print(soundset)
                             Default.sound.value['sfx']['volume'] = 0
+                            pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
                             from menu.gameselectMenu import soundset
                             soundset = 0.1
+                            print(soundset)
                             Default.sound.value['sfx']['volume'] = 0.1
+                            pygame.mixer.music.set_volume(0.1)
 
                 if event.type == pygame.VIDEORESIZE:  # 창크기가 변경되었을 때
                     # 화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
