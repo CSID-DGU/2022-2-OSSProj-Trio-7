@@ -65,7 +65,12 @@ class InfiniteGame:
         self.target3_image = target3img
         self.target4_image = target4img
         self.background_image = mapimg
-        self.background_music = "./Sound/bgm/bensound-evolution.wav"
+        if(choosed_chracter == "police"):
+            self.background_music = "./Sound/bgm/bgm_police.mp3"
+        if(choosed_chracter == "firefighter"):
+            self.background_music = "./Sound/bgm/bgm_firefighter.mp3"
+        if(choosed_chracter == "doctor"):
+            self.background_music = "./Sound/bgm/bgm_doctor.mp3"
         self.SB = 0
         self.dy = 2
         self.mob_velocity = 2
@@ -85,9 +90,9 @@ class InfiniteGame:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
         import button
-        self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
-
+        # self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png")  # sound on/off
+        self.stop = button.button(self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
+        self.sound = "on"
     def main(self):
         from menu.gameselectMenu import soundset
         # 메인 이벤트
@@ -117,6 +122,9 @@ class InfiniteGame:
             self.stop.change(self.screen.get_size()[
                              0], self.screen.get_size()[1])
             self.stop.draw(self.screen, (0, 0, 0))
+            self.setting.change(self.screen.get_size()[
+                             0], self.screen.get_size()[1])
+            self.setting.draw(self.screen, (0, 0, 0))
 
             # 입력 처리
             for event in pygame.event.get():  # 동작을 했을때 행동을 받아오게됨
@@ -131,6 +139,18 @@ class InfiniteGame:
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.stop.isOver(pos):  # 마우스로 일시정지 버튼 클릭하면
                         self.StopGame()
+
+                    from menu.gameselectMenu import soundset
+                    if self.setting.isOver(pos):
+                        if soundset == 0.1:
+                            self.setting.image = "Image/thema/off.png"
+                            soundset = 0
+                            Default.sound.value['sfx']['volume'] = 0
+                        else:
+                            self.setting.image = "Image/thema/on.png"
+                            from menu.gameselectMenu import soundset
+                            soundset = 0.1
+                            Default.sound.value['sfx']['volume'] = 0.1
 
                 if event.type == pygame.VIDEORESIZE:  # 창크기가 변경되었을 때
                     # 화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
@@ -171,15 +191,6 @@ class InfiniteGame:
                 # set mob location randomly
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
-
-            # 기본값 0.01
-            # if random.random() < Default.item.value["powerup"]["spawn_rate"]:
-            #     if (Default.item.value["powerup"]["spawn_rate"] < 0.5):
-            #         Default.item.value["powerup"]["spawn_rate"] += 0.0003
-            #     new_item = PowerUp(self.animation.animations["powerup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
 
             # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
@@ -229,15 +240,6 @@ class InfiniteGame:
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
-
-            # 기본값 0.002
-            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-            #         Default.item.value["speedup"]["spawn_rate"] += 0.0003
-            #     new_item = SpeedUp(self.animation.animations["speedup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -326,7 +328,7 @@ class InfiniteGame:
 
             # 현재 흘러간 시간
             play_time = float(time.time() - self.start_time)
-            time_text = font.render("Time : {:.2f}".format(
+            time_text = font.render("시간 : {:.2f}".format(
                 play_time), True, Color.YELLOW.value)
             self.screen.blit(time_text, (self.size[0]//2, 5))
 

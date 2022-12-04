@@ -14,7 +14,9 @@ from data.Defs import *
 from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
-from menu.CharacterStoreMenu import *
+from menu.CharacterStoreMenu_p import *
+from menu.CharacterStoreMenu_f import *
+from menu.CharacterStoreMenu_d import *
 from data.database_user import *
 from menu.HelpMenu import *
 from menu.Mypage_p import *
@@ -151,13 +153,11 @@ class GameselectMenu:
                 self.dcheck = Database().check_dchar_lock()
 
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-
                     print(choosed_character)
                     if choosed_character == "police":  # 경찰관 맵
                         print('show_pmychar')
                         User.pcharacter = self.database.show_pmychar()
 
-                   
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
@@ -277,10 +277,15 @@ class GameselectMenu:
                     LeaderBoardMenu(self.screen).rank()
 
                 if self.store.isOver(pos):
-                    CharacterStoreMenu(self.screen, choosed_character).show()
+                    if choosed_character=="police":
+                        CharacterStoreMenu_p(self.screen, choosed_character).show()
+                    if choosed_character=="firefighter":
+                        CharacterStoreMenu_f(self.screen, choosed_character).show()
+                    if choosed_character=="doctor":
+                        CharacterStoreMenu_d(self.screen, choosed_character).show()
 
                 if self.help.isOver(pos):
-                    HelpMenu(self.screen, choosed_character).show()
+                    HelpMenu(self.screen).show()
 
                 if self.logout.isOver(pos):
                     import Main
