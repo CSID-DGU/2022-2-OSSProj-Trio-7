@@ -12,8 +12,8 @@ class User:
     fcharacter = 3
     dcharacter = 6
     buy_pcharacter = 0
-    buy_fcharacter = 0
-    buy_dcharacter = 0
+    buy_fcharacter = 3
+    buy_dcharacter = 6
     price = [0, 0, 8000, 8000]
     score_score = 0
     time_score = 0.0

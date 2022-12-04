@@ -173,9 +173,9 @@ class CharacterStoreMenu_p:
 
         selected_idx = self.character_selector.get_value()[0][1]
         if(User.coin >= self.price[selected_idx]):
-            User.buy_character = selected_idx
+            User.buy_pcharacter = selected_idx
             database = Database()
-            database.buy_char()
+            database.buy_pchar()
             User.coin = Database().show_mycoin()
             #self.show()
             self.item_description_widget.set_title(title = "Unlocked" )
