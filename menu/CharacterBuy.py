@@ -5,7 +5,9 @@ import pygame_menu
 from data.CharacterDataManager import *
 from data.Defs import *
 from data.StageDataManager import *
-from menu.CharacterStoreMenu import *
+from menu.CharacterStoreMenu_p import *
+from menu.CharacterStoreMenu_f import *
+from menu.CharacterStoreMenu_d import *
 
 #Mypage에서 잠긴 캐릭터 SELECT할 시 보여주는 창
 class CharacterBuy:

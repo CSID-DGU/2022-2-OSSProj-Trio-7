@@ -87,7 +87,7 @@ class Mypage_d:
             self.dcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
             self.dcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
             for i in range(6,9):
-                dchar = data[i-6]
+                dchar = data[i-5]
     
                 if(dchar != -1): 
                     default_image = pygame_menu.BaseImage(
