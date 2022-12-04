@@ -184,8 +184,8 @@ class CharacterStoreMenu_f:
 
         else:
             print("not enough money") # 돈이 부족할 경우 AttributeError가 발생함.
-            import menu.CharacterBuy
-            menu.CharacterBuy.CharacterBuy(self.screen,self.character_data[selected_idx].name).show()    
+            import menu.CharacterBuy_f
+            menu.CharacterBuy_f.CharacterBuy_f(self.screen,self.character_data[selected_idx].name).show()    
 
     #잠금 표시
     def lock(self):
