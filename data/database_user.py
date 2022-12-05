@@ -470,3 +470,16 @@ class Database:
         if check == 0:  # 캐릭터가 잠겨 있으면 true
             return True
         return False  # 그렇지 않으면 false
+    
+    def buy_weapon(self):
+        self.id = User.user_id
+        self.coin = User.coin
+        prices = 2000
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+        curs.execute(sql, (self.coin-prices, self.id))
+        self.dct_db.commit()
+        curs.close()
+
+
+

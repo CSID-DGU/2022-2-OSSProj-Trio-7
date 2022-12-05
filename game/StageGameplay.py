@@ -29,7 +29,7 @@ from data.StoryManager import *
 
 class StageGame:
 
-    def __init__(self, character_data, character, stage, map_info):
+    def __init__(self, character_data, character, stage, map_info, weapon):
         print("stageGame에서 직업", map_info)
         # 1. 게임초기화
         pygame.init()
@@ -94,6 +94,18 @@ class StageGame:
 
         # 5. 캐릭터 초기화
         self.character.reinitialize(self)
+
+        # 무기 선택 옵션
+        self.stagew=False
+        self.infinitew=False
+        self.defaultw=False
+        self.wselect = weapon
+        if weapon == "stage":
+            self.stagew = True
+        elif weapon == "infinite":
+            self.infinitew = True
+        else:
+            self.defaultw = True
 
     def main_info(self):
         self.check_resize()
@@ -251,14 +263,24 @@ class StageGame:
                 self.item_list.append(new_item)
 
             # 기본값 0.002
-            if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-                if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-                    Default.item.value["speedup"]["spawn_rate"] += 0.0001
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.set_XY(
-                    (random.randrange(0, self.size[0]-new_item.sx), 0))
-                self.item_list.append(new_item)
+            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
+            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
+            #         Default.item.value["speedup"]["spawn_rate"] += 0.0001
+            #     new_item = SpeedUp(self.animation.animations["speedup"])
+            #     new_item.set_XY(
+            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
+            #     self.item_list.append(new_item)
 
+            # # 무기 구매 적용 
+            if self.stagew==True:
+                new_item = PowerUp(self.animation.animations["powerup"])
+                new_item.use(self)
+                # self.item_list.append(new_item)
+
+            if self.infinitew==True:
+                new_item = SpeedUp(self.animation.animations["speedup"])
+                new_item.use(self)
+                # self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -394,7 +416,7 @@ class StageGame:
 
     # 재시도 버튼 클릭 시
     def retry(self):
-        StageGame(self, self.character, self.stage).main()
+        StageGame(self, self.character, self.stage, self.storyInfo, self.wselect).main()
         self.menu.disable()
 
     # 홈버튼 클릭 시
@@ -470,8 +492,8 @@ class StageGame:
     # 실패 화면
     def showGameOverScreen(self):
         pygame.mixer.music.stop()
-        Database().reduce_char_life()  # stage fail하면 캐릭터 생명 하나 줄임
-        Database().char_lock()  # 생명이 0이 된다면 잠굼
+        # Database().reduce_char_life()  # stage fail하면 캐릭터 생명 하나 줄임
+        # Database().char_lock()  # 생명이 0이 된다면 잠굼
         gameover_theme = pygame_menu.themes.THEME_DARK.copy()
         gameover_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
         gameover_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND

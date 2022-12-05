@@ -5,9 +5,9 @@ from data.database_user import *
 
 class StoryManager():
     def __init__(self, stageinfo):
-        print("stageinfo", stageinfo)
         self.db = Database()
         self.mapinfo = stageinfo
+        print(self.mapinfo)
         # 게임창 설정
         pygame.init()
         infoObject = pygame.display.Info()
@@ -23,7 +23,7 @@ class StoryManager():
         # bg init
 
         bg_y = 0 # 배경이동을 위한 변수
-        if self.mapinfo == "poilce":
+        if self.mapinfo == "police":
             bg = pygame.image.load("./Image/background/police_background.png")
         elif self.mapinfo == "firefighter":
             bg = pygame.image.load(
