@@ -352,12 +352,31 @@ class Character(Object):
         if (self.name == "police"):
             self.gung_img = "./Image/gung_image/patrolcar.png"
             self.missile_img = "./Image/gung_image/tasergun.png"
-        elif (self.name == "doctor"):
-            self.gung_img = "./Image/gung_image/ambulance.png"
-            self.missile_img = "./Image/gung_image/medicalkit.png"
+        elif (self.name == "police1"):
+            self.gung_img = "./Image/gung_image/patrolcar.png"
+            self.missile_img = "./Image/gung_image/tasergun.png" 
+        elif (self.name == "police2"):
+            self.gung_img = "./Image/gung_image/patrolcar.png"
+            self.missile_img = "./Image/gung_image/tasergun.png"  
         elif (self.name == "firefighter"):
             self.gung_img = "./Image/gung_image/firetruck.png"
             self.missile_img = "./Image/gung_image/watercannon.png"
+        elif (self.name == "firefighter1"):
+            self.gung_img = "./Image/gung_image/firetruck.png"
+            self.missile_img = "./Image/gung_image/watercannon.png"
+        elif (self.name == "firefighter2"):
+            self.gung_img = "./Image/gung_image/firetruck.png"
+            self.missile_img = "./Image/gung_image/watercannon.png"    
+        elif (self.name == "doctor"):
+            self.gung_img = "./Image/gung_image/ambulance.png"
+            self.missile_img = "./Image/gung_image/medicalkit.png"
+        elif (self.name == "doctor1"):
+            self.gung_img = "./Image/gung_image/ambulance.png"
+            self.missile_img = "./Image/gung_image/medicalkit.png"
+        elif (self.name == "doctor2"):
+            self.gung_img = "./Image/gung_image/ambulance.png"
+            self.missile_img = "./Image/gung_image/medicalkit.png"
+        
         self.is_gunged = True
 
 
