@@ -54,7 +54,8 @@ class GameselectMenu:
                                  0.45, 0.05, 0.17, 0.065, "Image/thema/return.png")
 
         self.setting = button(self.board_height, self.board_height, 0.05,
-                              0.05, 0.06, 0.06, "Image/thema/on.png")  # sound on/off
+                              0.05, 0.06, 0.06, "Image/thema/on.png")
+
 
         self.barcol = button(self.board_height, self.board_height,
                              0.5, 0.0, 1, 0.2, "Image/thema/bar.png")
@@ -97,6 +98,7 @@ class GameselectMenu:
         self.stage_level = "1"
 
         self.sound = "on"
+        self.background_music = "./Sound/bgm/bensound-epic.wav"
 
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
@@ -111,20 +113,38 @@ class GameselectMenu:
 
         self.stay = 0
 
+        pygame.mixer.init()
+        pygame.mixer.music.load(self.background_music)
+        pygame.mixer.music.play(-1)
+        
     def show(self, screen, character):
         global soundset
         self.check_resize(screen)
         choosed_character = character
 
-        # if self.modestate == "stage":  # stage mode
 
-        screen.fill((255, 255, 255))  # 배경 나중에 바꾸기.
+
+        # 현재 소리 on/off 상태
+        if  Default.sound.value['sfx']['volume'] == 0.1:
+            self.setting.image = "Image/thema/on.png"
+            pygame.mixer.music.set_volume(0.1)
+        else :
+            pass
+
+        if  Default.sound.value['sfx']['volume'] == 0:
+            self.setting.image = "Image/thema/off.png"
+            pygame.mixer.music.set_volume(0)
+        else :
+            pass
+
+        screen.fill((255, 255, 255))
 
         for self.button in enumerate(self.buttonlist):  # 버튼 그리기
             # 화면 사이즈 변경되면 버튼사이즈 바꿔줌.
             self.button[1].change(
                 screen.get_size()[0], screen.get_size()[1])
             self.button[1].draw(screen, (0, 0, 0))
+
 
         for event in pygame.event.get():
 
@@ -153,8 +173,6 @@ class GameselectMenu:
                 self.dcheck = Database().check_dchar_lock()
 
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
-
-
                     print(choosed_character)
                     if choosed_character == "police":  # 경찰관 맵
                         print('show_pmychar')
@@ -170,7 +188,7 @@ class GameselectMenu:
                             StageGame(
                                 self.character_data, self.character_data[User.pcharacter], self.stage_map, "police").main_info()
                         pygame.display.update()
-               
+
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     if choosed_character == "firefighter":  # 경찰관 맵
                         print('show_fmychar')
@@ -201,7 +219,6 @@ class GameselectMenu:
                                 self.character_data, self.character_data[User.dcharacter], self.stage_map, "doctor").main_info()
                         pygame.display.update()
 
-
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
                         self.temp1 = "Image/thema/level2.png"  # 이미지 바꾸기
@@ -216,7 +233,6 @@ class GameselectMenu:
                         self.stage_level = "1"  # 바뀐 레벨로 저장.
                 pygame.display.update()
                 
-            if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.mode_map1.isOver(pos):
                     if self.inf_mode_map1 == 0:
                         self.inf_mode_map1 = 1
@@ -226,8 +242,6 @@ class GameselectMenu:
                         self.mode_map1.image = "Image/catthema/SCORE.png"
                 pygame.display.update()
 
-
-            if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     self.stage_map=self.mode[self.inf_mode_map1][1]
                     User.pcharacter = self.database.show_pmychar()
@@ -240,7 +254,6 @@ class GameselectMenu:
                                          "Image/background/police_background.png", self.police_attackTarget[0], self.police_attackTarget[1], self.police_attackTarget[2], self.police_attackTarget[3]).main()
                 pygame.display.update()
             
-
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     self.stage_map=self.mode[self.inf_mode_map1][1]
                     User.fcharacter = self.database.show_fmychar()
@@ -253,7 +266,6 @@ class GameselectMenu:
                                          "Image/background/firefighter_background.png", self.firefighter_attackTarget[0], self.firefighter_attackTarget[1], self.firefighter_attackTarget[2], self.firefighter_attackTarget[3]).main()
                 pygame.display.update()
 
-           
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     self.stage_map=self.mode[self.inf_mode_map1][1]
                     User.dcharacter = self.database.show_dmychar() # 캐릭터 분류하는 필수 함수
@@ -278,7 +290,6 @@ class GameselectMenu:
                     elif choosed_character == "doctor":
                         Mypage_d(self.screen).show()
 
-
                 if self.rankpage.isOver(pos):
                     LeaderBoardMenu(self.screen).rank()
 
@@ -291,7 +302,7 @@ class GameselectMenu:
                         CharacterStoreMenu_d(self.screen, choosed_character).show()
 
                 if self.help.isOver(pos):
-                    HelpMenu(self.screen).show()
+                    HelpMenu(self.screen, choosed_character).show()
 
                 if self.logout.isOver(pos):
                     import Main
@@ -312,6 +323,7 @@ class GameselectMenu:
                         soundset = 0
                         print(soundset)
                         Default.sound.value['sfx']['volume'] = 0
+                        pygame.mixer.music.set_volume(0)
                         self.character_data = CharacterDataManager.load()  # volume 적용
                     else:
                         self.setting.image = "Image/thema/on.png"
@@ -319,10 +331,10 @@ class GameselectMenu:
                         soundset = 0.1
                         print(soundset)
                         Default.sound.value['sfx']['volume'] = 0.1
+                        pygame.mixer.music.set_volume(0.1)
                         self.character_data = CharacterDataManager.load()  # volume 적용
 
     # 화면 크기 조정 감지 및 비율 고정
-
     def check_resize(self, screen):
         if (self.size != screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size()  # 변경된 사이즈
@@ -332,6 +344,4 @@ class GameselectMenu:
                 ratio_screen_size = (494, 537)
             if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
                 ratio_screen_size = (720, 783)
-            screen = pygame.display.set_mode(ratio_screen_size,
-
-                                             pygame.RESIZABLE)
+            screen = pygame.display.set_mode(ratio_screen_size, pygame.RESIZABLE)

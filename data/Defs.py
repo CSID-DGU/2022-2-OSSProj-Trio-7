@@ -247,22 +247,22 @@ class Default(enum.Enum):
             "interval": 1.0,
             "power": 1000,
             "frames": [
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png"
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png"
             ]
         },
         "health": {
             "spawn_rate": 0.002,
             "frames": [
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png"
+                "./Image/item/heart.png",
+                "./Image/item/heart.png",
+                "./Image/item/heart.png",
+                "./Image/item/heart.png",
+                "./Image/item/heart.png"
             ]
         },
         "100won": {

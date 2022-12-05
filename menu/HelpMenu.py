@@ -10,10 +10,10 @@ from pygame_menu.widgets.core.widget import Widget
 
 
 class HelpMenu:
-    def __init__(self, screen):
+    def __init__(self, screen, choosed_character):
         self.size = screen.get_size()
         self.screen = screen
-
+        
         self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 38 // 720  # 글씨크기
 
@@ -36,13 +36,18 @@ class HelpMenu:
 
         self.menu = pygame_menu.Menu(
             '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+        self.choosed_character = choosed_character # 현재 유저 정보 저장
         self.show()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
-    # 메인 메뉴로 돌아가기
+    def gameselectmenu(self):
+        import menu.gameselectMenu
+        game = menu.gameselectMenu.GameselectMenu(self.screen)
 
-    def to_menu(self):
-        self.menu.disable()
+        while True:
+            game.show(self.screen, self.choosed_character)
+            pygame.display.flip()
+
 
     # 도움말 메인 메뉴
     def show(self):
@@ -59,7 +64,7 @@ class HelpMenu:
         self.menu.add.button('   조작법 설명서   ', self.controls,
                              selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('         이전         ', self.to_menu,
+        self.menu.add.button('         이전         ',self.gameselectmenu,
                              selection_color=self.orange_color, font_size=self.font_size)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
