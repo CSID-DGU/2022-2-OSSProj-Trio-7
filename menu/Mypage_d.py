@@ -1,5 +1,3 @@
-
-
 from select import select
 import pygame
 import pygame_menu
@@ -11,6 +9,7 @@ from data.database_user import Database
 from game.InfiniteGame import *
 from pygame_menu.locals import ALIGN_RIGHT
 from pygame_menu.utils import make_surface
+from data.StoreDataManager import *
 
 # 캐릭터 선택 메뉴
 class Mypage_d:
@@ -57,7 +56,8 @@ class Mypage_d:
 
     #메뉴 구성하고 보이기
     def show(self, character):
-        choosed_character = character   
+        choosed_chracter = character  
+        # Database().char_lock()  
         self.menu.add.label("My ID : %s "%User.user_id)
         self.menu.add.label("My NICKNAME : %s "%User.user_nickname)
         Database().my_score_rank()
@@ -67,13 +67,14 @@ class Mypage_d:
         self.menu.add.label("Best Time : %s"%User.time_score)
         self.menu.add.label("My coin : %d "%User.coin)
         #캐릭터 선택 메뉴 구성
-        if choosed_character == "doctor":
+        if choosed_chracter == "doctor":
             Database().dchar_lock()
+            print('000')
             dcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
 
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id,dchar1,dchar2,dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            sql = "SELECT user_id, dchar1,dchar2,dchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
             curs.execute(sql,self.id) 
             data = curs.fetchone()  
             curs.close()
@@ -81,19 +82,19 @@ class Mypage_d:
             char2 = data[2]
             char3 = data[3]
             char4 = data[4]'''
-            self.character_data = CharacterDataManager.load()
-            front_image_path = [Images.doctor.value,Images.cat2.value, Images.cat3.value]
+            self.dcharacter_data = CharacterDataManager.load()
+            front_image_path = [Images.doctor.value,Images.doctor1.value, Images.doctor2.value]
             self.dcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
             self.dcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
-            for i in range(1,4):
-                dchar = data[i]
-                
-                if(dchar > -1): 
+            for i in range(6,9):
+                dchar = data[i-6]
+    
+                if(dchar != -1): 
                     default_image = pygame_menu.BaseImage(
-                    image_path=front_image_path[i-1]
+                    image_path=front_image_path[i-6]
                     ).scale(0.5, 0.5)
                     #print("이미지경로",front_image_path[i-1])
-                    dcharacters.append((self.character_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
+                    dcharacters.append((self.dcharacter_data[i].name, i))  # 3부터 #보유하고 있는 캐릭터 이름만 저장
                     self.dcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
             for i in range(3): 
@@ -114,32 +115,12 @@ class Mypage_d:
                 padding=(25, 0, 0, 0)  # top, right, bottom, left
             )
             self.status = ""
-            if User.dcharacter == 0:
+            if User.dcharacter == 6:
                 self.status = "Selected"
             else:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.frame_v = self.menu.add.frame_v(350, 160, margin=(5, 0))
-            # 각 캐릭터의 능력치 표시
-            self.power = self.frame_v.pack(self.menu.add.progress_bar(
-                title="Power",
-                default=int((self.character_data[0].missile_power/Default.character.value["max_stats"]["power"])*100),
-                progress_text_enabled = False,
-                box_progress_color = Color.RED.value
-            ), ALIGN_RIGHT)
-            self.fire_rate = self.frame_v.pack(self.menu.add.progress_bar(
-                title="Fire Rate",
-                default=int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[0].org_fire_interval)*100),
-                progress_text_enabled = False,
-                box_progress_color =Color.BLUE.value
-            ), ALIGN_RIGHT)
-            self.velocity = self.frame_v.pack(self.menu.add.progress_bar(
-                title="Mobility",
-                default=int((self.character_data[0].org_velocity/Default.character.value["max_stats"]["mobility"])*100),
-                progress_text_enabled = False,
-                box_progress_color = Color.GREEN.value
-            ), ALIGN_RIGHT)
             self.mytheme.widget_background_color = (150, 213, 252)
             self.menu.add.button("SELECT",self.select_dcharacter)
             self.menu.add.vertical_margin(5)
@@ -147,7 +128,19 @@ class Mypage_d:
             self.update_from_selection(int(self.dcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_background_color = (0,0,0,0)
 
-    
+    def select_dcharacter(self):
+        selected_idx = self.dcharacter_selector.get_value()[0][1] # 이게 문제
+        if User.doctor_lock[selected_idx] == False:
+            User.dcharacter = selected_idx
+            database = Database()
+            database.set_dchar()
+            self.menu.clear()
+            self.show('doctor')
+        else:
+            print("character locked")
+            import menu.CharacterLock
+            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
+
     def select_dcharacter(self):
         selected_idx = self.dcharacter_selector.get_value()[0][1]
         if User.doctor_lock[selected_idx] == False:
@@ -159,7 +152,21 @@ class Mypage_d:
         else:
             print("character locked")
             import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.character_data[selected_idx].name).show()
+            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
+            
+    def select_dcharacter(self): #게임 시작 함수
+        # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
+        selected_idx = self.dcharacter_selector.get_value()[0][1]
+        if User.doctor_lock[selected_idx-6] == False:
+            User.dcharacter = selected_idx
+            database = Database()
+            database.set_dchar()
+            self.menu.clear()
+            self.show("doctor")
+        else:
+            print("character locked")
+            import menu.CharacterLock
+            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
 
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
@@ -183,19 +190,22 @@ class Mypage_d:
     def on_selector_change(self, selected, value: int) -> None:
         self.update_from_selection(value)
 
+
+
+
     # 캐릭터 선택 시 캐릭터 이미지 및 능력치 위젯 업데이트
     def update_from_selection(self, selected_value, **kwargs) -> None:
         self.status2 = ""
         if User.dcharacter == selected_value:
             self.status2 = "Selected"
-        elif User.doctor_lock[selected_value] == False:
+        elif User.doctor_lock[selected_value-6] == False:
             self.status2 = "Unlocked"
         else:
             self.status2 = "Locked"
 
         self.current = selected_value
-        self.image_widget.set_image(self.dcharacter_imgs2[selected_value])
-        self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
+        self.image_widget.set_image(self.dcharacter_imgs2[selected_value-6])
+        '''self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
         self.fire_rate.set_value(int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[selected_value].org_fire_interval)*100))
-        self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))
+        self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))'''
         self.item_description_widget.set_title(title = self.status2)

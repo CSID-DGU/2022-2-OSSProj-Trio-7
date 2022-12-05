@@ -62,7 +62,11 @@ class Database:
 
     def add_pw(self, user_pw, user_id):  # 비밀번호 & coin 초기값 추가 * 캐릭터 초기값은 1로(캐릭터 숫자로 표현)
         initial_coin = 0  # 가입시, 보유한 coin 0으로 설정
-        initial_character = 0
+        initial_pcharacter = 0
+        initial_fcharacter = 3
+        initial_dcharacter = 6
+        have = 5
+        not_have = -1
         hashed_pw = bcrypt.hashpw(user_pw.encode(
             'utf-8'), bcrypt.gensalt()).decode('utf-8')
         # print(hashed_pw, "입력값")
@@ -77,17 +81,33 @@ class Database:
         self.dct_db.commit()
         curs = self.dct_db.cursor()
         sql = "UPDATE tusers2 SET user_pcharacter=%s WHERE user_id=%s"
-        curs.execute(sql, (initial_character, user_id))
+        curs.execute(sql, (initial_pcharacter, user_id))
         self.dct_db.commit()
         curs = self.dct_db.cursor()
         sql = "UPDATE tusers2 SET user_fcharacter=%s WHERE user_id=%s"
-        curs.execute(sql, (initial_character, user_id))
+        curs.execute(sql, (initial_fcharacter, user_id))
         self.dct_db.commit()
         curs = self.dct_db.cursor()
         sql = "UPDATE tusers2 SET user_dcharacter=%s WHERE user_id=%s"
-        curs.execute(sql, (initial_character, user_id))
+        curs.execute(sql, (initial_dcharacter, user_id))
         self.dct_db.commit()
         curs.close()
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET pchar1=%s, pchar2=%s, pchar3=%s WHERE user_id=%s"
+        curs.execute(sql, (have, not_have, not_have, user_id))
+        self.dct_db.commit()
+        curs.close()
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET fchar1=%s, fchar2=%s, fchar3=%s WHERE user_id=%s"
+        curs.execute(sql, (have, not_have, not_have, user_id))
+        self.dct_db.commit()
+        curs.close()
+        curs = self.dct_db.cursor()
+        sql = "UPDATE tusers2 SET dchar1=%s, dchar2=%s, dchar3=%s WHERE user_id=%s"
+        curs.execute(sql, (have, not_have, not_have, user_id))
+        self.dct_db.commit()
+        curs.close()
+        
 
     def set_pchar(self):
         self.id = User.user_id
@@ -432,7 +452,7 @@ class Database:
         data = curs.fetchone()
         curs.close()
         # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.fcharacter+1]
+        check = data[User.fcharacter-2]
         if check == 0:  # 캐릭터가 잠겨 있으면 true
             return True
         return False  # 그렇지 않으면 false
@@ -446,7 +466,7 @@ class Database:
         data = curs.fetchone()
         curs.close()
         # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.dcharacter+1]
+        check = data[User.dcharacter-5]
         if check == 0:  # 캐릭터가 잠겨 있으면 true
             return True
         return False  # 그렇지 않으면 false

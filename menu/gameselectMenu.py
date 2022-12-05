@@ -1,4 +1,3 @@
-
 from email.policy import default
 from pickle import TRUE
 from button import *
@@ -15,7 +14,9 @@ from data.Defs import *
 from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
-from menu.CharacterStoreMenu import *
+from menu.CharacterStoreMenu_p import *
+from menu.CharacterStoreMenu_f import *
+from menu.CharacterStoreMenu_d import *
 from data.database_user import *
 from menu.HelpMenu import *
 from menu.Mypage_p import *
@@ -153,12 +154,12 @@ class GameselectMenu:
 
                 if self.stageMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
 
+
                     print(choosed_character)
                     if choosed_character == "police":  # 경찰관 맵
                         print('show_pmychar')
                         User.pcharacter = self.database.show_pmychar()
 
-                   
                         self.stage_map = Stage(
                             self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
@@ -269,11 +270,25 @@ class GameselectMenu:
                 if self.mypage.isOver(pos):
                     Mypage(self.screen).show()
 
+                if self.mypage.isOver(pos):
+                    if choosed_character == "police":
+                        Mypage_p(self.screen).show()
+                    elif choosed_character == "firefighter":
+                        Mypage_f(self.screen).show()
+                    elif choosed_character == "doctor":
+                        Mypage_d(self.screen).show()
+
+
                 if self.rankpage.isOver(pos):
                     LeaderBoardMenu(self.screen).rank()
 
                 if self.store.isOver(pos):
-                    CharacterStoreMenu(self.screen, choosed_chracter).show()
+                    if choosed_character=="police":
+                        CharacterStoreMenu_p(self.screen, choosed_character).show()
+                    if choosed_character=="firefighter":
+                        CharacterStoreMenu_f(self.screen, choosed_character).show()
+                    if choosed_character=="doctor":
+                        CharacterStoreMenu_d(self.screen, choosed_character).show()
 
                 if self.help.isOver(pos):
                     HelpMenu(self.screen).show()
@@ -283,7 +298,7 @@ class GameselectMenu:
                     Main.Login(self.screen).show()
 
                 if self.returnpage.isOver(pos):  # 직업 선택 화면으로 되돌아가는 페이지
-                    from menu.characterSelectMenu import CharacterSelect
+                    from menu.CharacterSelectMenu import CharacterSelect
                     game = CharacterSelect(self.screen)
 
                     while True:
