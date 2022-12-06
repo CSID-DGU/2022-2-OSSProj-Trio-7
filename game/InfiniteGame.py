@@ -95,6 +95,9 @@ class InfiniteGame:
         self.stop = button.button(self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
         self.sound = "on"
 
+        self.plusgenerate = 0.0001 # FPS 단위마다 생성 범위 증가
+        self.maxgenerate = 0.3 #최대 발생 확률
+
     def main(self):
         from menu.gameselectMenu import soundset
         # 메인 이벤트
@@ -192,17 +195,16 @@ class InfiniteGame:
 
             # 기본값 0.015
             if (random.random() < self.mob_gen_rate):
-                if (self.mob_gen_rate < 0.5):
-                    self.mob_gen_rate += 0.002
-
+                if (self.mob_gen_rate < self.maxgenerate):
+                    self.mob_gen_rate += self.plusgenerate
                 # 게임 시작 후 일정 시간 지나면 새로운 attack target 등장
-                if (time.time() - self.start_time > 180):
+                if (time.time() - self.start_time > 270):
                     newMob = Mob(
                         self.target4_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
-                elif (time.time() - self.start_time > 120):
+                elif (time.time() - self.start_time > 180):
                     newMob = Mob(
                         self.target3_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
-                elif (time.time() - self.start_time > 60):
+                elif (time.time() - self.start_time > 90):
                     newMob = Mob(
                         self.target2_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
                 else:
@@ -214,8 +216,8 @@ class InfiniteGame:
 
             # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
-                if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
-                    Default.item.value["bomb"]["spawn_rate"] += 0.0001
+                if (Default.item.value["bomb"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["bomb"]["spawn_rate"] += self.plusgenerate
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -223,8 +225,8 @@ class InfiniteGame:
 
             # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
-                if (Default.item.value["health"]["spawn_rate"] < 0.3):
-                    Default.item.value["health"]["spawn_rate"] += 0.0001
+                if (Default.item.value["health"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["health"]["spawn_rate"] += self.plusgenerate 
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -232,8 +234,8 @@ class InfiniteGame:
 
             # 100coin 기본값 0.003
             if random.random() < Default.item.value["100won"]["spawn_rate"]:
-                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
-                    Default.item.value["100won"]["spawn_rate"] += 0.0001
+                if (Default.item.value["100won"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["100won"]["spawn_rate"] += self.plusgenerate 
                 new_item = Coin(
                     self.animation.animations["Coin100WonAnim"], "100won")
                 new_item.set_XY(
@@ -242,8 +244,8 @@ class InfiniteGame:
 
             # 500coin 기본값 0.002
             if random.random() < Default.item.value["500won"]["spawn_rate"]:
-                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
-                    Default.item.value["500won"]["spawn_rate"] += 0.0001
+                if (Default.item.value["500won"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["500won"]["spawn_rate"] += self.plusgenerate 
                 new_item = Coin(
                     self.animation.animations["Coin500WonAnim"], "500won")
                 new_item.set_XY(
@@ -252,8 +254,8 @@ class InfiniteGame:
 
             # 1000coin 기본값 0.001
             if random.random() < Default.item.value["1000won"]["spawn_rate"]:
-                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
-                    Default.item.value["1000won"]["spawn_rate"] += 0.0001
+                if (Default.item.value["1000won"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["1000won"]["spawn_rate"] += self.plusgenerate 
 
                 new_item = Coin(
                     self.animation.animations["Coin1000WonAnim"], "1000won")
@@ -289,7 +291,7 @@ class InfiniteGame:
                     if self.check_crash(missile, mob):
                         self.score += 10
                         self.crashed_mob_count += 1
-                        if (self.crashed_mob_count >= 5):  # 5마리 이상 몹 잡으면 궁극기 추가
+                        if (self.crashed_mob_count >= 10):  # 몹 10마리 잡으면 궁극기 추가
                             self.character.gung_count += 1
                             self.crashed_mob_count = 0
                         if missile in self.character.missiles_fired:
