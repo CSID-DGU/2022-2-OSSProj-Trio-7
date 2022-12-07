@@ -248,22 +248,22 @@ class Default(enum.Enum):
             "interval": 1.0,
             "power": 1000,
             "frames": [
-                "./Image/item/bomb.png",
-                "./Image/item/bomb.png",
-                "./Image/item/bomb.png",
-                "./Image/item/bomb.png",
-                "./Image/item/bomb.png",
-                "./Image/item/bomb.png"
+                "./Image/Item/bomb.png",
+                "./Image/Item/bomb.png",
+                "./Image/Item/bomb.png",
+                "./Image/Item/bomb.png",
+                "./Image/Item/bomb.png",
+                "./Image/Item/bomb.png"
             ]
         },
         "health": {
             "spawn_rate": 0.002,
             "frames": [
-                "./Image/item/heart.png",
-                "./Image/item/heart.png",
-                "./Image/item/heart.png",
-                "./Image/item/heart.png",
-                "./Image/item/heart.png"
+                "./Image/Item/heart.png",
+                "./Image/Item/heart.png",
+                "./Image/Item/heart.png",
+                "./Image/Item/heart.png",
+                "./Image/Item/heart.png"
             ]
         },
         "100won": {
