@@ -98,6 +98,7 @@ class GameselectMenu:
         self.stage_level = "1"
 
         self.sound = "on"
+        
         self.background_music = "./Sound/bgm/bgm_gameSelect.wav"
 
         self.mode = [("score", InfiniteGame.ScoreMode()),
