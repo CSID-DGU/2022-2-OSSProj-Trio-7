@@ -388,22 +388,35 @@ class InfiniteGame:
     def show_ranking_register_screen(self):
         play_time = time.time() - self.start_time
         pygame.mixer.music.stop()
-        ranking_register_screen = pygame_menu.themes.THEME_DEFAULT.copy()
-        ranking_register_screen.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        ranking_register_screen.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        ranking_register_screen.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Game Over', self.size[0], self.size[1],
-                                     theme=ranking_register_screen)
-        self.menu.add.image(Images.lose.value, scale=self.scale)
-        self.menu.add.label("Score : {}".format(
+        gameover_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.gameover.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+        self.mytheme.background_color = gameover_image
+
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
+                                     theme=self.mytheme)
+        self.menu.add.label("점수 : {}".format(
             self.score), font_size=self.font_size)
-        self.menu.add.label("Time : {:.2f}".format(
+        self.menu.add.vertical_margin(10)
+        self.menu.add.label("시간 : {:.2f}".format(
             play_time), font_size=self.font_size)
-        # 랭킹화면으로 넘어가도록 설정했음.
+        self.menu.add.vertical_margin(30)
         self.menu.add.button(
-            'Ranking', self.show_register_result, font_size=self.font_size)
-        self.menu.add.button('Retry', self.retry, font_size=self.font_size)
-        self.menu.add.button('to Home', self.gameselectmenu,
+            '   랭킹   ', self.show_register_result, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        self.menu.add.button( '다시 시작 ', self.retry, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        self.menu.add.button('모드 선택화면으로', self.gameselectmenu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)

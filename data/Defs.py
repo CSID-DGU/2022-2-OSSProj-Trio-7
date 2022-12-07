@@ -47,7 +47,6 @@ class Images(enum.Enum):
     chapter_clear_ice = "./Image/ChapterClear_Ice.jpg"
     chapter_clear_space = "./Image/ChapterClear_Space.jpg"
     chapter_cleared = "./Image/ClearedChapter.jpg"
-    gameover = "./Image/Gameover_v2.jpg"
 
     F5S1_locked = "./Image/CharacterLocked_F5S1.jpg"
     F5S4_locked = "./Image/CharacterLocked_F5S4.jpg"
@@ -105,10 +104,10 @@ class Images(enum.Enum):
 
     JobInfo = "./Image/JobInfo.png"
 
-
-
     help = "./Image/help.png";
     stop = "./Image/stop.png";
+    gameover = "./Image/gameover.png"; 
+
 
 class Scales(enum.Enum):
     large = (2, 2)

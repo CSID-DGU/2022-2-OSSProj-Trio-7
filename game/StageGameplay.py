@@ -500,21 +500,28 @@ class StageGame:
     # 실패 화면
     def showGameOverScreen(self):
         pygame.mixer.music.stop()
-        Database().reduce_char_life()  # stage fail하면 캐릭터 생명 하나 줄임
-        Database().char_lock()  # 생명이 0이 된다면 잠굼
-        gameover_theme = pygame_menu.themes.THEME_DARK.copy()
-        gameover_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        gameover_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        gameover_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Game Over', self.size[0], self.size[1],
-                                     theme=gameover_theme)
-        self.menu.add.image(Images.lose.value, scale=self.scale)
-        self.menu.add.label("stage: {}".format(
-            self.stage.stage), font_size=self.font_size)
-        self.menu.add.label("Score : {}".format(
+        gameover_image = pygame_menu.baseimage.BaseImage(
+        image_path=Images.gameover.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+        self.mytheme.background_color = gameover_image
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
+                                     theme=self.mytheme)
+        self.menu.add.label("점수 : {}".format(
             self.score), font_size=self.font_size)
-        self.menu.add.button('Retry', self.retry, font_size=self.font_size)
-        self.menu.add.button('Home', self.Home, self.menu,
+        self.menu.add.vertical_margin(30)
+        self.menu.add.button('  다시 시작  ', self.retry, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        self.menu.add.button('모드 선택화면으로', self.Home, self.menu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)
