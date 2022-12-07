@@ -24,7 +24,6 @@ from pygame_menu.utils import make_surface
 from data.database_user import *
 from data.Defs import User
 
-
 class InfiniteGame:
 
     def __init__(self, character, choosed_chracter, mode, mapimg, target1img, target2img, target3img, target4img):
@@ -65,7 +64,13 @@ class InfiniteGame:
         self.target3_image = target3img
         self.target4_image = target4img
         self.background_image = mapimg
-        self.background_music = "./Sound/bgm/bensound-evolution.wav"
+        from menu.gameselectMenu import soundset
+        if(choosed_chracter == "police"):
+            self.background_music = "./Sound/bgm/bgm_police.mp3"
+        if(choosed_chracter == "firefighter"):
+            self.background_music = "./Sound/bgm/bgm_firefighter.mp3"
+        if(choosed_chracter == "doctor"):
+            self.background_music = "./Sound/bgm/bgm_doctor.mp3"
         self.SB = 0
         self.dy = 2
         self.mob_velocity = 2
@@ -85,8 +90,13 @@ class InfiniteGame:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
         import button
-        self.stop = button.button(
-            self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
+        self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png")
+
+        self.stop = button.button(self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
+        self.sound = "on"
+
+        self.plusgenerate = 0.0001 # FPS 단위마다 생성 범위 증가
+        self.maxgenerate = 0.3 #최대 발생 확률
 
     def main(self):
         from menu.gameselectMenu import soundset
@@ -94,7 +104,20 @@ class InfiniteGame:
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(soundset)
+
+        # 현재 소리 on/off 상태
+        if  Default.sound.value['sfx']['volume'] == 0.1:
+            self.setting.image = "Image/thema/on.png"
+            pygame.mixer.music.set_volume(0.1)
+        else :
+            pass
+
+        if  Default.sound.value['sfx']['volume'] == 0:
+            self.setting.image = "Image/thema/off.png"
+            pygame.mixer.music.set_volume(0)
+        else :
+            pass
+        
         background1_y = 0  # 배경 움직임을 위한 변수
         while self.SB == 0:
             # fps 제한을 위해 한 loop에 한번 반드시 호출해야합니다.
@@ -117,6 +140,9 @@ class InfiniteGame:
             self.stop.change(self.screen.get_size()[
                              0], self.screen.get_size()[1])
             self.stop.draw(self.screen, (0, 0, 0))
+            self.setting.change(self.screen.get_size()[
+                             0], self.screen.get_size()[1])
+            self.setting.draw(self.screen, (0, 0, 0))
 
             # 입력 처리
             for event in pygame.event.get():  # 동작을 했을때 행동을 받아오게됨
@@ -127,10 +153,27 @@ class InfiniteGame:
                         self.SB = 1
                     if event.key == pygame.K_z:  # 테스트용
                         self.score += 30
+                        
                 pos = pygame.mouse.get_pos()  # mouse
+
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.stop.isOver(pos):  # 마우스로 일시정지 버튼 클릭하면
                         self.StopGame()
+
+                    if self.setting.isOver(pos):
+                        if soundset == 0.1:
+                            self.setting.image = "Image/thema/off.png"
+                            soundset = 0
+                            print(soundset)
+                            Default.sound.value['sfx']['volume'] = 0
+                            pygame.mixer.music.set_volume(0)
+                        else:
+                            self.setting.image = "Image/thema/on.png"
+                            from menu.gameselectMenu import soundset
+                            soundset = 0.1
+                            print(soundset)
+                            Default.sound.value['sfx']['volume'] = 0.1
+                            pygame.mixer.music.set_volume(0.1)
 
                 if event.type == pygame.VIDEORESIZE:  # 창크기가 변경되었을 때
                     # 화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
@@ -152,17 +195,16 @@ class InfiniteGame:
 
             # 기본값 0.015
             if (random.random() < self.mob_gen_rate):
-                if (self.mob_gen_rate < 0.5):
-                    self.mob_gen_rate += 0.002
-
+                if (self.mob_gen_rate < self.maxgenerate):
+                    self.mob_gen_rate += self.plusgenerate
                 # 게임 시작 후 일정 시간 지나면 새로운 attack target 등장
-                if (time.time() - self.start_time > 180):
+                if (time.time() - self.start_time > 270):
                     newMob = Mob(
                         self.target4_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
-                elif (time.time() - self.start_time > 120):
+                elif (time.time() - self.start_time > 180):
                     newMob = Mob(
                         self.target3_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
-                elif (time.time() - self.start_time > 60):
+                elif (time.time() - self.start_time > 90):
                     newMob = Mob(
                         self.target2_image, {"x": 50, "y": 50}, self.mob_velocity, 0)
                 else:
@@ -172,19 +214,10 @@ class InfiniteGame:
                 newMob.set_XY((random.randrange(0, self.size[0]), 0))
                 self.mobList.append(newMob)
 
-            # 기본값 0.01
-            # if random.random() < Default.item.value["powerup"]["spawn_rate"]:
-            #     if (Default.item.value["powerup"]["spawn_rate"] < 0.5):
-            #         Default.item.value["powerup"]["spawn_rate"] += 0.0003
-            #     new_item = PowerUp(self.animation.animations["powerup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
-
             # 기본값 0.002
             if random.random() < Default.item.value["bomb"]["spawn_rate"]:
-                if (Default.item.value["bomb"]["spawn_rate"] < 0.3):
-                    Default.item.value["bomb"]["spawn_rate"] += 0.0001
+                if (Default.item.value["bomb"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["bomb"]["spawn_rate"] += self.plusgenerate
                 new_item = Bomb(self.animation.animations["bomb"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -192,8 +225,8 @@ class InfiniteGame:
 
             # 기본값 0.002
             if random.random() < Default.item.value["health"]["spawn_rate"]:
-                if (Default.item.value["health"]["spawn_rate"] < 0.3):
-                    Default.item.value["health"]["spawn_rate"] += 0.0001
+                if (Default.item.value["health"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["health"]["spawn_rate"] += self.plusgenerate 
                 new_item = Health(self.animation.animations["health"])
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
@@ -201,8 +234,8 @@ class InfiniteGame:
 
             # 100coin 기본값 0.003
             if random.random() < Default.item.value["100won"]["spawn_rate"]:
-                if (Default.item.value["100won"]["spawn_rate"] < 0.3):
-                    Default.item.value["100won"]["spawn_rate"] += 0.0001
+                if (Default.item.value["100won"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["100won"]["spawn_rate"] += self.plusgenerate 
                 new_item = Coin(
                     self.animation.animations["Coin100WonAnim"], "100won")
                 new_item.set_XY(
@@ -211,8 +244,8 @@ class InfiniteGame:
 
             # 500coin 기본값 0.002
             if random.random() < Default.item.value["500won"]["spawn_rate"]:
-                if (Default.item.value["500won"]["spawn_rate"] < 0.3):
-                    Default.item.value["500won"]["spawn_rate"] += 0.0001
+                if (Default.item.value["500won"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["500won"]["spawn_rate"] += self.plusgenerate 
                 new_item = Coin(
                     self.animation.animations["Coin500WonAnim"], "500won")
                 new_item.set_XY(
@@ -221,23 +254,14 @@ class InfiniteGame:
 
             # 1000coin 기본값 0.001
             if random.random() < Default.item.value["1000won"]["spawn_rate"]:
-                if (Default.item.value["1000won"]["spawn_rate"] < 0.3):
-                    Default.item.value["1000won"]["spawn_rate"] += 0.0001
+                if (Default.item.value["1000won"]["spawn_rate"] < self.maxgenerate):
+                    Default.item.value["1000won"]["spawn_rate"] += self.plusgenerate 
 
                 new_item = Coin(
                     self.animation.animations["Coin1000WonAnim"], "1000won")
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
-
-            # 기본값 0.002
-            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-            #         Default.item.value["speedup"]["spawn_rate"] += 0.0003
-            #     new_item = SpeedUp(self.animation.animations["speedup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -267,7 +291,7 @@ class InfiniteGame:
                     if self.check_crash(missile, mob):
                         self.score += 10
                         self.crashed_mob_count += 1
-                        if (self.crashed_mob_count >= 5):  # 5마리 이상 몹 잡으면 궁극기 추가
+                        if (self.crashed_mob_count >= 10):  # 몹 10마리 잡으면 궁극기 추가
                             self.character.gung_count += 1
                             self.crashed_mob_count = 0
                         if missile in self.character.missiles_fired:
@@ -326,7 +350,7 @@ class InfiniteGame:
 
             # 현재 흘러간 시간
             play_time = float(time.time() - self.start_time)
-            time_text = font.render("Time : {:.2f}".format(
+            time_text = font.render("시간 : {:.2f}".format(
                 play_time), True, Color.YELLOW.value)
             self.screen.blit(time_text, (self.size[0]//2, 5))
 
@@ -338,8 +362,6 @@ class InfiniteGame:
                 self.register_ranking()
                 self.show_ranking_register_screen()
                 return
-
-            # self.mode.update_difficulty(self)
 
         # While 빠져나오면 랭킹등록 스크린 실행
         self.register_ranking()
@@ -504,8 +526,8 @@ class InfiniteGame:
 
     # 재시도 버튼 클릭 시 실행
     def retry(self):
-        InfiniteGame(self.character, self.mode,
-                     self.background_image, self.mob_image).main()
+        InfiniteGame(self.character, self.choosed_chracter, self.mode,
+                     self.background_image,self.target1_image,self.target2_image,self.target3_image,self.target4_image).main()
         self.menu.disable()
 
     # 난이도를 나누는 모드 클래스 (상속하여 사용)

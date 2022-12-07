@@ -7,6 +7,9 @@ from pygame_menu.widgets.core.widget import Widget
 
 class JobInfo:
     def __init__(self, screen):
+        infoObject = pygame.display.Info()
+        title = "직업 소개"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
         self.changed_screen_size = self.screen.get_size()
@@ -63,3 +66,24 @@ class JobInfo:
         self.menu.add.vertical_margin(300)
 
         b1 = self.menu.add.button('   직업을 선택하러 가볼까요?   ', self.returnPage)
+
+           # 화면 크기 조정 감지 및 비율 고정
+    def check_resize(self):
+        if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
+            changed_screen_size = self.screen.get_size()  # 변경된 사이즈
+            ratio_screen_size = (
+                changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
+            if (ratio_screen_size[0] < 320):  # 최소 x길이 제한
+                ratio_screen_size = (494, 537)
+            if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
+                ratio_screen_size = (720, 783)
+            self.screen = pygame.display.set_mode(ratio_screen_size,
+                                                  pygame.RESIZABLE)
+            window_size = self.screen.get_size()
+            new_w, new_h = 1 * window_size[0], 1 * window_size[1]
+            self.menu.resize(new_w, new_h)
+            self.menu._current._widgets_surface = make_surface(0, 0)
+            self.size = window_size
+            print(f'New menu size: {self.menu.get_size()}')
+            font_size = new_w * 40 // 720
+            self.font_size = font_size
