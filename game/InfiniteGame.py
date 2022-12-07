@@ -26,7 +26,7 @@ from data.Defs import User
 
 class InfiniteGame:
 
-    def __init__(self, character, choosed_chracter, mode, mapimg, target1img, target2img, target3img, target4img):
+    def __init__(self, character, choosed_chracter, mode, mapimg, target1img, target2img, target3img, target4img, weapon):
         # 1. 게임초기화
         pygame.init()
 
@@ -97,6 +97,19 @@ class InfiniteGame:
 
         self.plusgenerate = 0.0001 # FPS 단위마다 생성 범위 증가
         self.maxgenerate = 0.3 #최대 발생 확률
+
+        # 무기 선택 옵션
+        self.stagew=False
+        self.infinitew=False
+        self.defaultw=False
+        self.wselect = weapon
+        if weapon == "stage":
+            self.stagew = True
+        elif weapon == "infinite":
+            self.infinitew = True
+        else:
+            self.defaultw = True
+
 
     def main(self):
         from menu.gameselectMenu import soundset
@@ -262,6 +275,19 @@ class InfiniteGame:
                 new_item.set_XY(
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
+
+
+
+            # 무기 구입 정보 적용하기
+            if self.stagew==True:
+                new_item = PowerUp(self.animation.animations["powerup"])
+                new_item.use(self)
+                # self.item_list.append(new_item)
+
+            if self.infinitew==True:
+                new_item = SpeedUp(self.animation.animations["speedup"])
+                new_item.use(self)
+                # self.item_list.append(new_item)
 
             # 플레이어 객체 이동
             self.character.update(self)

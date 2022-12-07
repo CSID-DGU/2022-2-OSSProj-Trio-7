@@ -29,15 +29,15 @@ class CharacterStoreMenu_d:
         #menu_image = pygame_menu.baseimage.BaseImage(image_path='./Image/Login.png',drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
         #mytheme.widget_font = pygame_menu.font.FONT_8BIT
-        #mytheme.widget_background_color = (150, 213, 252) #버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
+        #self.mytheme.widget_background_color = (150, 213, 252) #버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
         self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
-        self.mytheme.selection_color = (255,255,255) #선택됐을때 글씨색 설정
-        self.mytheme.widget_font_color = (255,255,255) #글씨색 설정
+        self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
+        self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
         self.mytheme.title_background_color = (0,100,162)
         self.mytheme.title_font_color = (255,255,255)
         self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
         #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
-        self.mytheme.background_color = (0,0,0)
+        self.mytheme.background_color = (255,255,255)
 
         self.menu = pygame_menu.Menu('Character Store', self.size[0], self.size[1],
                             theme=self.mytheme)
@@ -117,7 +117,7 @@ class CharacterStoreMenu_d:
             
 
             self.item_description_widget = self.menu.add.label("")
-            self.frame_v = self.menu.add.frame_v(350, 160, margin=(10, 0))
+            self.frame_v = self.menu.add.frame_v(350, 50, margin=(10, 0))
             # 각 캐릭터의 능력치 표시
             # self.power = self.frame_v.pack(self.menu.add.progress_bar(
             #     title="Power",
@@ -142,6 +142,7 @@ class CharacterStoreMenu_d:
             #self.item_description_widget = self.show_price
             
             print("버튼 추가")
+            self.mytheme.widget_background_color = (150, 213, 252)
             self.menu.add.button("Buy", self.buy_character) # 버튼 추가시 기능 한번 실행됨.
             self.menu.add.vertical_margin(10)
             print(("뒤로가기 버튼 추가"))

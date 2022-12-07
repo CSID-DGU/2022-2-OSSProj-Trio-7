@@ -143,22 +143,22 @@ class Health(Item):
 
 
 class PowerUp(Item):
-    # 파워업 아이템: 획득 시 캐릭터 발사체 개수 증가
+    # 파워업 아이템(구매 아이템): 획득 시 캐릭터 발사체 개수 증가
     def __init__(self, animation):
         super().__init__(animation.frames, animation.frames_trans, "powerup")
 
     # 캐릭터와 충돌 시  바로 실행
     def use(self, game):
         if self.is_collidable == True:
-            self.sfx.play()
-            fire_count = game.character.fire_count + 1
+            # self.sfx.play()
+            # fire_count = game.character.fire_count + 1
             n_min = Default.character.value["missile"]["min"]
             n_max = Default.character.value["missile"]["max"]
-            if fire_count > n_max:
-                game.character.auto_target = True
-            game.character.fire_count = Utils.clamp(fire_count, n_min, n_max)
+            # if fire_count > n_max:
+            #     game.character.auto_target = True
+            game.character.fire_count = Utils.clamp(3, n_min, n_max)
             self.is_collidable = False
-            game.item_list.remove(self)
+            # game.item_list.remove(self) # 게임시작시 적용되므로 리스트에 들어가지x
 
 
 class SpeedUp(Item):
@@ -169,10 +169,10 @@ class SpeedUp(Item):
     # 캐릭터와 충돌 시  바로 실행
     def use(self, game):
         if self.is_collidable == True:
-            self.sfx.play()
+            # self.sfx.play()
             self.used = time.time()
             self.org_velocity = game.character.velocity
             self.org_fire_interval = game.character.fire_interval
             game.character.speed_up()
             self.is_collidable = False
-            game.item_list.remove(self)
+            # game.item_list.remove(self) # 게임시작시 적용되므로 리스트에 들어가지x
