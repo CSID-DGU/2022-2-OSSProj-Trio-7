@@ -37,7 +37,7 @@ class StageGame:
 
         # 2. 게임창 옵션 설정
         infoObject = pygame.display.Info()
-        title = "My game"
+        title = "스테이지 모드"
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = [infoObject.current_w, infoObject.current_h]
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
@@ -82,6 +82,7 @@ class StageGame:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
         import button
+        self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png")
         self.stop = button.button(
             self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
 
@@ -147,8 +148,19 @@ class StageGame:
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(soundset)
-        print("sound volume ", soundset)
+
+        # 현재 소리 on/off 상태
+        if  Default.sound.value['sfx']['volume'] == 0.1:
+            self.setting.image = "Image/thema/on.png"
+            pygame.mixer.music.set_volume(0.1)
+        else :
+            pass
+
+        if  Default.sound.value['sfx']['volume'] == 0:
+            self.setting.image = "Image/thema/off.png"
+            pygame.mixer.music.set_volume(0)
+        else :
+            pass
         background1_y = 0  # 배경 움직임을 위한 변수
         while self.SB == 0:
             # fps 제한을 위해 한 loop에 한번 반드시 호출해야합니다.
@@ -171,6 +183,9 @@ class StageGame:
             self.stop.change(self.screen.get_size()[
                              0], self.screen.get_size()[1])
             self.stop.draw(self.screen, (0, 0, 0))
+            self.setting.change(self.screen.get_size()[
+                             0], self.screen.get_size()[1])
+            self.setting.draw(self.screen, (0, 0, 0))
 
             # 입력 처리
             for event in pygame.event.get():  # 동작을 했을때 행동을 받아오게됨
@@ -183,6 +198,21 @@ class StageGame:
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.stop.isOver(pos):  # 마우스로 일시정지 버튼 클릭하면
                         self.StopGame()
+
+                    if self.setting.isOver(pos):
+                        if soundset == 0.1:
+                            self.setting.image = "Image/thema/off.png"
+                            soundset = 0
+                            print(soundset)
+                            Default.sound.value['sfx']['volume'] = 0
+                            pygame.mixer.music.set_volume(0)
+                        else:
+                            self.setting.image = "Image/thema/on.png"
+                            from menu.gameselectMenu import soundset
+                            soundset = 0.1
+                            print(soundset)
+                            Default.sound.value['sfx']['volume'] = 0.1
+                            pygame.mixer.music.set_volume(0.1)
 
                 if event.type == pygame.VIDEORESIZE:  # 화면이 리사이즈 되면
                     # 화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
@@ -369,14 +399,14 @@ class StageGame:
 
             # 점수와 목숨 표시
             font = pygame.font.Font(Default.font.value, self.size[0]//40)
-            score_life_text = font.render("Score : {} Life: {} Bomb: {} Coin : {}".format(
+            score_life_text = font.render("점수 : {} 생명: {} 폭탄: {} 돈 : {}".format(
                 self.score, self.life, self.character.bomb_count, self.coin), True, Color.YELLOW.value)  # 폰트가지고 랜더링 하는데 표시할 내용, True는 글자가 잘 안깨지게 하는 거임 걍 켜두기, 글자의 색깔
             # 이미지화 한 텍스트라 이미지를 보여준다고 생각하면 됨
             self.screen.blit(score_life_text, (10, 5))
 
             # 현재 흘러간 시간
             playTime = (time.time() - self.startTime)
-            time_text = font.render("Time : {:.2f}".format(
+            time_text = font.render("시간 : {:.2f}".format(
                 playTime), True, Color.YELLOW.value)
             self.screen.blit(time_text, (self.size[0]//2, 5))
 
@@ -492,21 +522,29 @@ class StageGame:
     # 실패 화면
     def showGameOverScreen(self):
         pygame.mixer.music.stop()
-        # Database().reduce_char_life()  # stage fail하면 캐릭터 생명 하나 줄임
-        # Database().char_lock()  # 생명이 0이 된다면 잠굼
-        gameover_theme = pygame_menu.themes.THEME_DARK.copy()
-        gameover_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        gameover_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        gameover_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Game Over', self.size[0], self.size[1],
-                                     theme=gameover_theme)
-        self.menu.add.image(Images.lose.value, scale=self.scale)
-        self.menu.add.label("stage: {}".format(
-            self.stage.stage), font_size=self.font_size)
-        self.menu.add.label("Score : {}".format(
+
+        gameover_image = pygame_menu.baseimage.BaseImage(
+        image_path=Images.gameover.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+        self.mytheme.background_color = gameover_image
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
+                                     theme=self.mytheme)
+        self.menu.add.label("점수 : {}".format(
             self.score), font_size=self.font_size)
-        self.menu.add.button('Retry', self.retry, font_size=self.font_size)
-        self.menu.add.button('Home', self.Home, self.menu,
+        self.menu.add.vertical_margin(30)
+        self.menu.add.button('  다시 시작  ', self.retry, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        self.menu.add.button('모드 선택화면으로', self.Home, self.menu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)

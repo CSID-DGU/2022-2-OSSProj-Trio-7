@@ -113,8 +113,6 @@ class Login:
         self.menu.add.text_input('아이디 : ', maxchar=100, onchange=self.get_id)
         self.menu.add.text_input(
             '비밀번호 : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
-        self.menu.add.text_input(
-            '닉네임 : ', maxchar=100, onchange=self.get_nickname)
         b1 = self.menu.add.button('  로그인  ', self.login)
         b2 = self.menu.add.button('  이전 화면  ', self.first_page)
         b3 = self.menu.add.button('  게임 종료  ', pygame_menu.events.EXIT)
@@ -126,7 +124,7 @@ class Login:
                     print("로그인 성공")
                     print(self.id)
                     User.user_id = self.id
-                    User.user_nickname = self.nickname
+                    #User.user_nickname = self.nickname
                     User.coin = self.database.show_mycoin()
                     # Database().dchar_lock()
                     self.login_success()
@@ -192,7 +190,7 @@ class Login:
             '비밀번호 : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
         self.menu.add.text_input(
             '닉네임 : ', maxchar=15, onreturn=self.save_nickname)
-        self.menu.add.button('  로그인  ', self.login_page)
+        self.menu.add.button('  회원가입  ', self.login_page)
         self.menu.add.button('  이전 화면  ', self.first_page)
         self.menu.add.button('  게임 종료   ', pygame_menu.events.EXIT)
 

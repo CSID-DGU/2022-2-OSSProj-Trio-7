@@ -56,10 +56,11 @@ class Mypage_d:
 
     #메뉴 구성하고 보이기
     def show(self, character):
+        self.db = Database()
         choosed_chracter = character  
         # Database().char_lock()  
         self.menu.add.label("My ID : %s "%User.user_id)
-        self.menu.add.label("My NICKNAME : %s "%User.user_nickname)
+        self.menu.add.label("My NICKNAME : %s "%self.db.get_nickname())
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
@@ -87,7 +88,7 @@ class Mypage_d:
             self.dcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
             self.dcharacter_imgs2 = [] #전체 이미지 들어 있는 파일
             for i in range(6,9):
-                dchar = data[i-6]
+                dchar = data[i-5]
     
                 if(dchar != -1): 
                     default_image = pygame_menu.BaseImage(

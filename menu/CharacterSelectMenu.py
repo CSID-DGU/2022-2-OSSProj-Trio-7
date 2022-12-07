@@ -6,21 +6,15 @@ from menu.JobInfo import *
 
 class CharacterSelect:
     def __init__(self, screen):
+        infoObject = pygame.display.Info()
+        title = "캐릭터 선택"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
         self.changed_screen_size = self.screen.get_size()
+        
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
-
-        self.charactor1 = button(self.board_width, self.board_height,
-                                 0.2, 0.4, 0.25, 0.35, "Image/policeCharacters/policeOfficer.png")
-        self.charactor2 = button(self.board_width, self.board_height,
-                                 0.5, 0.4, 0.25, 0.35, "Image/fireCharacters/firefighter.png")
-        self.charactor3 = button(self.board_width, self.board_height,
-                                 0.8, 0.4, 0.25, 0.35, "Image/doctorCharacters/doctor.png")
-
-        self.buttonlist = [self.charactor1, self.charactor2, self.charactor3]
-
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
             widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
@@ -42,22 +36,6 @@ class CharacterSelect:
             '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
         self.first_page()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
-
-    def show(self, screen):
-        self.check_resize(screen)
-        screen.fill((255, 255, 255))  # 배경 나중에 바꾸기.
-
-    def check_resize(self, screen):
-        if (self.size != screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
-            changed_screen_size = self.screen.get_size()  # 변경된 사이즈
-            ratio_screen_size = (
-                changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
-            if (ratio_screen_size[0] < 320):  # 최소 x길이 제한
-                ratio_screen_size = (494, 537)
-            if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
-                ratio_screen_size = (720, 783)
-            screen = pygame.display.set_mode(
-                ratio_screen_size, pygame.RESIZABLE)
 
     def show_policMap(self):
         print("경찰관선택")
@@ -99,3 +77,24 @@ class CharacterSelect:
         b3 = self.menu.add.button('   의사   ', self.show_doctorMap)
         self.menu.add.vertical_margin(10)
         b4 = self.menu.add.button('   직업이 궁금하나요?   ', self.show_jobinfo)
+
+   # 화면 크기 조정 감지 및 비율 고정
+    def check_resize(self):
+        if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
+            changed_screen_size = self.screen.get_size()  # 변경된 사이즈
+            ratio_screen_size = (
+                changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
+            if (ratio_screen_size[0] < 320):  # 최소 x길이 제한
+                ratio_screen_size = (494, 537)
+            if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
+                ratio_screen_size = (720, 783)
+            self.screen = pygame.display.set_mode(ratio_screen_size,
+                                                  pygame.RESIZABLE)
+            window_size = self.screen.get_size()
+            new_w, new_h = 1 * window_size[0], 1 * window_size[1]
+            self.menu.resize(new_w, new_h)
+            self.menu._current._widgets_surface = make_surface(0, 0)
+            self.size = window_size
+            print(f'New menu size: {self.menu.get_size()}')
+            font_size = new_w * 40 // 720
+            self.font_size = font_size

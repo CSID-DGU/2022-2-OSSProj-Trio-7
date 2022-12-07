@@ -12,8 +12,8 @@ class User:
     fcharacter = 3
     dcharacter = 6
     buy_pcharacter = 0
-    buy_fcharacter = 0
-    buy_dcharacter = 0
+    buy_fcharacter = 3
+    buy_dcharacter = 6
     price = [0, 0, 8000, 8000]
     score_score = 0
     time_score = 0.0
@@ -47,7 +47,6 @@ class Images(enum.Enum):
     chapter_clear_ice = "./Image/ChapterClear_Ice.jpg"
     chapter_clear_space = "./Image/ChapterClear_Space.jpg"
     chapter_cleared = "./Image/ClearedChapter.jpg"
-    gameover = "./Image/Gameover_v2.jpg"
 
     F5S1_locked = "./Image/CharacterLocked_F5S1.jpg"
     F5S4_locked = "./Image/CharacterLocked_F5S4.jpg"
@@ -105,10 +104,10 @@ class Images(enum.Enum):
 
     JobInfo = "./Image/JobInfo.png"
 
-
-
     help = "./Image/help.png";
     stop = "./Image/stop.png";
+    gameover = "./Image/gameover.png"; 
+
 
 class Scales(enum.Enum):
     large = (2, 2)
@@ -249,22 +248,22 @@ class Default(enum.Enum):
             "interval": 1.0,
             "power": 1000,
             "frames": [
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png",
-                "./Image/catthema/item/item_chu.png"
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png",
+                "./Image/item/bomb.png"
             ]
         },
         "health": {
             "spawn_rate": 0.002,
             "frames": [
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png",
-                "./Image/catthema/item/item_heart.png"
+                "./Image/item/heart.png",
+                "./Image/item/heart.png",
+                "./Image/item/heart.png",
+                "./Image/item/heart.png",
+                "./Image/item/heart.png"
             ]
         },
         "100won": {
