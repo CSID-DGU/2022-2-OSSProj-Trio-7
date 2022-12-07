@@ -207,29 +207,69 @@ class Database:
         curs.close()
 
     # 상점
-    def buy_char(self):
+    def buy_pchar(self):
         self.id = User.user_id
-        self.buy = User.buy_character
+        self.buy = User.buy_pcharacter
         self.coin = User.coin
         self.price = User.price
+        prices = 8000
+        have = 5
         curs = self.dct_db.cursor()
         if (self.buy == 1):
-            sql = "UPDATE users2 SET char2=%s WHERE user_id = %s"
-            curs.execute(sql, (5, self.id))
-            sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
-            curs.execute(sql, (self.coin-100, self.id))
+            sql = "UPDATE tusers2 SET pchar2=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
             self.dct_db.commit()
         if (self.buy == 2):
-            sql = "UPDATE users2 SET char3=%s WHERE user_id = %s"
-            curs.execute(sql, (5, self.id))
-            sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
-            curs.execute(sql, (self.coin-100, self.id))
+            sql = "UPDATE tusers2 SET pchar3=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
             self.dct_db.commit()
-        if (self.buy == 3):
-            sql = "UPDATE users2 SET char4=%s WHERE user_id = %s"
-            curs.execute(sql, (5, self.id))
-            sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
-            curs.execute(sql, (self.coin-200, self.id))
+        curs.close()
+
+    def buy_fchar(self):
+        self.id = User.user_id
+        self.buy = User.buy_fcharacter
+        self.coin = User.coin
+        self.price = User.price
+        prices = 8000
+        have = 5
+        curs = self.dct_db.cursor()
+        if (self.buy == 4):
+            sql = "UPDATE tusers2 SET fchar2=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
+            self.dct_db.commit()
+        if (self.buy == 5):
+            sql = "UPDATE tusers2 SET fchar3=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
+            self.dct_db.commit()
+        curs.close()
+
+    def buy_dchar(self):
+        self.id = User.user_id
+        self.buy = User.buy_dcharacter
+        self.coin = User.coin
+        self.price = User.price
+        prices = 8000
+        have = 5
+        curs = self.dct_db.cursor()
+        if (self.buy == 7):
+            sql = "UPDATE tusers2 SET dchar2=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
+            self.dct_db.commit()
+        if (self.buy == 8):
+            sql = "UPDATE tusers2 SET dchar3=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
             self.dct_db.commit()
         curs.close()
 

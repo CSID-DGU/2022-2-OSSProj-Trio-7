@@ -170,17 +170,17 @@ class CharacterStoreMenu_d:
 
         selected_idx = self.character_selector.get_value()[0][1]
         if(User.coin >= self.price[selected_idx]):
-            User.buy_character = selected_idx
+            User.buy_dcharacter = selected_idx + 6
             database = Database()
-            database.buy_char()
+            database.buy_dchar()
             User.coin = Database().show_mycoin()
             #self.show()
             self.item_description_widget.set_title(title = "Unlocked" )
 
         else:
             print("not enough money") # 돈이 부족할 경우 AttributeError가 발생함.
-            import menu.CharacterBuy
-            menu.CharacterBuy.CharacterBuy(self.screen,self.character_data[selected_idx].name).show()    
+            import menu.CharacterBuy_d
+            menu.CharacterBuy_d.CharacterBuy_d(self.screen,self.character_data[selected_idx].name).show()    
 
     #잠금 표시
     def lock(self):

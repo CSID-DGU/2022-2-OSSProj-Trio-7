@@ -5,10 +5,12 @@ import pygame_menu
 from data.CharacterDataManager import *
 from data.Defs import *
 from data.StageDataManager import *
-from menu.CharacterStoreMenu import *
+from menu.CharacterStoreMenu_p import *
+from menu.CharacterStoreMenu_f import *
+from menu.CharacterStoreMenu_d import *
 
 #Mypage에서 잠긴 캐릭터 SELECT할 시 보여주는 창
-class CharacterBuy:
+class CharacterBuy_f:
     def __init__(self,screen,character):
         self.size = screen.get_size()
         self.screen = screen
@@ -23,12 +25,10 @@ class CharacterBuy:
             title_font_color = (255,255,255),
             title_bar_style = pygame_menu.pygame_menu.widgets.MENUBAR_STYLE_NONE,
             widget_font_size = self.size[0] * 30 //720)
-        if(character == 'doctor'):
+        if(character == 'fire1'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat2.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        elif(character == 'firefighter'):
+        elif(character == 'fire2'):
              self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat3.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        elif(character == 'Kongchi'):
-            self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat4.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         self.charlock_theme.background_color = self.menu_image
         self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
                             theme=self.charlock_theme)
@@ -38,12 +38,12 @@ class CharacterBuy:
         self.menu.add.vertical_margin(self.size[0]*0.5)
         self.menu.add.button('back', self.back_from_locked)
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
-        CharacterStoreMenu.buy_character()
+        CharacterStoreMenu_f.buy_character()
         
     
     def back_from_locked(self):
         self.menu.clear()
-        CharacterStoreMenu(self.screen).show()
+        CharacterStoreMenu_f(self.screen,self.character).show()
 
         # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
