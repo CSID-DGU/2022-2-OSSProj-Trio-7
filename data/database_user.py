@@ -207,36 +207,77 @@ class Database:
         curs.close()
 
     # 상점
-    def buy_char(self):
+    def buy_pchar(self):
         self.id = User.user_id
-        self.buy = User.buy_character
+        self.buy = User.buy_pcharacter
         self.coin = User.coin
         self.price = User.price
+        prices = 8000
+        have = 5
         curs = self.dct_db.cursor()
         if (self.buy == 1):
-            sql = "UPDATE users2 SET char2=%s WHERE user_id = %s"
-            curs.execute(sql, (5, self.id))
-            sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
-            curs.execute(sql, (self.coin-100, self.id))
+            sql = "UPDATE tusers2 SET pchar2=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
             self.dct_db.commit()
         if (self.buy == 2):
-            sql = "UPDATE users2 SET char3=%s WHERE user_id = %s"
-            curs.execute(sql, (5, self.id))
-            sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
-            curs.execute(sql, (self.coin-100, self.id))
+            sql = "UPDATE tusers2 SET pchar3=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
             self.dct_db.commit()
-        if (self.buy == 3):
-            sql = "UPDATE users2 SET char4=%s WHERE user_id = %s"
-            curs.execute(sql, (5, self.id))
-            sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
-            curs.execute(sql, (self.coin-200, self.id))
+        curs.close()
+
+    def buy_fchar(self):
+        self.id = User.user_id
+        self.buy = User.buy_fcharacter
+        self.coin = User.coin
+        self.price = User.price
+        prices = 8000
+        have = 5
+        curs = self.dct_db.cursor()
+        if (self.buy == 4):
+            sql = "UPDATE tusers2 SET fchar2=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
+            self.dct_db.commit()
+        if (self.buy == 5):
+            sql = "UPDATE tusers2 SET fchar3=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
+            self.dct_db.commit()
+        curs.close()
+
+    def buy_dchar(self):
+        self.id = User.user_id
+        self.buy = User.buy_dcharacter
+        self.coin = User.coin
+        self.price = User.price
+        prices = 8000
+        have = 5
+        curs = self.dct_db.cursor()
+        if (self.buy == 7):
+            sql = "UPDATE tusers2 SET dchar2=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
+            self.dct_db.commit()
+        if (self.buy == 8):
+            sql = "UPDATE tusers2 SET dchar3=%s WHERE user_id = %s"
+            curs.execute(sql, (have, self.id))
+            sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
+            curs.execute(sql, (self.coin-prices, self.id))
             self.dct_db.commit()
         curs.close()
 
     # 유저 게임기록 업데이트
 
     def update_score(self, mode, new_score):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
         now = datetime.now()
@@ -249,7 +290,8 @@ class Database:
         curs.close()
 
     def update_time(self, mode, new_time):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
         now = datetime.now()
@@ -263,7 +305,8 @@ class Database:
 
     # 현재 최고기록 확인
     def high_score(self, mode):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
@@ -277,7 +320,8 @@ class Database:
         return highscore
 
     def high_time(self, mode):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
@@ -334,7 +378,8 @@ class Database:
     def update_score2(self, mode, new_score):
         now = datetime.now()
         curs = self.dct_db.cursor()
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
 
         if mode == "score":
@@ -348,7 +393,8 @@ class Database:
     def update_time2(self, mode, new_time):
         now = datetime.now()
         curs = self.dct_db.cursor()
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
 
         if mode == "time":

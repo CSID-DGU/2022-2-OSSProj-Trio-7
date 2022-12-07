@@ -98,7 +98,8 @@ class GameselectMenu:
         self.stage_level = "1"
 
         self.sound = "on"
-        self.background_music = "./Sound/bgm/bensound-epic.wav"
+        
+        self.background_music = "./Sound/bgm/bgm_gameSelect.wav"
 
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
@@ -277,6 +278,8 @@ class GameselectMenu:
                             InfiniteGame(self.character_data[User.dcharacter], "doctor", self.stage_map,
                                          "Image/background/doctor_background.png", self.doctor_attackTarget[0], self.doctor_attackTarget[1], self.doctor_attackTarget[2], self.doctor_attackTarget[3]).main()
                 pygame.display.update()
+
+            if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
 
                 if self.mypage.isOver(pos):
                     if choosed_character == "police":
