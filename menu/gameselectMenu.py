@@ -225,7 +225,7 @@ class GameselectMenu:
                                     StageGame(
                                         self.character_data, self.character_data[User.dcharacter], self.stage_map, "doctor", winfo).main_info()
                                 pygame.display.update()
-               
+
 
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
@@ -250,7 +250,6 @@ class GameselectMenu:
                         self.mode_map1.image = "Image/catthema/SCORE.png"
                 pygame.display.update()
 
-# ====================================================인피니티 모드==================================
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기  
                     if choosed_character == "police":  # 경찰관 맵

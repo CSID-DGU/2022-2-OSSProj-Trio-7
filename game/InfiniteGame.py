@@ -110,6 +110,7 @@ class InfiniteGame:
         else:
             self.defaultw = True
 
+
     def main(self):
         from menu.gameselectMenu import soundset
         # 메인 이벤트
@@ -275,16 +276,9 @@ class InfiniteGame:
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 기본값 0.002
-            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-            #         Default.item.value["speedup"]["spawn_rate"] += 0.0003
-            #     new_item = SpeedUp(self.animation.animations["speedup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
 
-            # 무기 구입 정보 적용하기~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
+
+            # 무기 구입 정보 적용하기
             if self.stagew==True:
                 new_item = PowerUp(self.animation.animations["powerup"])
                 new_item.use(self)
@@ -294,7 +288,6 @@ class InfiniteGame:
                 new_item = SpeedUp(self.animation.animations["speedup"])
                 new_item.use(self)
                 # self.item_list.append(new_item)
-            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
             # 플레이어 객체 이동
             self.character.update(self)

@@ -522,7 +522,6 @@ class StageGame:
     # 실패 화면
     def showGameOverScreen(self):
         pygame.mixer.music.stop()
-
         gameover_image = pygame_menu.baseimage.BaseImage(
         image_path=Images.gameover.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
