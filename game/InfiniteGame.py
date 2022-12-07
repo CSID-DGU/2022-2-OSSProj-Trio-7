@@ -566,7 +566,7 @@ class InfiniteGame:
     # 재시도 버튼 클릭 시 실행
     def retry(self):
         InfiniteGame(self.character, self.choosed_chracter, self.mode,
-                     self.background_image,self.target1_image,self.target2_image,self.target3_image,self.target4_image).main()
+                     self.background_image,self.target1_image,self.target2_image,self.target3_image,self.target4_image, self.wselect).main()
         self.menu.disable()
 
     # 난이도를 나누는 모드 클래스 (상속하여 사용)
