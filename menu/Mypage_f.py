@@ -56,10 +56,11 @@ class Mypage_f:
 
     #메뉴 구성하고 보이기
     def show(self, character):
+        self.db = Database()
         choosed_chracter = character  
         # Database().char_lock()  
         self.menu.add.label("My ID : %s "%User.user_id)
-        self.menu.add.label("My NICKNAME : %s "%User.user_nickname)
+        self.menu.add.label("My NICKNAME : %s "%self.db.get_nickname())
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
