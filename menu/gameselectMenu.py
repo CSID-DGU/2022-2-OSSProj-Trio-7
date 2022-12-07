@@ -99,7 +99,7 @@ class GameselectMenu:
 
         self.sound = "on"
         
-        self.background_music = "./Sound/bgm/bensound-epic.wav"
+        self.background_music = "./Sound/bgm/bgm_gameSelect.wav"
 
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
