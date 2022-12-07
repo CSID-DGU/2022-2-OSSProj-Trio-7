@@ -276,7 +276,8 @@ class Database:
     # 유저 게임기록 업데이트
 
     def update_score(self, mode, new_score):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
         now = datetime.now()
@@ -289,7 +290,8 @@ class Database:
         curs.close()
 
     def update_time(self, mode, new_time):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
         now = datetime.now()
@@ -303,7 +305,8 @@ class Database:
 
     # 현재 최고기록 확인
     def high_score(self, mode):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
@@ -317,7 +320,8 @@ class Database:
         return highscore
 
     def high_time(self, mode):
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
         curs = self.dct_db.cursor()
 
@@ -374,7 +378,8 @@ class Database:
     def update_score2(self, mode, new_score):
         now = datetime.now()
         curs = self.dct_db.cursor()
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
 
         if mode == "score":
@@ -388,7 +393,8 @@ class Database:
     def update_time2(self, mode, new_time):
         now = datetime.now()
         curs = self.dct_db.cursor()
-        self.nickname = User.user_nickname
+        self.db = Database()
+        self.nickname = self.db.get_nickname()
         self.id = User.user_id
 
         if mode == "time":
