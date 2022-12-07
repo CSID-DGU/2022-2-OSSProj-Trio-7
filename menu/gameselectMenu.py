@@ -98,6 +98,7 @@ class GameselectMenu:
         self.stage_level = "1"
 
         self.sound = "on"
+        
         self.background_music = "./Sound/bgm/bensound-epic.wav"
 
         self.mode = [("score", InfiniteGame.ScoreMode()),
@@ -279,8 +280,6 @@ class GameselectMenu:
                 pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
-                if self.mypage.isOver(pos):
-                    Mypage(self.screen).show()
 
                 if self.mypage.isOver(pos):
                     if choosed_character == "police":
