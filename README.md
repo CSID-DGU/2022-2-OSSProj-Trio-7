@@ -33,8 +33,9 @@
 #### 1. install python3
 
 ```
-sudo apt get update
-sudo apt install python3
+sudo apt-get update
+sudo apt install python3-pip
+
 ```
 
 #### 2. install pygame 2.0.2
@@ -55,14 +56,20 @@ sudo pip3 install pygame_menu==4.2.0
 sudo pip3 install pymysql==1.0.2
 ```
 
-#### 5. download/clone this project and go to the directory
+#### 5. install bcrypt 1.0.2
+
+```
+pip install bcrypt
+```
+
+#### 6. download/clone this project and go to the directory
 
 ```
 git clone https://github.com/CSID-DGU/2022-2-OSSProj-Trio-7.git
 cd2022-2-OSSProj-Trio-7
 ```
 
-#### 6. run Main.py
+#### 7. run Main.py
 
 ```
 python3 Main.py
