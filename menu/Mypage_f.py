@@ -28,8 +28,8 @@ class Mypage_f:
         self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
         self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
         self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (0,100,162)
-        self.mytheme.title_font_color = (255,255,255)
+        self.mytheme.title_background_color = (253, 111, 34)
+        self.mytheme.title_font_color = (0,10,63)
         self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
         #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
         self.mytheme.background_color = (255,255,255)
@@ -122,12 +122,12 @@ class Mypage_f:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_background_color = (150, 213, 252)
+            self.mytheme.widget_background_color = (253, 111, 34)
             self.menu.add.button("SELECT",self.select_fcharacter)
             self.menu.add.vertical_margin(5)
             self.menu.add.button("    BACK    ",self.to_menu)
             self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color = (0,0,0,0)
+            self.mytheme.widget_background_color = (0,10,63)
 
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
