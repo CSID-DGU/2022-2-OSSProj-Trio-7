@@ -112,6 +112,7 @@ class Images(enum.Enum):
     JobInfo = "./Image/JobInfo.png"
 
     help = "./Image/help.png";
+    ranking = "./Image/ranking.png";
     stop = "./Image/stop.png";
     gameover = "./Image/gameover.png"; 
 
@@ -131,7 +132,9 @@ class Color(enum.Enum):
     WHITE = (255, 255, 255)
     TRANSPARENT = (255, 255, 255, 128)
     GRAY = (220, 220, 220)
+    ORANGE = (253, 111, 34)
     BLACK = (0, 0, 0)
+    INDIGO = (0, 10, 63)
 
 
 class Menus(enum.Enum):

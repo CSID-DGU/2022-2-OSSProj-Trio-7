@@ -25,7 +25,7 @@ class CharacterStoreMenu_d:
         self.screen = screen
         self.size = screen.get_size()
         self.character = character_info
-
+        
         self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
         self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
         self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
