@@ -170,8 +170,8 @@ class Default(enum.Enum):
         ],
         "gun_size": 10,
         "bullet_size": {
-            "x": 20,
-            "y": 20
+            "x": 50,
+            "y": 50
         },
         "health": 12000,
         "firing_speed": [
