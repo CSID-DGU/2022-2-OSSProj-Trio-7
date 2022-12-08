@@ -100,7 +100,7 @@ class Mypage_p:
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.5, 0.5)
+                    ).scale(0.3, 0.3)
         
                     self.pcharacter_imgs2.append(default_image.copy())
             #print(self.price)    
