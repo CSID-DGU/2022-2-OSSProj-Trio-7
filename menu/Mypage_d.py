@@ -130,7 +130,7 @@ class Mypage_d:
             self.mytheme.widget_background_color = (0,0,0,0)
 
     def select_dcharacter(self):
-        selected_idx = self.dcharacter_selector.get_value()[0][1] # 이게 문제
+        selected_idx = self.dcharacter_selector.get_value()[0][1]
         if User.doctor_lock[selected_idx] == False:
             User.dcharacter = selected_idx
             database = Database()
