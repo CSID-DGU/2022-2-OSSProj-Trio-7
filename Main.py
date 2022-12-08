@@ -44,7 +44,7 @@ class Login:
             widget_font=Default.font.value,
             widget_background_color=Color.NAVY.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=Color.ORANGY.value,  # 선택됐을때 글씨색 설정
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
             widget_font_color=Color.WHITE.value,  # 기본 글자색
             title_background_color=Color.TRANSPARENT.value, # 투명
             title_font_color=Color.TRANSPARENT.value, # 투명
@@ -89,11 +89,12 @@ class Login:
             new_w, new_h = 1 * window_size[0], 1 * window_size[1]
             font_size = new_w * 30 // 720
             self.mytheme.widget_font_size = font_size
+            print(f'font_size: {font_size}')
             self.menu.resize(new_w, new_h)
             self.size = window_size
             self.menu._current._widgets_surface = make_surface(0, 0)
             print(f'New menu size: {self.menu.get_size()}')
-
+            pygame.display.flip()
             return True
         return False
 
@@ -214,10 +215,8 @@ class Login:
         self.menu.add.button('  이전 화면  ', self.show_signup)
 
     def tutorial_page(self):
-        pvpgame = tutorial(self.pvpcharacter_data,
-                           self.pvpcharacter_data[0], self.mode)
-        pvpgame.tutorial_info()
-
+        tutorialgame = tutorial(self.pvpcharacter_data, self.pvpcharacter_data[0], self.mode)
+        tutorialgame.tutorial_info()
 
     def main(self):
         while True:
@@ -233,7 +232,7 @@ class Login:
             screen.fill(Color.WHITE.value)
             login.menu.update(events)
             login.menu.draw(screen)
-            pygame.display.flip()  # 화면이 계속 업데이트 될 수 있도록 설정
+            pygame.display.flip()  # 화면 계속 업데이트
 
 
 if __name__ == '__main__':

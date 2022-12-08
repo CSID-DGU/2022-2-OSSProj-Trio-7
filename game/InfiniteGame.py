@@ -370,15 +370,14 @@ class InfiniteGame:
             # 점수와 목숨 표시
             font = pygame.font.Font(Default.font.value, self.size[0]//40)
             score_life_text = font.render("점수 : {} 생명: {} 폭탄: {} 돈 : {} 궁극기 : {} ".format(
-                self.score, self.life, self.character.bomb_count, self.coin, self.character.gung_count), True, Color.YELLOW.value)  # 폰트가지고 랜더링 하는데 표시할 내용, True는 글자가 잘 안깨지게 하는 거임 걍 켜두기, 글자의 색깔
-            # 이미지화 한 텍스트라 이미지를 보여준다고 생각하면 됨
-            self.screen.blit(score_life_text, (10, 5))
+                self.score, self.life, self.character.bomb_count, self.coin, self.character.gung_count), True, Color.YELLOW.value) 
+            self.screen.blit(score_life_text, (10, 5)) # x: 왼족에서 10 떨어짐 y : 위에서 5 떨어짐
 
             # 현재 흘러간 시간
             play_time = float(time.time() - self.start_time)
             time_text = font.render("시간 : {:.2f}".format(
                 play_time), True, Color.YELLOW.value)
-            self.screen.blit(time_text, (self.size[0]//2, 5))
+            self.screen.blit(time_text, (self.size[0]//2, 5)) # x: 화면정 중앙 y : 위에서 5 떨어짐
 
             # 화면갱신
             pygame.display.flip()  # 그려왔던데 화면에 업데이트가 됨
@@ -418,12 +417,12 @@ class InfiniteGame:
             image_path=Images.gameover.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.NAVY.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value, # 투명
+            title_font_color=Color.TRANSPARENT.value, # 투명
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )

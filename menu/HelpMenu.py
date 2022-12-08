@@ -13,18 +13,16 @@ class HelpMenu:
     def __init__(self, screen, choosed_character):
         self.size = screen.get_size()
         self.screen = screen
-        
-        self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 38 // 720  # 글씨크기
 
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63,0),  # 버튼 배경색 설정
+            widget_background_color=Color.TRANSPARENT.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(0, 10, 63),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0), # 투명
-            title_font_color=(255, 255, 255, 0),  # 투명
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.NAVY.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value, # 투명
+            title_font_color=Color.TRANSPARENT.value, # 투명
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -53,19 +51,19 @@ class HelpMenu:
     def show(self):
         self.menu.clear()
         self.menu.add.button('     스테이지 모드     ', self.infinite_game_1,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('     무한 모드     ', self.stage_game_1,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('   아이템 설명서   ', self.items,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('   조작법 설명서   ', self.controls,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('     이전     ',self.gameselectmenu,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
     # 무한 모드 설명 페이지 1
@@ -74,11 +72,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_infi_1.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("1/6", font_size=self.font_size)
+        self.menu.add.label("1/6")
         self.menu.add.button('     이전     ', self.show,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_2,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 무한 모드 설명 페이지 2
@@ -87,11 +85,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_infi_2.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("2/6", font_size=self.font_size)
+        self.menu.add.label("2/6")
         self.menu.add.button('     이전     ', self.infinite_game_1,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_3,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 무한 모드 설명 페이지 3
@@ -100,11 +98,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_infi_3.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("3/6", font_size=self.font_size)
+        self.menu.add.label("3/6")
         self.menu.add.button('     이전     ', self.infinite_game_2,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_4,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 무한 모드 설명 페이지 4
@@ -113,24 +111,24 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_infi_4.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("4/6", font_size=self.font_size)
+        self.menu.add.label("4/6")
         self.menu.add.button('     이전     ', self.infinite_game_3,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_5,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 무한 모드 설명 페이지 5
     def infinite_game_5(self):
         self.menu.clear()
-        self.menu.add.label("5/6", font_size=self.font_size)
+        self.menu.add.label("5/6")
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_infi_5.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.button('     이전     ', self.infinite_game_4,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_6,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 무한 모드 설명 페이지 6
@@ -139,11 +137,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_infi_6.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("6/6", font_size=self.font_size)
+        self.menu.add.label("6/6")
         self.menu.add.button('     이전     ', self.infinite_game_5,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     종료     ', self.show,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 스테이지 모드 설명 페이지 1
@@ -152,11 +150,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_1.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("1/6", font_size=self.font_size)
+        self.menu.add.label("1/6")
         self.menu.add.button('     이전     ', self.show,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_2,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 스테이지 모드 설명 페이지 2
@@ -165,11 +163,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_2.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("2/6", font_size=self.font_size)
+        self.menu.add.label("2/6")
         self.menu.add.button('     이전     ', self.stage_game_1,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_3,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 스테이지 모드 설명 페이지 3
@@ -178,11 +176,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_3.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("3/6", font_size=self.font_size)
+        self.menu.add.label("3/6")
         self.menu.add.button('     이전     ', self.stage_game_2,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_4,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 스테이지 모드 설명 페이지 4
@@ -191,11 +189,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_4.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("4/6", font_size=self.font_size)
+        self.menu.add.label("4/6")
         self.menu.add.button('     이전     ', self.stage_game_3,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_5,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 스테이지 모드 설명 페이지 5
@@ -204,11 +202,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_5.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("5/6", font_size=self.font_size)
+        self.menu.add.label("5/6")
         self.menu.add.button('     이전     ', self.stage_game_4,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_6,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 스테이지 모드 설명 페이지 6
@@ -217,11 +215,11 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_5.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("5/6", font_size=self.font_size)
+        self.menu.add.label("5/6")
         self.menu.add.button('     이전     ', self.stage_game_5,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
         self.menu.add.button('     종료     ', self.show,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
 
     # 아이템 설명 페이지
@@ -231,7 +229,7 @@ class HelpMenu:
         self.menu.add.image(Images.info_items.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.button('     이전     ', self.show,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
     # 조작법 설명 페이지
     def controls(self):
@@ -240,7 +238,7 @@ class HelpMenu:
         self.menu.add.image(Images.info_controls.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.button('     이전     ', self.show,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value)
 
    # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
