@@ -11,7 +11,6 @@ from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
-from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu_p import *
@@ -41,13 +40,13 @@ class wselectMenu:
         self.weapon = ""
 
         self.stageW = button(self.board_width, self.board_height,
-                                0.2, 0.4, 0.25, 0.35, "Image/weaponSelect/wstage.png")
+                                0.17, 0.4, 0.32, 0.45, "Image/weaponSelect/wstage.png")
 
         self.infiniteW = button(self.board_width, self.board_height,
-                                   0.8, 0.4, 0.25, 0.35, "Image/weaponSelect/winfinite.png")
+                                   0.825, 0.4, 0.32, 0.45, "Image/weaponSelect/winfinite.png")
 
         self.defaultW = button(self.board_width, self.board_height,
-                                         0.5, 0.4, 0.25, 0.35, "Image/weaponSelect/wdefault.png")
+                                         0.5, 0.4, 0.32, 0.45, "Image/weaponSelect/wdefault.png")
 
         self.backgroundw = button(self.board_width, self.board_height,
                                          0.5, 0.5, 1.0, 1.0, "Image/weaponSelect/wbackground.png")

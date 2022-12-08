@@ -42,7 +42,7 @@ class StageGame:
         self.size = [infoObject.current_w, infoObject.current_h]
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
         self.font_size = self.size[0] * 40 // 720
-        self.scale = (self.size[0]*0.00015, self.size[1]*0.00015)
+        self.scale = (self.size[0]*0.0020, self.size[1]*0.0020)
         mytheme = pygame_menu.themes.THEME_ORANGE.copy()
         self.menu = pygame_menu.Menu('Select Stage...', self.size[0], self.size[1],
                                      theme=mytheme)
@@ -497,19 +497,27 @@ class StageGame:
     # 클리어 화면
     def showStageClearScreen(self):
         pygame.mixer.music.stop()
-        stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-        stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Stage Clear', self.size[0], self.size[1],
-                                     theme=stageclear_theme)
-        self.menu.add.image(Images.win.value, scale=self.scale)
-        self.menu.add.label("")
+        stageclaer_image = pygame_menu.baseimage.BaseImage(
+        image_path=Images.stage_clear.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+        self.mytheme.background_color = stageclaer_image
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
+                                     theme=self.mytheme)
         #self.menu.add.button('to Menu', self.toMenu,self.menu)
         if (self.stage.stage != "3"):
             self.menu.add.button(
-                'Next stage', self.nextstage, font_size=self.font_size)
-        self.menu.add.button('Home', self.gameselectmenu,
+                '다음 스테이지', self.nextstage, font_size=self.font_size)
+        self.menu.add.button('홈으로', self.gameselectmenu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)
@@ -517,7 +525,7 @@ class StageGame:
         print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen)  # ,bgfun = self.check_resize)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize)  # ,bgfun = self.check_resize)
 
     # 실패 화면
     def showGameOverScreen(self):
@@ -551,7 +559,7 @@ class StageGame:
         print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen)  # ,bgfun = self.check_resize)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize)  # ,bgfun = self.check_resize)
         #User.coin = User.coin + self.coin
         #self.database = Database()
         # self.database.set_coin()
@@ -618,5 +626,5 @@ class StageGame:
             print(self.screen)
             font_size = new_w * 40 // 720
             self.font_size = font_size
-            self.scale = (new_w*0.00015, new_h*0.00015)
+            self.scale = (new_w*0.0020, new_h*0.0020)
             return True
