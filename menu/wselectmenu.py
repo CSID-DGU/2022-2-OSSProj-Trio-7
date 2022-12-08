@@ -23,11 +23,6 @@ from menu.Mypage_p import *
 from menu.Mypage_f import *
 from menu.Mypage_d import *
 
-
-global soundset
-soundset = 0.1
-
-
 class wselectMenu:
     def __init__(self, screen):
 
