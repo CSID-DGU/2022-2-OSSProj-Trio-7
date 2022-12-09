@@ -115,7 +115,8 @@ class Images(enum.Enum):
     ranking = "./Image/ranking.png";
     stop = "./Image/stop.png";
     gameover = "./Image/gameover.png"; 
-
+    mypage = "./Image/mypage.png"; 
+    store = "./Image/store.png"; 
 
 class Scales(enum.Enum):
     large = (2, 2)
