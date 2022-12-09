@@ -42,7 +42,7 @@ class Images(enum.Enum):
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
-    stage_clear = "./Image/Stageclear_v1.jpg"
+    stage_clear = "./Image/stageclearpage.png"
     chapter_clear_oasis = "./Image/ChapterClear_Oasis.jpg"
     chapter_clear_ice = "./Image/ChapterClear_Ice.jpg"
     chapter_clear_space = "./Image/ChapterClear_Space.jpg"
@@ -74,7 +74,7 @@ class Images(enum.Enum):
     cat4 = "./Image/catthema/cat4_front.png"
 
 
-    win = "./Image/catthema/win.png"
+    win = "./Image/stageclear.png"
     lose = "./Image/catthema/lose.png"
 
     lock_cat2 = "./Image/catthema/lock_cat2.png"
@@ -173,8 +173,8 @@ class Default(enum.Enum):
         ],
         "gun_size": 10,
         "bullet_size": {
-            "x": 20,
-            "y": 20
+            "x": 50,
+            "y": 50
         },
         "health": 12000,
         "firing_speed": [

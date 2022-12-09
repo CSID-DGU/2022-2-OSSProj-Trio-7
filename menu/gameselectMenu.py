@@ -11,7 +11,6 @@ from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
-from menu.WeaponSelect import *
 # from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu_p import *

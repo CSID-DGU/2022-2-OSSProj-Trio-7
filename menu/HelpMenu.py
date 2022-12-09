@@ -49,10 +49,10 @@ class HelpMenu:
     # 도움말 메인 메뉴
     def show(self):
         self.menu.clear()
-        self.menu.add.button('     스테이지 모드     ', self.infinite_game_1,
+        self.menu.add.button('     스테이지 모드     ', self.stage_game_1,
                              selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('     무한 모드     ', self.stage_game_1,
+        self.menu.add.button('     무한 모드     ', self.infinite_game_1,
                              selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('   아이템 설명서   ', self.items,
@@ -149,7 +149,7 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_1.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("1/6")
+        self.menu.add.label("1/7")
         self.menu.add.button('     이전     ', self.show,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_2,
@@ -162,7 +162,7 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_2.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("2/6")
+        self.menu.add.label("2/7")
         self.menu.add.button('     이전     ', self.stage_game_1,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_3,
@@ -175,7 +175,7 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_3.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("3/6")
+        self.menu.add.label("3/7")
         self.menu.add.button('     이전     ', self.stage_game_2,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_4,
@@ -188,7 +188,7 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_4.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("4/6")
+        self.menu.add.label("4/7")
         self.menu.add.button('     이전     ', self.stage_game_3,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_5,
@@ -200,8 +200,8 @@ class HelpMenu:
         self.menu.clear()
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_5.value, scale=(
-            self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("5/6")
+            self.size[0]*0.001, self.size[1]*0.0009))
+        self.menu.add.label("5/7")
         self.menu.add.button('     이전     ', self.stage_game_4,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_6,
@@ -212,14 +212,25 @@ class HelpMenu:
     def stage_game_6(self):
         self.menu.clear()
         self.menu.add.vertical_margin(Menus.margin_10.value)
-        self.menu.add.image(Images.info_stage_5.value, scale=(
+        self.menu.add.image(Images.info_stage_6.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("5/6")
+        self.menu.add.label("6/7")
         self.menu.add.button('     이전     ', self.stage_game_5,
+                             selection_color=Color.ORANGE.value)
+        self.menu.add.button('     다음     ', self.stage_game_7,
+                             selection_color=Color.ORANGE.value)
+    
+        # 스테이지 모드 설명 페이지 
+    def stage_game_7(self):
+        self.menu.clear()
+        self.menu.add.vertical_margin(Menus.margin_10.value)
+        self.menu.add.image(Images.info_stage_7.value, scale=(
+            self.size[0]*0.001, self.size[1]*0.001))
+        self.menu.add.label("7/7")
+        self.menu.add.button('     이전     ', self.stage_game_6,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     종료     ', self.show,
                              selection_color=Color.ORANGE.value)
-
 
     # 아이템 설명 페이지
     def items(self):
