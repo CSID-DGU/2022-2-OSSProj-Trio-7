@@ -20,6 +20,8 @@ class Mypage:
 
     def __init__(self,screen):
         # 화면 받고 화면 크기 값 받기
+        title = "마이 페이지"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.screen = screen
         self.size = screen.get_size()
         self.font_size = self.size[0] * 25 //720

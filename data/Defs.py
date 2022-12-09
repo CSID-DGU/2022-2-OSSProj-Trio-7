@@ -126,6 +126,8 @@ class Color(enum.Enum):
     TRANSPARENT = (255, 255, 255, 128)
     GRAY = (220, 220, 220)
     BLACK = (0, 0, 0)
+    NAVY = (0, 10, 63)
+    ORANGE = (253, 111, 34)
 
 
 class Menus(enum.Enum):

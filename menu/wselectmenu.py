@@ -22,14 +22,10 @@ from menu.Mypage_p import *
 from menu.Mypage_f import *
 from menu.Mypage_d import *
 
-
-global soundset
-soundset = 0.1
-
-
 class wselectMenu:
     def __init__(self, screen):
-
+        title = "무기 선택"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
         self.changed_screen_size = self.screen.get_size()
