@@ -52,10 +52,10 @@ class HelpMenu:
     # 도움말 메인 메뉴
     def show(self):
         self.menu.clear()
-        self.menu.add.button('     스테이지 모드     ', self.infinite_game_1,
+        self.menu.add.button('     스테이지 모드     ', self.stage_game_1,
                              selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('     무한 모드     ', self.stage_game_1,
+        self.menu.add.button('     무한 모드     ', self.infinite_game_1,
                              selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('   아이템 설명서   ', self.items,
@@ -203,7 +203,7 @@ class HelpMenu:
         self.menu.clear()
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_5.value, scale=(
-            self.size[0]*0.001, self.size[1]*0.001))
+            self.size[0]*0.001, self.size[1]*0.0009))
         self.menu.add.label("5/6", font_size=self.font_size)
         self.menu.add.button('     이전     ', self.stage_game_4,
                              selection_color=self.orange_color, font_size=self.font_size)
@@ -215,9 +215,9 @@ class HelpMenu:
     def stage_game_6(self):
         self.menu.clear()
         self.menu.add.vertical_margin(Menus.margin_10.value)
-        self.menu.add.image(Images.info_stage_5.value, scale=(
+        self.menu.add.image(Images.info_stage_6.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
-        self.menu.add.label("5/6", font_size=self.font_size)
+        self.menu.add.label("6/6", font_size=self.font_size)
         self.menu.add.button('     이전     ', self.stage_game_5,
                              selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.button('     종료     ', self.show,
