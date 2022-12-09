@@ -47,6 +47,7 @@ class Mypage_p:
             '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
 
 
+
         #캐릭터 데이터를 json에서 불러온다
         self.character_data = CharacterDataManager.load()
 
@@ -135,6 +136,7 @@ class Mypage_p:
             self.menu.add.vertical_margin(10)
             self.menu.add.button('         이전         ',self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)
+
             self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_background_color = (0,10,63)
 

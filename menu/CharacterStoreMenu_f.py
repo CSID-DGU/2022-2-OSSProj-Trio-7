@@ -52,6 +52,7 @@ class CharacterStoreMenu_f:
             '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
 
 
+
         self.show()
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
 
@@ -130,10 +131,13 @@ class CharacterStoreMenu_f:
             
 
             self.item_description_widget = self.menu.add.label("")
+
             self.frame_v = self.menu.add.frame_v(400, 70, margin=(10, 0))
+
             self.mytheme.widget_background_color = (253, 111, 34)
        
             
+
 
             self.mytheme.widget_font_color=(255, 255, 255)
             self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
@@ -202,8 +206,8 @@ class CharacterStoreMenu_f:
         if (self.size != self.screen.get_size()): #현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size() #변경된 사이즈
             ratio_screen_size = (changed_screen_size[0],changed_screen_size[0]*783/720) #y를 x에 비례적으로 계산
-            if(ratio_screen_size[0]<320): #최소 x길이 제한
-                ratio_screen_size = (494,537)
+            if(ratio_screen_size[0]<584): #최소 x길이 제한
+                ratio_screen_size = (584,635)
             if(ratio_screen_size[1]>783): #최대 y길이 제한
                 ratio_screen_size = (720,783)
             self.screen = pygame.display.set_mode(ratio_screen_size,

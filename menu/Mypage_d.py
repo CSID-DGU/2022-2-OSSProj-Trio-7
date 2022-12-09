@@ -46,6 +46,7 @@ class Mypage_d:
 
 
 
+
         #캐릭터 데이터를 json에서 불러온다
         self.character_data = CharacterDataManager.load()
 
@@ -131,6 +132,7 @@ class Mypage_d:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
+
             self.mytheme.widget_font_color=(255, 255, 255)
             self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_dcharacter,
@@ -139,11 +141,12 @@ class Mypage_d:
             self.menu.add.button('         이전         ',self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)
             self
+
             self.update_from_selection(int(self.dcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_background_color = (0,10,63)
 
     def select_dcharacter(self):
-        selected_idx = self.dcharacter_selector.get_value()[0][1] # 이게 문제
+        selected_idx = self.dcharacter_selector.get_value()[0][1]
         if User.doctor_lock[selected_idx] == False:
             User.dcharacter = selected_idx
             database = Database()
@@ -187,8 +190,8 @@ class Mypage_d:
         if (self.size != self.screen.get_size()): #현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size() #변경된 사이즈
             ratio_screen_size = (changed_screen_size[0],changed_screen_size[0]*783/720) #y를 x에 비례적으로 계산
-            if(ratio_screen_size[0]<320): #최소 x길이 제한
-                ratio_screen_size = (494,537)
+            if(ratio_screen_size[0]<600): #최소 x길이 제한
+                ratio_screen_size = (600,650)
             if(ratio_screen_size[1]>783): #최대 y길이 제한
                 ratio_screen_size = (720,783)
             self.screen = pygame.display.set_mode(ratio_screen_size,

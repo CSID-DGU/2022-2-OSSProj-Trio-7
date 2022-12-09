@@ -1,33 +1,32 @@
 {
-    "Characters": [
-        {
-            "name": "police",
-            "img_path": "./Image/policeCharacters/policeOfficer.png",
-            "velocity": 13,
-            "missile_img": "./Image/Weapon/handcuffs.png",
-            "missile_size": {
-                "x": 50,
-                "y": 50
-            },
-            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 300,
-            "fire_interval": 0.7,
-            "price": 0
-        },
-        {
-            "name": "police1",
-            "img_path": "./Image/storeItems/police1.png",
-            "velocity": 13,
-            "missile_img": "./Image/storeItems/baton.png",
+  "Characters": [
+    {
+      "name": "police",
+      "img_path": "./Image/policeCharacters/policeOfficer.png",
+      "velocity": 13,
+      "missile_img": "./Image/Weapon/handcuffs.png",
+      "missile_size": {
+        "x": 50,
+        "y": 50
+      },
+      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+      "missile_power": 300,
+      "fire_interval": 0.7,
+      "price": 0
+    },
+    {
+      "name": "police1",
+      "img_path": "./Image/storeItems/police1.png",
+      "velocity": 13,
+      "missile_img": "./Image/storeItems/baton.png",
 
-            "missile_size": {
-                "x": 50,
-                "y": 50
-            },
-            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 300,
-            "fire_interval": 0.7,
-
+      "missile_size": {
+        "x": 50,
+        "y": 50
+      },
+      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+      "missile_power": 300,
+      "fire_interval": 0.7,
             "price": 8000
         },
         {
@@ -91,7 +90,7 @@
             "name": "doctor",
             "img_path": "./Image/doctorCharacters/doctor.png",
             "velocity": 13,
-            "missile_img": "./Image/Weapon/handcuffs.png",
+            "missile_img": "./Image/Weapon/pill.png",
             "missile_size": {
                 "x": 50,
                 "y": 50
@@ -131,21 +130,64 @@
         }
     ],
 
+    {
+      "name": "doctor",
+      "img_path": "./Image/doctorCharacters/doctor.png",
+      "velocity": 13,
+      "missile_img": "./Image/Weapon/pill.png",
+      "missile_size": {
+        "x": 50,
+        "y": 50
+      },
+      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+      "missile_power": 300,
+      "fire_interval": 0.7,
+      "price": 8000
+    },
+    {
+      "name": "doctor1",
+      "img_path": "./Image/storeItems/doctor1.png",
+      "velocity": 13,
+      "missile_img": "./Image/storeItems/stethoscope.png",
+      "missile_size": {
+        "x": 50,
+        "y": 50
+      },
+      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+      "missile_power": 300,
+      "fire_interval": 0.7,
+      "price": 8000
+    },
+    {
+      "name": "doctor2",
+      "img_path": "./Image/storeItems/doctor2.png",
+      "velocity": 13,
+      "missile_img": "./Image/storeItems/syringe.png",
+      "missile_size": {
+        "x": 50,
+        "y": 50
+      },
+      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+      "missile_power": 300,
+      "fire_interval": 0.7,
+      "price": 8000
+    }
+  ],
 
-    "PVPcharacter" : [
-        {
-            "name": "police",
-            "img_path": "./Image/policeCharacters/policeOfficer.png",
-            "velocity": 13,
-            "missile_img": "./Image/Weapon/handcuffs.png",
-            "missile_size": {
-                "x": 50,
-                "y": 50
-            },
-            "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-            "missile_power": 300,
-            "fire_interval": 0.7,
-            "price": 0
-        }
-    ]
+  "PVPcharacter": [
+    {
+      "name": "police",
+      "img_path": "./Image/policeCharacters/policeOfficer.png",
+      "velocity": 13,
+      "missile_img": "./Image/Weapon/handcuffs.png",
+      "missile_size": {
+        "x": 50,
+        "y": 50
+      },
+      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
+      "missile_power": 300,
+      "fire_interval": 0.7,
+      "price": 0
+    }
+  ]
 }
