@@ -301,7 +301,8 @@ class Character(Object):
     # 발사체 공격
     def shoot(self):
         self.last_fired = time.time()
-        self.missile_sfx.play()
+        if Default.sound.value["sfx"]["volume"] == 0.1:
+            self.missile_sfx.play()
         for num in range(1, self.fire_count+1):
             missile = Missile(self.missile_img,
                               self.missile_size, self.missile_power)
@@ -338,7 +339,8 @@ class Character(Object):
     # 폭탄 공격
     def use_bomb(self, game):
         self.last_bomb = time.time()
-        self.bomb_sfx.play()
+        if Default.sound.value["sfx"]["volume"] == 0.1:
+            self.bomb_sfx.play()
         explosion = Explosion(game.animation.animations["bomb_effect"])
         player_location = {"x": self.x+(self.sx/2), "y": self.y+(self.sy/2)}
         explosion.set_XY(
@@ -348,7 +350,8 @@ class Character(Object):
     # 궁극기 사용
     def use_gung(self, game):
         self.last_gung = time.time()
-        self.gung_sfx.play()
+        if Default.sound.value["sfx"]["volume"] == 0.1:
+            self.gung_sfx.play()
         if (self.name == "police"):
             self.gung_img = "./Image/gung_image/patrolcar.png"
             self.missile_img = "./Image/gung_image/tasergun.png"

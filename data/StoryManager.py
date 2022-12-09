@@ -2,7 +2,7 @@ import pygame
 import time
 from data.Defs import *
 from data.database_user import *
-
+from data.Defs import *
 
 class StoryManager():
     def __init__(self, stageinfo):
@@ -97,7 +97,8 @@ class StoryManager():
                 space_released = False
                 # if (index + 1) != len(text_renders) else 0
                 index = (index + 1)
-                self.test_sound.play()  # 정의한 소리 한번 재생
+                if Default.sound.value["sfx"]["volume"] == 0.1:
+                    self.test_sound.play()  # 정의한 소리 한번 재생
             elif not keys[pygame.K_SPACE]:
                 space_released = True
 
