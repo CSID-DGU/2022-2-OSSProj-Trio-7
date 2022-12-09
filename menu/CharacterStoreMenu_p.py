@@ -26,25 +26,17 @@ class CharacterStoreMenu_p:
         self.screen = screen
         self.size = screen.get_size()
         self.character = character_info
-        #menu_image = pygame_menu.baseimage.BaseImage(image_path='./Image/Login.png',drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
-        #mytheme.widget_font = pygame_menu.font.FONT_8BIT
-        #mytheme.widget_background_color = (150, 213, 252) #버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
         self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
         self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
         self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (0,100,162)
-        self.mytheme.title_font_color = (255,255,255)
+        self.mytheme.title_background_color = (255, 111, 34)
+        self.mytheme.title_font_color = (0,16,63)
         self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
-        #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
         self.mytheme.background_color = (255,255,255)
 
         self.menu = pygame_menu.Menu('Character Store', self.size[0], self.size[1],
                             theme=self.mytheme)
-
-
-        #캐릭터 데이터를 json에서 불러온다
-        #self.character_data = CharacterDataManager.load()
 
         self.show()
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
@@ -58,16 +50,12 @@ class CharacterStoreMenu_p:
                 pygame.display.flip()
 
     #메뉴 구성하고 보이기
-    def show(self):  # 원래 character_info를 가져와서 직업에 따라 상점 구현하려고 함.
-
-        # front_image_path = [ Images.fire.value, Images.fire1.value, Images.fire2.value, Images.police.value, Images.police1.value,
-        # Images.police2.value, Images.doctor.value, Images.doctor1.value, Images.doctor2.value]
-        # self.character_data = CharacterDataManager.load()
+    def show(self): 
         front_image_path = [Images.police.value, Images.police1.value, Images.police2.value]
         self.character_data = StoreDataManager.load("police")  
         curs = Database().dct_db.cursor()
         self.id = User.user_id
-        sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택 -> 수정 필요
+        sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" 
         curs.execute(sql,self.id) 
         data = curs.fetchone()  # fetchone 데이터베이스로부터 정보를 가져오는 과정 
         curs.close()        
@@ -83,7 +71,7 @@ class CharacterStoreMenu_p:
         self.price = []
 
 
-        for idx in range(1,4): # 데이버 베이스 정보를 가져올 인덱스 설정
+        for idx in range(1,4): # 데이터 베이스 정보를 가져올 인덱스 설정
             char = data[idx] # 해당 인덱스에 저장된 값 (-1 또는 보유시 5로 설정)
 
             if(char == -1): # 보유하지 않다면 (기본캐릭터는 상점에 나오지 않음)
@@ -118,34 +106,13 @@ class CharacterStoreMenu_p:
                 padding=(25, 0, 0, 0)  # top, right, bottom, left
             )
             
-
             self.item_description_widget = self.menu.add.label("")
             self.frame_v = self.menu.add.frame_v(350, 50, margin=(10, 0))
-            # 각 캐릭터의 능력치 표시
-            # self.power = self.frame_v.pack(self.menu.add.progress_bar(
-            #     title="Power",
-            #     default=int((self.character_data[0].missile_power/Default.character.value["max_stats"]["power"])*100),
-            #     progress_text_enabled = False,
-            #     box_progress_color = Color.RED.value
-            # ), ALIGN_RIGHT)
-            # self.fire_rate = self.frame_v.pack(self.menu.add.progress_bar(
-            #     title="Fire Rate",
-            #     default=int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[0].org_fire_interval)*100),
-            #     progress_text_enabled = False,
-            #     box_progress_color =Color.BLUE.value
-            # ), ALIGN_RIGHT)
-            # self.velocity = self.frame_v.pack(self.menu.add.progress_bar(
-            #     title="Mobility",
-            #     default=int((self.character_data[0].org_velocity/Default.character.value["max_stats"]["mobility"])*100),
-            #     progress_text_enabled = False,
-            #     box_progress_color = Color.GREEN.value
-            # ), ALIGN_RIGHT)
-
-            self.mytheme.widget_background_color = (150, 213, 252)
-            #self.item_description_widget = self.show_price
+            self.mytheme.widget_background_color = (253, 111, 34)
+      
             
             print("버튼 추가")
-            self.menu.add.button("Buy", self.buy_character) # argument를 받으면 함수가 선언될 때 한번 실행됨.
+            self.menu.add.button("Buy", self.buy_character) 
             self.menu.add.vertical_margin(10)
             print(("뒤로가기 버튼 추가"))
             self.menu.add.button("    BACK    ",self.to_menu)
@@ -153,7 +120,7 @@ class CharacterStoreMenu_p:
 
             
             self.update_from_selection(int(self.character_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color = (0,0,0,0)
+            self.mytheme.widget_background_color = (0,10,63)
         
 
 
@@ -163,25 +130,23 @@ class CharacterStoreMenu_p:
 
         curs = Database().dct_db.cursor()
         self.id = User.user_id
-        sql = "SELECT user_id, pchar1, pchar2, pchar3, user_coin FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+        sql = "SELECT user_id, pchar1, pchar2, pchar3, user_coin FROM tusers2 WHERE user_id=%s" 
         curs.execute(sql,self.id) 
         data = curs.fetchone()  
         curs.close()
         
        
         # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
-
         selected_idx = self.character_selector.get_value()[0][1]
         if(User.coin >= self.price[selected_idx]):
             User.buy_pcharacter = selected_idx
             database = Database()
             database.buy_pchar()
             User.coin = Database().show_mycoin()
-            #self.show()
             self.item_description_widget.set_title(title = "Unlocked" )
 
         else:
-            print("not enough money") # 돈이 부족할 경우 AttributeError가 발생함. choosed_character를 못 읽어서 발생하는 문제일듯
+            print("not enough money")
             import menu.CharacterBuy_p
             menu.CharacterBuy_p.CharacterBuy_p(self.screen,self.character_data[selected_idx].name).show()    
 
@@ -190,13 +155,13 @@ class CharacterStoreMenu_p:
 
         curs = Database().dct_db.cursor()
         self.id = User.user_id
-        sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+        sql = "SELECT user_id, pchar1, pchar2, pchar3 FROM tusers2 WHERE user_id=%s" 
         curs.execute(sql,self.id) 
         data = curs.fetchone()  
         curs.close()
 
         selected_idx = self.character_selector.get_value()[0][1]
-        #self.item_description_widget.set_title(title = "Unlocked" if data[selected_idx] == True else "Locked")
+
 
         if(data[2] == 0):
             self.item_description_widget.set_title(title = "Locked")
@@ -207,11 +172,6 @@ class CharacterStoreMenu_p:
             self.item_description_widget.set_title(title = "Locked")
         else:
             self.item_description_widget.set_title(title = "Unlocked" if data[selected_idx] == True else "Locked")
-        
-        # if(data[4] == 0):
-        #     self.item_description_widget.set_title(title = "Locked")
-        # else:
-        #     self.item_description_widget.set_title(title = "Unlocked" if data[selected_idx] == True else "Locked")
         
     
 
@@ -224,8 +184,8 @@ class CharacterStoreMenu_p:
         if (self.size != self.screen.get_size()): #현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size() #변경된 사이즈
             ratio_screen_size = (changed_screen_size[0],changed_screen_size[0]*783/720) #y를 x에 비례적으로 계산
-            if(ratio_screen_size[0]<320): #최소 x길이 제한
-                ratio_screen_size = (494,537)
+            if(ratio_screen_size[0]<584): #최소 x길이 제한
+                ratio_screen_size = (584,635)
             if(ratio_screen_size[1]>783): #최대 y길이 제한
                 ratio_screen_size = (720,783)
             self.screen = pygame.display.set_mode(ratio_screen_size,
@@ -243,10 +203,6 @@ class CharacterStoreMenu_p:
 
     # 캐릭터 선택 시 캐릭터 이미지 및 능력치 위젯 업데이트
     def update_from_selection(self, selected_value, **kwargs) -> None:
-        #selected_idx = self.character_selector.get_value()[0][1]
         self.current = selected_value
         self.image_widget.set_image(self.character_imgs2[selected_value])
-        # self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
-        # self.fire_rate.set_value(int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[selected_value].org_fire_interval)*100))
-        # self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))
         self.item_description_widget.set_title(title = self.price[selected_value])

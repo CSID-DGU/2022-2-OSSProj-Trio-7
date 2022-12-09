@@ -30,8 +30,8 @@ class Mypage_f:
         self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
         self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
         self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (0,100,162)
-        self.mytheme.title_font_color = (255,255,255)
+        self.mytheme.title_background_color = (253, 111, 34)
+        self.mytheme.title_font_color = (0,10,63)
         self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
         #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
         self.mytheme.background_color = (255,255,255)
@@ -103,7 +103,7 @@ class Mypage_f:
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.5, 0.5)
+                    ).scale(0.3, 0.3)
         
                     self.fcharacter_imgs2.append(default_image.copy())
             #print(self.price)    
@@ -124,12 +124,12 @@ class Mypage_f:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_background_color = (150, 213, 252)
+            self.mytheme.widget_background_color = (253, 111, 34)
             self.menu.add.button("SELECT",self.select_fcharacter)
             self.menu.add.vertical_margin(5)
             self.menu.add.button("    BACK    ",self.to_menu)
             self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color = (0,0,0,0)
+            self.mytheme.widget_background_color = (0,10,63)
 
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
@@ -176,8 +176,8 @@ class Mypage_f:
         if (self.size != self.screen.get_size()): #현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size() #변경된 사이즈
             ratio_screen_size = (changed_screen_size[0],changed_screen_size[0]*783/720) #y를 x에 비례적으로 계산
-            if(ratio_screen_size[0]<320): #최소 x길이 제한
-                ratio_screen_size = (494,537)
+            if(ratio_screen_size[0]<600): #최소 x길이 제한
+                ratio_screen_size = (600,650)
             if(ratio_screen_size[1]>783): #최대 y길이 제한
                 ratio_screen_size = (720,783)
             self.screen = pygame.display.set_mode(ratio_screen_size,

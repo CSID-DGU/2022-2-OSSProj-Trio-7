@@ -1,3 +1,5 @@
+
+
 from select import select
 import pygame
 import pygame_menu
@@ -30,8 +32,8 @@ class Mypage_p:
         self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
         self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
         self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (0,100,162)
-        self.mytheme.title_font_color = (255,255,255)
+        self.mytheme.title_background_color = (253, 111, 34) #주황색 
+        self.mytheme.title_font_color = (0,10,63) # 남색
         self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
         #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
         self.mytheme.background_color = (255,255,255)
@@ -58,8 +60,9 @@ class Mypage_p:
 
     #메뉴 구성하고 보이기
     def show(self, character):
+        choosed_chracter = character 
         self.db = Database()
-        choosed_chracter = character  
+        self.nickname = self.db.get_nickname() 
         # Database().char_lock()  
         self.menu.add.label("My ID : %s "%User.user_id)
         self.menu.add.label("My NICKNAME : %s "%self.db.get_nickname())
@@ -80,10 +83,7 @@ class Mypage_p:
             curs.execute(sql,self.id) 
             data = curs.fetchone()  
             curs.close()
-            '''char1 = data[1] # char1의 정보는 첫번째 인덱스에 저장되어 있음
-            char2 = data[2]
-            char3 = data[3]
-            char4 = data[4]'''
+
             self.pcharacter_data = StoreDataManager.load("police")
             front_image_path = [Images.police.value,Images.police1.value, Images.police2.value]
             self.pcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
@@ -102,7 +102,7 @@ class Mypage_p:
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.5, 0.5)
+                    ).scale(0.3, 0.3)
         
                     self.pcharacter_imgs2.append(default_image.copy())
             #print(self.price)    
@@ -123,12 +123,12 @@ class Mypage_p:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_background_color = (150, 213, 252)
+            self.mytheme.widget_background_color = (253, 111, 34) # 버튼 색깔
             self.menu.add.button("SELECT",self.select_pcharacter)
             self.menu.add.vertical_margin(5)
             self.menu.add.button("    BACK    ",self.to_menu)
             self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color = (0,0,0,0)
+            self.mytheme.widget_background_color = (0,10,63)
 
     def select_pcharacter(self):
         selected_idx = self.pcharacter_selector.get_value()[0][1]
@@ -143,33 +143,7 @@ class Mypage_p:
             import menu.CharacterLock
             menu.CharacterLock.Characterlock(self.screen,self.pcharacter_data[selected_idx].name).show()
 
-    def select_fcharacter(self):
-        selected_idx = self.fcharacter_selector.get_value()[0][1]
-        if User.firefighter_lock[selected_idx] == False:
-            User.fcharacter = selected_idx
-            database = Database()
-            database.set_fchar()
-            self.menu.clear()
-            self.show('firefighter')
-        else:
-            print("character locked")
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
-            
-    def select_dcharacter(self): #게임 시작 함수
-        # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
-        selected_idx = self.dcharacter_selector.get_value()[0][1]
-        if User.doctor_lock[selected_idx] == False:
-            User.dcharacter = selected_idx
-            database = Database()
-            database.set_dchar()
-            self.menu.clear()
-            self.show()
-        else:
-            print("character locked")
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
-
+   
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
         if (self.size != self.screen.get_size()): #현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
@@ -192,9 +166,6 @@ class Mypage_p:
     def on_selector_change(self, selected, value: int) -> None:
         self.update_from_selection(value)
 
-
-
-
     # 캐릭터 선택 시 캐릭터 이미지 및 능력치 위젯 업데이트
     def update_from_selection(self, selected_value, **kwargs) -> None:
         self.status2 = ""
@@ -207,7 +178,4 @@ class Mypage_p:
 
         self.current = selected_value
         self.image_widget.set_image(self.pcharacter_imgs2[selected_value])
-        '''self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
-        self.fire_rate.set_value(int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[selected_value].org_fire_interval)*100))
-        self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))'''
         self.item_description_widget.set_title(title = self.status2)
