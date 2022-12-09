@@ -130,49 +130,8 @@
         }
     ],
 
-    {
-      "name": "doctor",
-      "img_path": "./Image/doctorCharacters/doctor.png",
-      "velocity": 13,
-      "missile_img": "./Image/Weapon/pill.png",
-      "missile_size": {
-        "x": 50,
-        "y": 50
-      },
-      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-      "missile_power": 300,
-      "fire_interval": 0.7,
-      "price": 8000
-    },
-    {
-      "name": "doctor1",
-      "img_path": "./Image/storeItems/doctor1.png",
-      "velocity": 13,
-      "missile_img": "./Image/storeItems/stethoscope.png",
-      "missile_size": {
-        "x": 50,
-        "y": 50
-      },
-      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-      "missile_power": 300,
-      "fire_interval": 0.7,
-      "price": 8000
-    },
-    {
-      "name": "doctor2",
-      "img_path": "./Image/storeItems/doctor2.png",
-      "velocity": 13,
-      "missile_img": "./Image/storeItems/syringe.png",
-      "missile_size": {
-        "x": 50,
-        "y": 50
-      },
-      "missile_sfx": "./Sound/Weapon/heavy_missile.wav",
-      "missile_power": 300,
-      "fire_interval": 0.7,
-      "price": 8000
-    }
-  ],
+    
+    
 
   "PVPcharacter": [
     {
