@@ -83,18 +83,15 @@ class Login:
                 ratio_screen_size = (494, 537)
             if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
                 ratio_screen_size = (720, 783)
-            self.screen = pygame.display.set_mode(ratio_screen_size,
-                                                  pygame.RESIZABLE)
+            self.screen = pygame.display.set_mode(ratio_screen_size, pygame.RESIZABLE)
             window_size = self.screen.get_size()
             new_w, new_h = 1 * window_size[0], 1 * window_size[1]
-            font_size = new_w * 30 // 720
-            self.mytheme.widget_font_size = font_size
-            print(f'font_size: {font_size}')
+            font_size = new_w * 45 // 720
             self.menu.resize(new_w, new_h)
             self.size = window_size
+            self.mytheme.widget_font_size = font_size
             self.menu._current._widgets_surface = make_surface(0, 0)
             print(f'New menu size: {self.menu.get_size()}')
-            pygame.display.flip()
             return True
         return False
 
@@ -110,12 +107,12 @@ class Login:
 
     def login_page(self):  # 로그인 페이지
         self.menu.clear()
-        self.menu.add.text_input('아이디 : ', maxchar=100, onchange=self.get_id)
+        self.menu.add.text_input('  아이디 :  ', maxchar=100, onchange=self.get_id)
         self.menu.add.vertical_margin(10)
         self.menu.add.text_input(
-            '비밀번호 : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
+            ' 비밀번호 : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
         self.menu.add.vertical_margin(10)
-        b1 = self.menu.add.button('  로그인  ', self.login)
+        b1 = self.menu.add.button('    로그인    ', self.login)
         self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button('  이전 화면  ', self.first_page)
         self.menu.add.vertical_margin(10)
@@ -142,17 +139,17 @@ class Login:
         else:
             self.login_page()
 
-    def password_fail(self):
+    def password_fail(self): # 비밀번호 불일치 안내 페이지
         self.menu.clear()
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("비밀번호 불일치", selectable=False)
+        self.menu.add.label(" 비밀번호 불일치 ", selectable=False)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  이전 화면  ', self.login_page)
 
     def login_fail(self):
-        self.menu.clear()
+        self.menu.clear() # 아이디 없음 안내 페이지
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("아이디 없음", selectable=False)
+        self.menu.add.label(" 아이디 없음 ", selectable=False)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  이전 화면  ', self.login_page)
 
@@ -184,15 +181,15 @@ class Login:
         self.nickname = value
         self.database.add_ninkname(self.nickname, self.id)
 
-    def show_signup(self):
+    def show_signup(self): # 회원가입 페이지
         self.menu.clear()
-        self.menu.add.text_input('아이디 : ', maxchar=15, onreturn=self.save_id)
+        self.menu.add.text_input('  아이디 :  ', maxchar=15, onreturn=self.save_id)
         self.menu.add.vertical_margin(10)
         self.menu.add.text_input(
-            '비밀번호 : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
+            ' 비밀번호 : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
         self.menu.add.vertical_margin(10)
         self.menu.add.text_input(
-            '닉네임 : ', maxchar=15, onreturn=self.save_nickname)
+            '  닉네임 :  ', maxchar=15, onreturn=self.save_nickname)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  회원가입  ', self.login_page)
         self.menu.add.vertical_margin(10)

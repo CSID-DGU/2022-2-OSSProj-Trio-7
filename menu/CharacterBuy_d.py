@@ -12,6 +12,8 @@ from menu.CharacterStoreMenu_d import *
 #Mypage에서 잠긴 캐릭터 SELECT할 시 보여주는 창
 class CharacterBuy_d:
     def __init__(self,screen,character):
+        title = "상점"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
         self.character = character
@@ -24,7 +26,7 @@ class CharacterBuy_d:
             title_background_color = (0,100,162),
             title_font_color = (255,255,255),
             title_bar_style = pygame_menu.pygame_menu.widgets.MENUBAR_STYLE_NONE,
-            widget_font_size = self.size[0] * 30 //720)
+            widget_font_size = self.size[0] *  45 // 720)
         if(character == 'doctor1'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_cat2.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         elif(character == 'doctor2'):

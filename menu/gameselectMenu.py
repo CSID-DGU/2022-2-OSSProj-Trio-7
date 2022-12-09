@@ -33,6 +33,9 @@ global choosed_character  # 사용자가 선택한 캐릭터
 
 class GameselectMenu:
     def __init__(self, screen):
+        
+        title = "모드 선택"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
 
         self.size = screen.get_size()
         self.screen = screen

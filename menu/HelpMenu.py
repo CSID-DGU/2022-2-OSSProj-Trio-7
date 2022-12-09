@@ -13,8 +13,8 @@ class HelpMenu:
     def __init__(self, screen, choosed_character):
         self.size = screen.get_size()
         self.screen = screen
-        self.font_size = self.size[0] * 38 // 720  # 글씨크기
-
+        title = "도움말 페이지"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
             widget_background_color=Color.TRANSPARENT.value,  # 버튼 배경색 설정
@@ -26,7 +26,6 @@ class HelpMenu:
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
-
         main_image = pygame_menu.baseimage.BaseImage(
             image_path=Images.help.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
 
@@ -258,5 +257,5 @@ class HelpMenu:
             self.menu._current._widgets_surface = make_surface(0, 0)
             self.size = window_size
             print(f'New menu size: {self.menu.get_size()}')
-            font_size = new_w * 40 // 720
-            self.font_size = font_size
+            font_size = new_w * 45 // 720
+            self.mytheme.widget_font_size = font_size
