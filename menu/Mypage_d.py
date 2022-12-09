@@ -17,27 +17,34 @@ class Mypage_d:
     item_description_widget: 'pygame_menu.widgets.Label'
 
     def __init__(self,screen):
-        title = "마이 페이지"
-        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
-        # 화면 받고 화면 크기 값 받기
-        self.screen = screen
         self.size = screen.get_size()
-        self.font_size = self.size[0] * 25 //720
-        #menu_image = pygame_menu.baseimage.BaseImage(image_path='./Image/Login.png',drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
-        #mytheme.widget_font = pygame_menu.font.FONT_8BIT
-        #mytheme.widget_background_color = (150, 213, 252) #버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
-        self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
-        self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
-        self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (253, 111, 34)
-        self.mytheme.title_font_color = (0,10,63)
-        self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
-        #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
-        self.mytheme.background_color = (255,255,255)
-        self.mytheme.widget_font_size = self.font_size
-        self.menu = pygame_menu.Menu('My Page', self.size[0], self.size[1],
-                            theme=self.mytheme)
+        self.screen = screen
+
+        self.orange_color = (253, 111, 34)
+        self.font_size = self.size[0] * 30 // 720  # 글씨크기
+        
+        # 화면 받고 화면 크기 값 받기
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(255, 255, 255),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(0, 0, 0),  # 기본 글자색
+            title_background_color=(255, 255, 255, 0), 
+            title_font_color=(0, 0, 0, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+
+        main_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.mypage.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+
+        self.mytheme.background_color = main_image
+
+        self.menu = pygame_menu.Menu(
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+
+
 
 
         #캐릭터 데이터를 json에서 불러온다
@@ -60,15 +67,16 @@ class Mypage_d:
     def show(self, character):
         self.db = Database()
         choosed_chracter = character  
+        self.nickname = self.db.get_nickname() 
         # Database().char_lock()  
-        self.menu.add.label("My ID : %s "%User.user_id)
-        self.menu.add.label("My NICKNAME : %s "%self.db.get_nickname())
+        self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
+        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
-        self.menu.add.label("Best Score : %s"%User.score_score)
-        self.menu.add.label("Best Time : %s"%User.time_score)
-        self.menu.add.label("My coin : %d "%User.coin)
+        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(0.75,0.75)
+        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(0.75,0.75)
+        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75,0.75)
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "doctor":
             Database().dchar_lock()
@@ -109,7 +117,7 @@ class Mypage_d:
             #print(self.price)    
             #print("이미지리스트",self.character_imgs)
             self.dcharacter_selector = self.menu.add.selector(
-                title='Character :\t',
+                title='캐릭터 : ',
                 items=dcharacters,
                 onchange=self.on_selector_change #이미지 수정 코드
             )
@@ -124,10 +132,16 @@ class Mypage_d:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_background_color = (253, 111, 34)
-            self.menu.add.button("SELECT",self.select_dcharacter)
-            self.menu.add.vertical_margin(5)
-            self.menu.add.button("    BACK    ",self.to_menu)
+
+            self.mytheme.widget_font_color=(255, 255, 255)
+            self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+            self.menu.add.button('   캐릭터 선택   ', self.select_dcharacter,
+                             selection_color=self.orange_color, font_size=self.font_size)
+            self.menu.add.vertical_margin(10)
+            self.menu.add.button('         이전         ',self.to_menu,
+                             selection_color=self.orange_color, font_size=self.font_size)
+            self
+
             self.update_from_selection(int(self.dcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_background_color = (0,10,63)
 

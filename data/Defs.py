@@ -116,7 +116,8 @@ class Images(enum.Enum):
     ranking = "./Image/ranking.png";
     stop = "./Image/stop.png";
     gameover = "./Image/gameover.png"; 
-
+    mypage = "./Image/mypage.png"; 
+    store = "./Image/store.png"; 
 
 class Scales(enum.Enum):
     large = (2, 2)
@@ -137,6 +138,7 @@ class Color(enum.Enum):
     BLACK = (0, 0, 0)
     INDIGO = (0, 10, 63)
     NAVY = (0, 10, 63)
+
 
 
 

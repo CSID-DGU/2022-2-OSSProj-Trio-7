@@ -22,21 +22,35 @@ class CharacterStoreMenu_p:
     item_description_widget: 'pygame_menu.widgets.Label'
 
     def __init__(self, screen, character_info):
-        # 화면 받고 화면 크기 값 받기
-        self.screen = screen
         self.size = screen.get_size()
         self.character = character_info
-        self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
-        self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
-        self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
-        self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (255, 111, 34)
-        self.mytheme.title_font_color = (0,16,63)
-        self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
-        self.mytheme.background_color = (255,255,255)
 
-        self.menu = pygame_menu.Menu('Character Store', self.size[0], self.size[1],
-                            theme=self.mytheme)
+        self.screen = screen
+
+        self.orange_color = (253, 111, 34)
+        self.font_size = self.size[0] * 30 // 720  # 글씨크기
+        
+        # 화면 받고 화면 크기 값 받기
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(255, 255, 255),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(0, 0, 0),  # 기본 글자색
+            title_background_color=(255, 255, 255, 0), 
+            title_font_color=(0, 0, 0, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+
+        main_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.store.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+
+        self.mytheme.background_color = main_image
+
+        self.menu = pygame_menu.Menu(
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+
 
         self.show()
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
@@ -61,7 +75,7 @@ class CharacterStoreMenu_p:
         curs.close()        
 
         User.coin = Database().show_mycoin()
-        self.menu.add.label("My coin : %d "%User.coin)
+        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75, 0.75)
         #캐릭터 선택 메뉴 구성
         characters = []
 
@@ -77,13 +91,20 @@ class CharacterStoreMenu_p:
             if(char == -1): # 보유하지 않다면 (기본캐릭터는 상점에 나오지 않음)
                 default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[idx-1] # 1~3까지 설정된  front_image_path 이미지 띄움
-                ).scale(0.5, 0.5)
+                ).scale(0.3, 0.3)
                 characters.append((self.character_data[idx-1].name, idx-1))
                 self.character_imgs.append(default_image.copy())
                 
         if len(characters)==0:
-                    self.menu.add.label("Nothing to buy.")
-                    self.menu.add.button("    BACK    ",self.to_menu)
+                    self.mytheme.widget_font_color=(0, 0, 0)
+                    self.mytheme.widget_background_color = (255, 255, 255) # 버튼 색깔
+                    self.menu.add.vertical_margin(10)
+                    self.menu.add.label("구매할 수 있는 품목 없음.").scale(1.5, 1.5)
+                    self.menu.add.vertical_margin(100)
+                    self.mytheme.widget_font_color=(255, 255, 255)
+                    self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+                    self.menu.add.button('   이전   ', self.to_menu,
+                             selection_color=self.orange_color, font_size=self.font_size)
 
         else: # 구매할 아이템이 있을 경우
             for i in range(3): 
@@ -97,7 +118,7 @@ class CharacterStoreMenu_p:
                 self.price.append(User.price[i+1])
                 
             self.character_selector = self.menu.add.selector(
-                title='Character :\t',
+                title='캐릭터 :',
                 items=characters,
                 onchange=self.on_selector_change
             )
@@ -107,15 +128,17 @@ class CharacterStoreMenu_p:
             )
             
             self.item_description_widget = self.menu.add.label("")
-            self.frame_v = self.menu.add.frame_v(350, 50, margin=(10, 0))
-            self.mytheme.widget_background_color = (253, 111, 34)
-      
+
+            self.frame_v = self.menu.add.frame_v(400, 70, margin=(10, 0))
             
-            print("버튼 추가")
-            self.menu.add.button("Buy", self.buy_character) 
+            self.mytheme.widget_font_color=(255, 255, 255)
+            self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+            self.menu.add.button('   캐릭터 구매   ', self.buy_character,
+                             selection_color=self.orange_color, font_size=self.font_size)
+
             self.menu.add.vertical_margin(10)
-            print(("뒤로가기 버튼 추가"))
-            self.menu.add.button("    BACK    ",self.to_menu)
+            self.menu.add.button('   이전   ', self.to_menu,
+                             selection_color=self.orange_color, font_size=self.font_size)                 
             self.lock()
 
             
