@@ -41,7 +41,7 @@ class CharacterBuy_p:
             title_font_color = (255,255,255),
             title_bar_style = pygame_menu.pygame_menu.widgets.MENUBAR_STYLE_NONE,
             widget_font_size = self.size[0] * 30 //720)
-        '''
+ 
         if(character == 'police1'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_police1.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         elif(character == 'police2'):

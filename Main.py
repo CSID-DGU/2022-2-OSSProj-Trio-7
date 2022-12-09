@@ -42,12 +42,12 @@ class Login:
             image_path=Images.main.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.NAVY.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value, # 투명
+            title_font_color=Color.TRANSPARENT.value, # 투명
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -83,17 +83,15 @@ class Login:
                 ratio_screen_size = (494, 537)
             if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
                 ratio_screen_size = (720, 783)
-            self.screen = pygame.display.set_mode(ratio_screen_size,
-                                                  pygame.RESIZABLE)
+            self.screen = pygame.display.set_mode(ratio_screen_size, pygame.RESIZABLE)
             window_size = self.screen.get_size()
             new_w, new_h = 1 * window_size[0], 1 * window_size[1]
-            font_size = new_w * 30 // 720
-            self.mytheme.widget_font_size = font_size
+            font_size = new_w * 45 // 720
             self.menu.resize(new_w, new_h)
             self.size = window_size
+            self.mytheme.widget_font_size = font_size
             self.menu._current._widgets_surface = make_surface(0, 0)
             print(f'New menu size: {self.menu.get_size()}')
-
             return True
         return False
 
@@ -109,12 +107,15 @@ class Login:
 
     def login_page(self):  # 로그인 페이지
         self.menu.clear()
-        # login.mytheme.widget_background_color = (0,0,0,0) #투명 배경
-        self.menu.add.text_input('아이디 : ', maxchar=100, onchange=self.get_id)
+        self.menu.add.text_input('  아이디 :  ', maxchar=100, onchange=self.get_id)
+        self.menu.add.vertical_margin(10)
         self.menu.add.text_input(
-            '비밀번호 : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
-        b1 = self.menu.add.button('  로그인  ', self.login)
+            ' 비밀번호 : ', maxchar=100, onchange=self.get_pw, password=True, password_char='*')
+        self.menu.add.vertical_margin(10)
+        b1 = self.menu.add.button('    로그인    ', self.login)
+        self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button('  이전 화면  ', self.first_page)
+        self.menu.add.vertical_margin(10)
         b3 = self.menu.add.button('  게임 종료  ', pygame_menu.events.EXIT)
 
     def login(self):
@@ -124,9 +125,7 @@ class Login:
                     print("로그인 성공")
                     print(self.id)
                     User.user_id = self.id
-                    #User.user_nickname = self.nickname
                     User.coin = self.database.show_mycoin()
-                    # Database().dchar_lock()
                     self.login_success()
 
                 else:
@@ -138,25 +137,23 @@ class Login:
                 self.login_fail()
 
         else:
-            print("이건뭘까")
             self.login_page()
 
-    def password_fail(self):
+    def password_fail(self): # 비밀번호 불일치 안내 페이지
         self.menu.clear()
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("아이디 혹은 비밀번호 불일치", selectable=False)
+        self.menu.add.label(" 비밀번호 불일치 ", selectable=False)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  이전 화면  ', self.login_page)
 
     def login_fail(self):
-        self.menu.clear()
+        self.menu.clear() # 아이디 없음 안내 페이지
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("아이디 혹은 비밀번호 불일치", selectable=False)
+        self.menu.add.label(" 아이디 없음 ", selectable=False)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  이전 화면  ', self.login_page)
 
-    # 아이디 input값으로 변경
-
+    # 아이디 입력값으로 변경
     def get_id(self, value):
         self.id = value
 
@@ -164,6 +161,7 @@ class Login:
     def get_pw(self, value):
         self.password = value
 
+    # 닉네임 입력값으로 변경
     def get_nickname(self, value):
         self.nickname = value
 
@@ -183,15 +181,20 @@ class Login:
         self.nickname = value
         self.database.add_ninkname(self.nickname, self.id)
 
-    def show_signup(self):
+    def show_signup(self): # 회원가입 페이지
         self.menu.clear()
-        self.menu.add.text_input('아이디 : ', maxchar=15, onreturn=self.save_id)
+        self.menu.add.text_input('  아이디 :  ', maxchar=15, onreturn=self.save_id)
+        self.menu.add.vertical_margin(10)
         self.menu.add.text_input(
-            '비밀번호 : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
+            ' 비밀번호 : ', maxchar=50, onreturn=self.save_password, password=True, password_char='*')
+        self.menu.add.vertical_margin(10)
         self.menu.add.text_input(
-            '닉네임 : ', maxchar=15, onreturn=self.save_nickname)
+            '  닉네임 :  ', maxchar=15, onreturn=self.save_nickname)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('  회원가입  ', self.login_page)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('  이전 화면  ', self.first_page)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('  게임 종료   ', pygame_menu.events.EXIT)
 
     def login_success(self):
@@ -204,16 +207,13 @@ class Login:
     def signup_fail(self):
         self.menu.clear()
         self.menu.add.vertical_margin(10)
-        self.menu.add.label("  아이디 이미 존재   ", selectable=False)
+        self.menu.add.label("  이미 존재하는 아이디   ", selectable=False)
         self.menu.add.vertical_margin(10)
         self.menu.add.button('  이전 화면  ', self.show_signup)
 
     def tutorial_page(self):
-        pvpgame = tutorial(self.pvpcharacter_data,
-                           self.pvpcharacter_data[0], self.mode)
-
-        pvpgame.tutorial_info()
-
+        tutorialgame = tutorial(self.pvpcharacter_data, self.pvpcharacter_data[0], self.mode)
+        tutorialgame.tutorial_info()
 
     def main(self):
         while True:
@@ -226,13 +226,10 @@ class Login:
                     pass
 
             # 화면에 메뉴 그리기
-            screen.fill((25, 0, 50))  # 값 변경해보고 지워봤는데 큰 변화 없음. 없어도 되는 기능인듯?
-
+            screen.fill(Color.WHITE.value)
             login.menu.update(events)
             login.menu.draw(screen)
-            # pygame.draw.rect(screen,color,input_rect,2)
-
-            pygame.display.flip()  # 화면이 계속 업데이트 될 수 있도록 설정
+            pygame.display.flip()  # 화면 계속 업데이트
 
 
 if __name__ == '__main__':

@@ -20,12 +20,12 @@ class JobInfo:
             image_path=Images.JobInfo.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.NAVY.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value, # 투명
+            title_font_color=Color.TRANSPARENT.value, # 투명
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )

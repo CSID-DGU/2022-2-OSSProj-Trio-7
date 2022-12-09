@@ -17,6 +17,8 @@ class Mypage_d:
     item_description_widget: 'pygame_menu.widgets.Label'
 
     def __init__(self,screen):
+        title = "마이 페이지"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         # 화면 받고 화면 크기 값 받기
         self.screen = screen
         self.size = screen.get_size()
@@ -130,7 +132,7 @@ class Mypage_d:
             self.mytheme.widget_background_color = (0,10,63)
 
     def select_dcharacter(self):
-        selected_idx = self.dcharacter_selector.get_value()[0][1] # 이게 문제
+        selected_idx = self.dcharacter_selector.get_value()[0][1]
         if User.doctor_lock[selected_idx] == False:
             User.dcharacter = selected_idx
             database = Database()

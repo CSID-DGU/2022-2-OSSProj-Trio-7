@@ -44,7 +44,6 @@ class tutorial:
         self.size = [infoObject.current_w, infoObject.current_h]
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
         self.scale = (self.size[0]*0.00015, self.size[1]*0.00015)
-        self.font_size = self.size[0] * 40 // 720
 
         # 3. 게임 내 필요한 설정
         self.clock = pygame.time.Clock()  # 이걸로 FPS설정함
@@ -122,7 +121,7 @@ class tutorial:
             '훌륭합니다. 튜토리얼은 모두 완료하였습니다. 이제 게임을 플레이해보세요'
         ]
         self.test_sound = pygame.mixer.Sound("./Sound/message.wav")
-        font = pygame.font.SysFont("malgungothic", 15)
+        font = pygame.font.Font(Default.font.value, self.size[0]//35)
         text_renders = [font.render(text, True, (255, 255, 255))
                         for text in self.texts1]
         text_box = pygame.Rect(
@@ -184,6 +183,9 @@ class tutorial:
                     # self.animation.on_resize(self)
                     text_box = pygame.Rect(
                         0, self.size[1]*0.8, self.size[0], self.size[1]/3)
+                    font = pygame.font.Font(Default.font.value, self.size[0]//35)
+                    text_renders = [font.render(text, True, (255, 255, 255))
+                            for text in self.texts1]
                     if box_render:
                         self.screen.blit(
                             text_renders[index], (40, self.size[1]*0.85))

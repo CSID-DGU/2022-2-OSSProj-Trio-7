@@ -42,7 +42,7 @@ class Images(enum.Enum):
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
-    stage_clear = "./Image/Stageclear_v1.jpg"
+    stage_clear = "./Image/stageclearpage.png"
     chapter_clear_oasis = "./Image/ChapterClear_Oasis.jpg"
     chapter_clear_ice = "./Image/ChapterClear_Ice.jpg"
     chapter_clear_space = "./Image/ChapterClear_Space.jpg"
@@ -58,6 +58,7 @@ class Images(enum.Enum):
     info_infi_3 = "./Image/Info_infi_3.png"
     info_infi_4 = "./Image/Info_infi_4.png"
     info_infi_5 = "./Image/Info_infi_5.png"
+    info_infi_6 = "./Image/Info_infi_6.png"
     info_stage_1 = "./Image/Info_stage_1.png"
     info_stage_2 = "./Image/Info_stage_2.png"
     info_stage_3 = "./Image/Info_stage_3.png"
@@ -73,7 +74,7 @@ class Images(enum.Enum):
     cat4 = "./Image/catthema/cat4_front.png"
 
 
-    win = "./Image/catthema/win.png"
+    win = "./Image/stageclear.png"
     lose = "./Image/catthema/lose.png"
 
     lock_cat2 = "./Image/catthema/lock_cat2.png"
@@ -135,6 +136,8 @@ class Color(enum.Enum):
     ORANGE = (253, 111, 34)
     BLACK = (0, 0, 0)
     INDIGO = (0, 10, 63)
+    NAVY = (0, 10, 63)
+
 
 
 class Menus(enum.Enum):
@@ -180,8 +183,8 @@ class Default(enum.Enum):
         ],
         "gun_size": 10,
         "bullet_size": {
-            "x": 20,
-            "y": 20
+            "x": 50,
+            "y": 50
         },
         "health": 12000,
         "firing_speed": [
