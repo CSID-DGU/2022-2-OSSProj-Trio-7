@@ -232,6 +232,7 @@ class HelpMenu:
         self.menu.add.button('     종료     ', self.show,
                              selection_color=Color.ORANGE.value)
 
+
     # 아이템 설명 페이지
     def items(self):
         self.menu.clear()
