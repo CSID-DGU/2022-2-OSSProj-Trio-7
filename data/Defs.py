@@ -65,6 +65,7 @@ class Images(enum.Enum):
     info_stage_4 = "./Image/Info_stage_4.png"
     info_stage_5 = "./Image/Info_stage_5.png"
     info_stage_6 = "./Image/Info_stage_6.png"
+    info_stage_7 = "./Image/Info_stage_7.png"
     info_items = "./Image/Info_items.png"
     info_controls = "./Image/Info_controls.png"
 

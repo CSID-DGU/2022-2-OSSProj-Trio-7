@@ -225,7 +225,7 @@ class HelpMenu:
     def stage_game_6(self):
         self.menu.clear()
         self.menu.add.vertical_margin(Menus.margin_10.value)
-        self.menu.add.image(Images.info_stage_5.value, scale=(
+        self.menu.add.image(Images.info_stage_6.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.label("6/7")
         self.menu.add.button('     이전     ', self.stage_game_5,
