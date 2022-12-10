@@ -28,7 +28,7 @@ from data.StoryManager import *
 
 
 class StageGame:
-
+    # 캐릭터데이터, 캐릭터, 스테이지 정보, 맵 정보, 구매한 무기
     def __init__(self, character_data, character, stage, map_info, weapon):
         print("stageGame에서 직업", map_info)
         # 1. 게임초기화
@@ -404,11 +404,6 @@ class StageGame:
             # 이미지화 한 텍스트라 이미지를 보여준다고 생각하면 됨
             self.screen.blit(score_life_text, (10, 5))
 
-            # 현재 흘러간 시간
-            playTime = (time.time() - self.startTime)
-            time_text = font.render("시간 : {:.2f}".format(
-                playTime), True, Color.YELLOW.value)
-            self.screen.blit(time_text, (self.size[0]//2, 5))
 
             # 화면갱신
             pygame.display.flip()  # 그려왔던데 화면에 업데이트가 됨
@@ -446,7 +441,7 @@ class StageGame:
 
     # 재시도 버튼 클릭 시
     def retry(self):
-        StageGame(self, self.character, self.stage, self.storyInfo, self.wselect).main()
+        StageGame(self, self.character, self.stage, self.storyInfo, self.wselect).main() # storyInfo는 맵 정보
         self.menu.disable()
 
     # 홈버튼 클릭 시
@@ -473,25 +468,24 @@ class StageGame:
 
         chapterlist = [['police', "gloomy street"], [
             'firefighter', "burning house"], ['doctor', "hospital"]]
-
-        if self.stage.chapter == 'police':
-            self.temp = 0
-        elif self.stage.chapter == 'firefighter':
+        if self.stage.chapter == "map1":
+            self.temp = 0    
+        elif self.stage.chapter == "map2":
             self.temp = 1
         else:
             self.temp = 2
 
-        if (self.stage.stage == 1):
+        if (self.stage.stage == 1): # 스테이지 단계
             self.stage_map = Stage(
-                self.stage_data["chapter"][chapterlist[self.temp][1]]["2"])
+                self.stage_data["chapter"][chapterlist[self.temp][1]]["2"]) # 맵이름을 가져오기 stage_data[챕터][맵이름][단계]
             StageGame(self.character_data,
-                      self.character_data[User.pcharacter], self.stage_map, self.storyInfo, self.wselect).main_info()
+                      self.character, self.stage_map, self.storyInfo, self.wselect).main_info()
             self.menu.disable()
         if (self.stage.stage == 2):
             self.stage_map = Stage(
-                self.stage_data["chapter"][chapterlist[self.temp][1]]["2"])
+                self.stage_data["chapter"][chapterlist[self.temp][1]]["3"])
             StageGame(self.character_data,
-                      self.character_data[User.pcharacter], self.stage_map, self.storyInfo, self.wselect).main_info()
+                      self.character, self.stage_map, self.storyInfo, self.wselect).main_info()
             self.menu.disable()
 
     # 클리어 화면
