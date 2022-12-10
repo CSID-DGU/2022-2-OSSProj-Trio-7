@@ -214,13 +214,26 @@ class HelpMenu:
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.image(Images.info_stage_6.value, scale=(
             self.size[0]*0.001, self.size[1]*0.001))
+        self.menu.add.label("5/6", font_size=self.font_size)
+        self.menu.add.button('     이전     ', self.stage_game_4,
+                             selection_color=self.orange_color, font_size=self.font_size)
+        self.menu.add.button('     다음     ', self.stage_game_6,
+                             selection_color=self.orange_color, font_size=self.font_size)
+
+
+    # 스테이지 모드 설명 페이지 6
+    def stage_game_6(self):
+        self.menu.clear()
+        self.menu.add.vertical_margin(Menus.margin_10.value)
+        self.menu.add.image(Images.info_stage_6.value, scale=(
+            self.size[0]*0.001, self.size[1]*0.001))
         self.menu.add.label("6/7")
         self.menu.add.button('     이전     ', self.stage_game_5,
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_7,
                              selection_color=Color.ORANGE.value)
     
-        # 스테이지 모드 설명 페이지 
+    # 스테이지 모드 설명 페이지 7
     def stage_game_7(self):
         self.menu.clear()
         self.menu.add.vertical_margin(Menus.margin_10.value)
@@ -231,6 +244,7 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     종료     ', self.show,
                              selection_color=Color.ORANGE.value)
+
 
 
     # 아이템 설명 페이지
