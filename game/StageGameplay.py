@@ -485,13 +485,13 @@ class StageGame:
             self.stage_map = Stage(
                 self.stage_data["chapter"][chapterlist[self.temp][1]]["2"])
             StageGame(self.character_data,
-                      self.character_data[User.character], self.stage_map).main_info()
+                      self.character_data[User.pcharacter], self.stage_map, self.storyInfo, self.wselect).main_info()
             self.menu.disable()
         if (self.stage.stage == 2):
             self.stage_map = Stage(
                 self.stage_data["chapter"][chapterlist[self.temp][1]]["2"])
             StageGame(self.character_data,
-                      self.character_data[User.character], self.stage_map).main_info()
+                      self.character_data[User.pcharacter], self.stage_map, self.storyInfo, self.wselect).main_info()
             self.menu.disable()
 
     # 클리어 화면
@@ -514,9 +514,10 @@ class StageGame:
         self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
                                      theme=self.mytheme)
         #self.menu.add.button('to Menu', self.toMenu,self.menu)
-        if (self.stage.stage != "3"):
+        if (self.stage.stage != 3):
             self.menu.add.button(
                 '다음 스테이지', self.nextstage, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
         self.menu.add.button('홈으로', self.gameselectmenu,
                              font_size=self.font_size)
         print(User.coin)

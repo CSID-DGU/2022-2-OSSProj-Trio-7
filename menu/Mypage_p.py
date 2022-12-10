@@ -138,7 +138,8 @@ class Mypage_p:
                              selection_color=self.orange_color, font_size=self.font_size)
 
             self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color = (0,10,63)
+            self.mytheme.widget_font_color=(0, 0, 0)
+            self.mytheme.widget_background_color = (255,255,255)
 
     def select_pcharacter(self):
         selected_idx = self.pcharacter_selector.get_value()[0][1]
