@@ -85,6 +85,13 @@ class Images(enum.Enum):
     failbuy_cat3 = "./Image/catthema/failbuy_cat3.png"
     failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
 
+    failbuy_doctor1 = "./Image/catthema/failbuy_doctor1.png"
+    failbuy_doctor2 = "./Image/catthema/failbuy_doctor2.png"
+    failbuy_fire1 = "./Image/catthema/failbuy_fire1.png"
+    failbuy_fire2 = "./Image/catthema/failbuy_fire2.png"
+    failbuy_police1 = "./Image/catthema/failbuy_police1.png"
+    failbuy_police2 = "./Image/catthema/failbuy_police2.png"
+
     police = "./Image/policeCharacters/policeOfficer.png"
     police1 = "./Image/storeItems/police1.png"
     police2 = "./Image/storeItems/police2.png"
@@ -106,9 +113,11 @@ class Images(enum.Enum):
     JobInfo = "./Image/JobInfo.png"
 
     help = "./Image/help.png";
+    ranking = "./Image/ranking.png";
     stop = "./Image/stop.png";
     gameover = "./Image/gameover.png"; 
-
+    mypage = "./Image/mypage.png"; 
+    store = "./Image/store.png"; 
 
 class Scales(enum.Enum):
     large = (2, 2)
@@ -125,7 +134,12 @@ class Color(enum.Enum):
     WHITE = (255, 255, 255)
     TRANSPARENT = (255, 255, 255, 128)
     GRAY = (220, 220, 220)
+    ORANGE = (253, 111, 34)
     BLACK = (0, 0, 0)
+    INDIGO = (0, 10, 63)
+    NAVY = (0, 10, 63)
+
+
 
 
 class Menus(enum.Enum):
