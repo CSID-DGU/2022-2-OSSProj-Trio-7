@@ -32,7 +32,7 @@ class StoryManager():
         else:
             bg = pygame.image.load("./Image/background/doctor_background.png")
 
-        text_box = pygame.Rect(0, 400, infoObject.current_w, 165)
+        text_box = pygame.Rect(0, self.size[1]*0.80, self.size[0], self.size[1]*0.3)
 
         # dialogue init
         font = pygame.font.Font(Default.font.value, self.size[0]//25)
