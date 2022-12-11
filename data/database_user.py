@@ -48,7 +48,7 @@ class Database:
         curs.close()
         curs = self.dct_db.cursor()
         self.dct_db.commit()
-        # users테이블에서 user_id 필드에 %s의 값을 삽입
+        # tusers테이블에서 user_id 필드에 %s의 값을 삽입
         sql = "INSERT INTO tusers2 (user_id) VALUES (%s)"
         curs.execute(sql, user_id)
         self.dct_db.commit()
@@ -60,20 +60,18 @@ class Database:
         curs.execute(sql,(user_nickname, user_id))
         self.dct_db.commit()
 
-    def add_pw(self, user_pw, user_id):  # 비밀번호 & coin 초기값 추가 * 캐릭터 초기값은 1로(캐릭터 숫자로 표현)
-        initial_coin = 0  # 가입시, 보유한 coin 0으로 설정
-        initial_pcharacter = 0
-        initial_fcharacter = 3
-        initial_dcharacter = 6
+    def add_pw(self, user_pw, user_id):  # 비밀번호 & coin 초기값 추가
+        initial_coin = 0  # 가입시, 보유한 돈 0으로 설정
+        initial_pcharacter = 0 # 경찰 기본 캐릭터 0
+        initial_fcharacter = 3 # 소방관 기본 캐릭터 3
+        initial_dcharacter = 6 # 의사 기본 캐릭터 6
         have = 5
         not_have = -1
         hashed_pw = bcrypt.hashpw(user_pw.encode(
             'utf-8'), bcrypt.gensalt()).decode('utf-8')
-        # print(hashed_pw, "입력값")
         curs = self.dct_db.cursor()
         sql = "UPDATE users1 SET user_password=%s WHERE user_id=%s"
         curs.execute(sql, (hashed_pw, user_id))
-        # print(hashed_pw, "라라")
         self.dct_db.commit()
         curs = self.dct_db.cursor()
         sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id=%s"
@@ -109,7 +107,7 @@ class Database:
         curs.close()
         
 
-    def set_pchar(self):
+    def set_pchar(self): # 현재  착용중인 캐릭터 나타내는 함수
         self.id = User.user_id
         self.char = User.pcharacter
         curs = self.dct_db.cursor()
@@ -145,32 +143,29 @@ class Database:
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        check_pchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        check_pchar = data[1]  # user_id는 인덱스 0에, user_pcharacter는 인덱스 1에 저장되어 있음
         return check_pchar
     
-    def show_fmychar(self):  # 선택한 캐릭터 보여주는 함수
+    def show_fmychar(self):  
         self.id = User.user_id
         self.char = User.fcharacter
         curs = self.dct_db.cursor()
-        # user_id와 user_character열만 선택
         sql = "SELECT user_id,user_fcharacter FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        check_fchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
-        print(check_fchar)
+        check_fchar = data[1]
         return check_fchar
     
-    def show_dmychar(self):  # 선택한 캐릭터 보여주는 함수
+    def show_dmychar(self):  
         self.id = User.user_id
         self.char = User.dcharacter
         curs = self.dct_db.cursor()
-        # user_id와 user_character열만 선택
         sql = "SELECT user_id,user_dcharacter FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        check_dchar = data[1]  # user_id는 인덱스 0에, user_character는 인덱스 1에 저장되어 있음
+        check_dchar = data[1] 
         return check_dchar
     
     def show_mycoin(self):
@@ -187,19 +182,17 @@ class Database:
     def get_nickname(self): # 스토리라인 삽입을 위한 이름 가져오는 함수
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        # user_id와 user_character열만 선택
         sql = "SELECT user_id, user_nickname FROM users1 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        name = data[1]  # user_id는 인덱스 0에, user_coin 인덱스 1에 저장되어 있음
+        name = data[1]
         return name
 
 
     def set_coin(self):
         self.id = User.user_id
         self.coin = User.coin
-        print(self.coin)
         curs = self.dct_db.cursor()
         sql = "UPDATE tusers2 SET user_coin=%s WHERE user_id = %s"
         curs.execute(sql, (self.coin, self.id))
@@ -303,7 +296,7 @@ class Database:
         self.dct_db.commit()
         curs.close()
 
-    # 현재 최고기록 확인
+    # score 모드 최고기록 확인
     def high_score(self, mode):
         self.db = Database()
         self.nickname = self.db.get_nickname()
@@ -318,7 +311,8 @@ class Database:
         curs.close()
         highscore = data[0]
         return highscore
-
+    
+    # time 모드 최고기록 확인
     def high_time(self, mode):
         self.db = Database()
         self.nickname = self.db.get_nickname()
@@ -334,7 +328,7 @@ class Database:
         hightime = data[0]
         return hightime
    
-    # 데이터 로드 (랭킹메뉴에서)
+    # 데이터 로드
     def load_data(self, mode):
         curs = self.dct_db.cursor(pymysql.cursors.DictCursor)
         if mode == 'score':
@@ -388,7 +382,6 @@ class Database:
         curs.execute(sql, (self.id, new_score, now.strftime('%Y-%m-%d'), self.nickname))
         self.dct_db.commit()
         curs.close()
-        print("suc")
 
     def update_time2(self, mode, new_time):
         now = datetime.now()
@@ -403,12 +396,10 @@ class Database:
         curs.execute(sql, (self.id, new_time, now.strftime('%Y-%m-%d'),self.nickname))
         self.dct_db.commit()
         curs.close()
-        print("suc")
 
     def my_score_rank(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        # user_id와 user_character열만 선택
         sql = "SELECT nickname,score FROM current_score_score WHERE ID=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -416,13 +407,12 @@ class Database:
         if data == None:
             User.score_score = "None"
         else:
-            score_score = data[1]  # user_id는 인덱스 0에, score 인덱스 1에 저장되어 있음
+            score_score = data[1] 
             User.score_score = score_score
 
     def my_time_rank(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        # user_id와 user_character열만 선택
         sql = "SELECT nickname,time FROM current_time_score WHERE ID=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
@@ -430,52 +420,37 @@ class Database:
         if data == None:
             User.time_score = "None"
         else:
-            time_score = data[1]  # user_id는 인덱스 0에, time 인덱스 1에 저장되어 있음
+            time_score = data[1]  
             User.time_score = time_score
 
     # 데이터베이스 확인을 통해, 캐릭터가 잠겨있는지 안잠겨있는지 확인
     def pchar_lock(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
         sql = "SELECT user_id,pchar2,pchar3 FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
 
-        for i in range(1, 3):
-            if data[i] == 0:
-                User.cat_lock[i] = True
-
     def fchar_lock(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
         sql = "SELECT user_id,fchar2,fchar3 FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
 
-        for i in range(1, 3):
-            if data[i] == 0:
-                User.cat_lock[i] = True
-    
     def dchar_lock(self):
         self.id = User.user_id
         curs = self.dct_db.cursor()
-        # user_id와 char 2,3,4 선택(char1은 목숨 무제한)
         sql = "SELECT user_id,dchar2,dchar3 FROM tusers2 WHERE user_id=%s"
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
 
-        for i in range(1, 3):
-            if data[i] == 0:
-                User.cat_lock[i] = True
-
-
 
     def check_pchar_lock(self):
+        index = 1
         self.char = User.pcharacter
         self.id = User.user_id
         curs = self.dct_db.cursor()
@@ -483,13 +458,13 @@ class Database:
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.pcharacter+1]
-        if check == 0:  # 캐릭터가 잠겨 있으면 true
+        check = data[User.pcharacter + index]
+        if check == 0:  
             return True
-        return False  # 그렇지 않으면 false
+        return False 
     
     def check_fchar_lock(self):
+        index = 2
         self.char = User.fcharacter
         self.id = User.user_id
         curs = self.dct_db.cursor()
@@ -497,13 +472,13 @@ class Database:
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.fcharacter-2]
-        if check == 0:  # 캐릭터가 잠겨 있으면 true
+        check = data[User.fcharacter - index]
+        if check == 0:  
             return True
-        return False  # 그렇지 않으면 false
+        return False  
     
     def check_dchar_lock(self):
+        index = 5
         self.char = User.dcharacter
         self.id = User.user_id
         curs = self.dct_db.cursor()
@@ -511,11 +486,10 @@ class Database:
         curs.execute(sql, self.id)
         data = curs.fetchone()
         curs.close()
-        # User.character의 인덱스는 0부터임, 지금 가져온 데이터에서 char1부터 인덱스 1이므로, +1을 한 값.
-        check = data[User.dcharacter-5]
-        if check == 0:  # 캐릭터가 잠겨 있으면 true
+        check = data[User.dcharacter - index]
+        if check == 0:  
             return True
-        return False  # 그렇지 않으면 false
+        return False 
     
     def buy_weapon(self):
         self.id = User.user_id

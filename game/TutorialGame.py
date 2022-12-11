@@ -38,7 +38,7 @@ class tutorial:
 
         # 2. 게임창 옵션 설정
         infoObject = pygame.display.Info()
-        title = "PVP game"
+        title = "tutorial game"
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = [infoObject.current_w, infoObject.current_h]
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
@@ -47,7 +47,7 @@ class tutorial:
         # 3. 게임 내 필요한 설정
         self.clock = pygame.time.Clock()  # 이걸로 FPS설정함
 
-        # 4. 게임에 필요한 객체들을 담을 배열 생성, 변수 초기화, pvp
+        # 4. 게임에 필요한 객체들을 담을 배열 생성, 변수 초기화
         self.animation = AnimationManager()
         self.mobList = []
         self.item_list = []
@@ -78,14 +78,14 @@ class tutorial:
         #self.infowindow_image = "Image/catthema/map1.png"
 
         # 5. 캐릭터 초기화
-        self.character1.pvp_reinitialize1(self)
+        self.character1.tutorial_reinitialize1(self)
 
         # 방향키
 
         self.direction1 = {None: (0, 0), pygame.K_UP: (0, -2), pygame.K_DOWN: (0, 2),
                            pygame.K_LEFT: (-2, 0), pygame.K_RIGHT: (2, 0)}
         mytheme = pygame_menu.themes.THEME_ORANGE.copy()
-        self.menu = pygame_menu.Menu('PVP.', self.size[0], self.size[1],
+        self.menu = pygame_menu.Menu('tutorial.', self.size[0], self.size[1],
                                      theme=mytheme)
 
         # 일시정지 버튼
@@ -134,7 +134,7 @@ class tutorial:
             # 화면 흰색으로 채우기
             self.screen.fill(Color.WHITE.value)
 
-            # pvp 모드를 위한 배경 분리
+            # tutorial 모드를 위한 배경 분리
             background1 = pygame.image.load(self.background_image)
 
             background1 = pygame.transform.scale(
@@ -342,7 +342,7 @@ class tutorial:
             # print("update")
             # pygame.display.update()
 
-            self.character1.pvp_update1(self)
+            self.character1.tutorial_update1(self)
 
             pygame.display.flip()
 

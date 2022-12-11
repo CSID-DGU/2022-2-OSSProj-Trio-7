@@ -4,7 +4,7 @@
 
 ## Info
 
-- python ![Generic badge](https://img.shields.io/badge/python-3-blue.svg)
+- python ![Generic badge](https://img.shields.io/badge/python-3.8-blue.svg)
   ![Generic badge](https://img.shields.io/badge/pygame-2.0.2-blue.svg)
   ![Generic badge](https://img.shields.io/badge/pygame_menu-4.2.0-blue.svg)
   ![Generic badge](https://img.shields.io/badge/pymysql-1.0.2-blue.svg)
@@ -29,7 +29,8 @@
 
 ---
 
-### 어린이 직업체험 슈팅게임
+### 어린이를 위한 직업 체험 슈팅게임
+#### 자신이 원하는 직업을 선택하고, 직업에 따라 몬스터와 보스를 처치하자!
 
 <br />
 
@@ -105,12 +106,12 @@ python3 Main.py
 |- 메인화면에서 튜토리얼 모드를 선택한다. |- ENTER 키를 눌러서 튜토리얼을 시작한다. |- 안내에 따라 조작법을 익힌다.|
 
 ## 캐릭터 소개
-게임플레이시 사용자가 선택할 수 있는 캐릭터 종류입니다.
+게임플레이시 사용자가 사용할 수 있는 캐릭터 종류입니다.
 |경찰관|소방관|의사|
 |---|---|---|
-|경찰관|소방관|의사|
-|경찰관|소방관|의사|
-|경찰관|소방관|의사|
+|![policeOfficer](https://user-images.githubusercontent.com/62867581/206884199-6822f5c4-134d-486d-83fd-b52c06a49404.png)|![firefighter](https://user-images.githubusercontent.com/62867581/206884204-d352b4cb-83ad-46cd-889d-747155320da0.png)|![doctor](https://user-images.githubusercontent.com/62867581/206884293-620dab06-c5b9-41d7-baeb-2759672c6bb1.png)|
+|![police1](https://user-images.githubusercontent.com/62867581/206884267-1857f68a-9358-4959-b060-d662f5bf9e70.png)|![firefighter1](https://user-images.githubusercontent.com/62867581/206884273-9d7c6cf5-1be6-4cd8-86f8-0fc12511ff0a.png)|![doctor1](https://user-images.githubusercontent.com/62867581/206884266-01ef820f-e0ac-4db2-a352-34e0fc0bd1fd.png)|
+|![police2](https://user-images.githubusercontent.com/62867581/206884274-b0fef079-fb3a-4fe8-bf4f-3e738aa107f5.png)|![firefighter2](https://user-images.githubusercontent.com/62867581/206884269-5a9173c2-e27a-4a9d-91ba-f9d92ef47fa7.png)|![doctor2](https://user-images.githubusercontent.com/62867581/206884276-c5b4f627-a492-4fa4-b0e5-712e3e59131d.png)|
 
 ## 마이페이지 및 캐릭터 상점, 무기 구매
 |상점 화면 |구매 불가 화면 |마이페이지 |무기 구매 화면 |
@@ -154,6 +155,10 @@ python3 Main.py
 http://www.pygame.org/docs
 <br/>
 https://pygame-menu.readthedocs.io/en/4.2.0/_source/widgets_frame.html
+<br />
+https://github.com/CSID-DGU/2021-2-OSSProj-PlusAlpha-9
+<br />
+https://github.com/CSID-DGU/2022-1-OSSProj-DreamsComeTrue-4
 
 ## Sound credit
 

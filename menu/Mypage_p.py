@@ -27,12 +27,12 @@ class Mypage_p:
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(255, 255, 255),  # 버튼 배경색 설정
+            widget_background_color= Color.WHITE.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(0, 0, 0),  # 기본 글자색
-            title_background_color=(255, 255, 255, 0), 
-            title_font_color=(0, 0, 0, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.BLACK.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value, 
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -53,8 +53,6 @@ class Mypage_p:
         self.show(character='police')
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
         
-           
-
     def to_menu(self):
         import menu.ModeSelectMenu
         game=menu.ModeSelectMenu.ModeSelectMenu(self.screen)
@@ -67,8 +65,7 @@ class Mypage_p:
     def show(self, character):
         choosed_chracter = character 
         self.db = Database()
-        self.nickname = self.db.get_nickname() 
-        # Database().char_lock()  
+        self.nickname = self.db.get_nickname()  
         self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
         self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
         Database().my_score_rank()
@@ -84,7 +81,7 @@ class Mypage_p:
 
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id,pchar1,pchar2,pchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            sql = "SELECT user_id,pchar1,pchar2,pchar3 FROM tusers2 WHERE user_id=%s" 
             curs.execute(sql,self.id) 
             data = curs.fetchone()  
             curs.close()
@@ -100,8 +97,7 @@ class Mypage_p:
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i-1]
                     ).scale(0.5, 0.5)
-                    #print("이미지경로",front_image_path[i-1])
-                    pcharacters.append((self.pcharacter_data[i-1].name, i-1)) #보유하고 있는 캐릭터 이름만 저장
+                    pcharacters.append((self.pcharacter_data[i-1].name, i-1)) # 0부텉 보유하고 있는 캐릭터 이름만 저장
                     self.pcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
             for i in range(3): 
@@ -110,8 +106,7 @@ class Mypage_p:
                     ).scale(0.3, 0.3)
         
                     self.pcharacter_imgs2.append(default_image.copy())
-            #print(self.price)    
-            #print("이미지리스트",self.character_imgs)
+
             self.pcharacter_selector = self.menu.add.selector(
                 title='캐릭터 : ',
                 items=pcharacters,
@@ -128,17 +123,17 @@ class Mypage_p:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_font_color=(255, 255, 255)
-            self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+            self.mytheme.widget_font_color= Color.WHITE.value
+            self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_pcharacter,
                              selection_color=self.orange_color, font_size=self.font_size)
-            self.menu.add.vertical_margin(10)
+            self.menu.add.vertical_margin(Menus.margin_10.value)
             self.menu.add.button('         이전         ',self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)
 
             self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_font_color=(0, 0, 0)
-            self.mytheme.widget_background_color = (255,255,255)
+            self.mytheme.widget_font_color= Color.BLACK.value
+            self.mytheme.widget_background_color = Color.WHITE.value
 
     def select_pcharacter(self):
         selected_idx = self.pcharacter_selector.get_value()[0][1]

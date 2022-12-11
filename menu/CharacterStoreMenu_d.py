@@ -31,12 +31,12 @@ class CharacterStoreMenu_d:
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(255, 255, 255),  # 버튼 배경색 설정
+            widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(0, 0, 0),  # 기본 글자색
-            title_background_color=(255, 255, 255, 0), 
-            title_font_color=(0, 0, 0, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value,
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -63,7 +63,6 @@ class CharacterStoreMenu_d:
 
     #메뉴 구성하고 보이기
     def show(self):  
-
         front_image_path = [Images.doctor.value, Images.doctor1.value, Images.doctor2.value]
         self.character_data = StoreDataManager.load("doctor")
 
@@ -75,6 +74,8 @@ class CharacterStoreMenu_d:
         curs.close()
 
         User.coin = Database().show_mycoin()
+        self.mytheme.widget_font_color=Color.BLACK.value
+        self.mytheme.widget_background_color = Color.WHITE.value
         self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75, 0.75)
         #캐릭터 선택 메뉴 구성
         characters = []
@@ -95,13 +96,13 @@ class CharacterStoreMenu_d:
                 self.character_imgs.append(default_image.copy())
                 
         if len(characters)==0:
-                    self.mytheme.widget_font_color=(0, 0, 0)
-                    self.mytheme.widget_background_color = (255, 255, 255) # 버튼 색깔
-                    self.menu.add.vertical_margin(10)
+                    self.mytheme.widget_font_color=Color.BLACK.value
+                    self.mytheme.widget_background_color = Color.WHITE.value # 버튼 색깔
+                    self.menu.add.vertical_margin(Menus.margin_10.value)
                     self.menu.add.label("구매할 수 있는 품목 없음.").scale(1.5, 1.5)
-                    self.menu.add.vertical_margin(100)
-                    self.mytheme.widget_font_color=(255, 255, 255)
-                    self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+                    self.menu.add.vertical_margin(Menus.margin_100.value)
+                    self.mytheme.widget_font_color=Color.WHITE.value
+                    self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
                     self.menu.add.button('   이전   ', self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)
 
@@ -131,25 +132,22 @@ class CharacterStoreMenu_d:
 
             self.frame_v = self.menu.add.frame_v(400, 70, margin=(10, 0))
             
-            self.mytheme.widget_font_color=(255, 255, 255)
-            self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+            self.mytheme.widget_font_color= Color.WHITE.value
+            self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 구매   ', self.buy_character,
                              selection_color=self.orange_color, font_size=self.font_size)
-
-            self.menu.add.vertical_margin(10)
+            self.menu.add.vertical_margin(Menus.margin_10.value)
             self.menu.add.button('   이전   ', self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)                 
             self.lock()
 
             
             self.update_from_selection(int(self.character_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color =(0,10,63)
+            self.mytheme.widget_background_color = Color.INDIGO.value
         
 
 
     def buy_character(self):
-
-        print("아이템을 구매합니다.")
 
         curs = Database().dct_db.cursor()
         self.id = User.user_id
@@ -169,7 +167,6 @@ class CharacterStoreMenu_d:
             self.item_description_widget.set_title(title = "Unlocked" )
 
         else:
-            print("not enough money") 
             import menu.CharacterBuy_d
             menu.CharacterBuy_d.CharacterBuy_d(self.screen,self.character_data[selected_idx].name).show()    
 

@@ -32,8 +32,8 @@ class CharacterDataManager:
             print("불러올 데이터가 없습니다.")
 
 
-# pvp캐릭터 데이터 json 파일 읽기/쓰기 클래스
-class PvpCharacterDataManager:
+# tutorial캐릭터 데이터 json 파일 읽기/쓰기 클래스
+class TutorialCharacterDataManager:
     # 캐릭터 데이터 json 파일 업데이트
     # default=Character.json_dumpt_obj로 설정함으로 필요한 속성값만 포함시켜 serialize
     def save(characters):

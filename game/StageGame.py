@@ -30,7 +30,6 @@ from data.StoryManager import *
 class StageGame:
     # 캐릭터데이터, 캐릭터, 스테이지 정보, 맵 정보, 구매한 무기
     def __init__(self, character_data, character, stage, map_info, weapon):
-        print("stageGame에서 직업", map_info)
         # 1. 게임초기화
         pygame.init()
         self.stage_cleared = False
@@ -201,14 +200,12 @@ class StageGame:
                         if soundset == 0.1:
                             self.setting.image = "Image/thema/off.png"
                             soundset = 0
-                            print(soundset)
                             Default.sound.value['sfx']['volume'] = 0
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
                             from menu.ModeSelectMenu import soundset
                             soundset = 0.1
-                            print(soundset)
                             Default.sound.value['sfx']['volume'] = 0.1
                             pygame.mixer.music.set_volume(0.1)
 
@@ -290,25 +287,14 @@ class StageGame:
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 기본값 0.002
-            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-            #         Default.item.value["speedup"]["spawn_rate"] += 0.0001
-            #     new_item = SpeedUp(self.animation.animations["speedup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
+
 
             # # 무기 구매 적용 
             if self.stagew==True:
-                new_item = PowerUp(self.animation.animations["powerup"])
-                new_item.use(self)
-                # self.item_list.append(new_item)
+                PowerUp(self)
 
             if self.infinitew==True:
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.use(self)
-                # self.item_list.append(new_item)
+                SpeedUp(self)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -372,7 +358,6 @@ class StageGame:
                     if self.character.is_collidable == True:
                         self.character.last_crashed = time.time()
                         self.character.is_collidable = False
-                        print("crash!")
                         self.life -= 1
                         mob.destroy(self)
 
@@ -404,7 +389,7 @@ class StageGame:
 
 
             # 화면갱신
-            pygame.display.flip()  # 그려왔던데 화면에 업데이트가 됨
+            pygame.display.flip()  
 
             # 보스를 처치하면 스테이지 클리어 화면
             if (self.stage_cleared):
@@ -493,12 +478,12 @@ class StageGame:
         image_path=Images.stage_clear.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value,
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -512,13 +497,10 @@ class StageGame:
         self.menu.add.vertical_margin(10)
         self.menu.add.button('홈으로', self.ModeSelectMenu,
                              font_size=self.font_size)
-        print(User.coin)
-        print(self.coin)
         User.coin = User.coin + self.coin
-        print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen,bgfun = self.check_resize)  # ,bgfun = self.check_resize)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize) 
 
     # 실패 화면
     def showGameOverScreen(self):
@@ -546,16 +528,11 @@ class StageGame:
         self.menu.add.vertical_margin(10)
         self.menu.add.button('모드 선택화면으로', self.Home, self.menu,
                              font_size=self.font_size)
-        print(User.coin)
-        print(self.coin)
         User.coin = User.coin + self.coin
-        print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen,bgfun = self.check_resize)  # ,bgfun = self.check_resize)
-        #User.coin = User.coin + self.coin
-        #self.database = Database()
-        # self.database.set_coin()
+        self.menu.mainloop(self.screen,bgfun = self.check_resize) 
+    
 
     # 일시정지 화면
     def StopGame(self):
@@ -566,12 +543,12 @@ class StageGame:
 
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value,
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -615,8 +592,6 @@ class StageGame:
             self.menu.resize(new_w, new_h)
             self.size = window_size
             self.menu._current._widgets_surface = make_surface(0, 0)
-            print(f'New menu size: {self.menu.get_size()}')
-            print(self.screen)
             font_size = new_w * 40 // 720
             self.font_size = font_size
             self.scale = (new_w*0.0020, new_h*0.0020)
