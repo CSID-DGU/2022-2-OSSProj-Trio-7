@@ -7,7 +7,6 @@ from data.StageDataManager import *
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
-from menu.MypageMenu import *
 from menu.CharacterStoreMenu_p import *
 from menu.CharacterStoreMenu_f import *
 from menu.CharacterStoreMenu_d import *
