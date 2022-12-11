@@ -279,14 +279,10 @@ class InfiniteGame:
 
             # 무기 구입 정보 적용하기
             if self.stagew==True:
-                new_item = PowerUp(self.animation.animations["powerup"])
-                new_item.use(self)
-                # self.item_list.append(new_item)
+                PowerUp(self)
 
             if self.infinitew==True:
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.use(self)
-                # self.item_list.append(new_item)
+                SpeedUp(self)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -481,7 +477,7 @@ class InfiniteGame:
 
     def gameselectmenu(self):
         import menu.GameSelectMenu
-        game = menu.GameSelectMenu.GameselectMenu(self.screen)
+        game = menu.GameSelectMenu.GameSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.choosed_chracter)

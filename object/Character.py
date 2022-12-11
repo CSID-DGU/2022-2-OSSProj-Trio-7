@@ -85,8 +85,8 @@ class Character(Object):
         self.velocity = self.org_velocity
         self.fire_interval = self.org_fire_interval
 
-# pvp게임 시작 시 캐릭터 초기화를 위해 필수적으로 실행
-    def pvp_reinitialize1(self, game):
+# tutorial게임 시작 시 캐릭터 초기화를 위해 필수적으로 실행
+    def tutorial_reinitialize1(self, game):
         size = game.size
         # 캐릭터 사이즈/위치 초기화
         self.on_resize(game)
@@ -202,10 +202,10 @@ class Character(Object):
 
 
 
-# pvp player 1 게임 실행 중 입력 키에 따라 캐릭터 이동, 발사 등의 액션을 수행
+# tutorial 게임 실행 중 입력 키에 따라 캐릭터 이동, 발사 등의 액션을 수행
 
 
-    def pvp_update1(self, game):
+    def tutorial_update1(self, game):
         if (game.size[0] != self.boundary[0]) or (game.size[1] != self.boundary[1]):
             self.on_resize(game)
         # 키 입력 감지

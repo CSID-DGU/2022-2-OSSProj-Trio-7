@@ -54,8 +54,8 @@ class Login:
 
         self.mytheme.background_color = main_image
 
-        # pvp 관련
-        self.pvpcharacter_data = PvpCharacterDataManager.load()  # pvp 캐릭터 데이터
+        # tutorial 관련
+        self.tutorialcharacter_data = TutorialCharacterDataManager.load()  # tutorial 캐릭터 데이터
         self.mode = ("score", InfiniteGame.ScoreMode())
         self.changed_screen_size = self.screen.get_size()
         self.board_width = self.changed_screen_size[0]  # x
@@ -212,7 +212,7 @@ class Login:
         self.menu.add.button('  이전 화면  ', self.show_signup)
 
     def tutorial_page(self):
-        tutorialgame = tutorial(self.pvpcharacter_data, self.pvpcharacter_data[0], self.mode)
+        tutorialgame = tutorial(self.tutorialcharacter_data, self.tutorialcharacter_data[0], self.mode)
         tutorialgame.tutorial_info()
 
     def main(self):
