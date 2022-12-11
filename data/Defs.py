@@ -29,29 +29,12 @@ class Images(enum.Enum):
     main = "./Image/main.png"
     characterSelect = "./Image/characterSelect_background.png"
     weaponback = "./Image/weaponSelect/wbackground.png"
-    start = "./Image/StartImage.png"
-    how_to_play = "./Image/howtoplay.png"
-    about = "./Image/AboutPage.jpg"
-    background_map1 = "./Image/catthema/map1.png"
-    background_map2 = "./Image/catthema/map2.png"
-    enemy_scrophion = "./Image/scorphion1-1.png"
-    enemy_cactus = "./Image/Catus.png"
-    missile_missile2 = "./Image/MISSILE_2.png"
     weapon_target_missile = "./Image/Weapon/spaceMissiles_012.png"
     pausedInfo = "./Image/thema/pauseInfo.png"
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
     stage_clear = "./Image/stageclearpage.png"
-    chapter_clear_oasis = "./Image/ChapterClear_Oasis.jpg"
-    chapter_clear_ice = "./Image/ChapterClear_Ice.jpg"
-    chapter_clear_space = "./Image/ChapterClear_Space.jpg"
-    chapter_cleared = "./Image/ClearedChapter.jpg"
-
-    F5S1_locked = "./Image/CharacterLocked_F5S1.jpg"
-    F5S4_locked = "./Image/CharacterLocked_F5S4.jpg"
-    Tank_locked = "./Image/CharacterLocked_Tank.jpg"
-    stage_locked = "./Image/StageLocked_v1.jpg"
 
     info_infi_1 = "./Image/Info_infi_1.png"
     info_infi_2 = "./Image/Info_infi_2.png"
@@ -69,22 +52,7 @@ class Images(enum.Enum):
     info_items = "./Image/Info_items.png"
     info_controls = "./Image/Info_controls.png"
 
-    cat1 = "./Image/catthema/cat1_front.png"
-    cat2 = "./Image/catthema/cat2_front.png"
-    cat3 = "./Image/catthema/cat3_front.png"
-    cat4 = "./Image/catthema/cat4_front.png"
-
-
     win = "./Image/stageclear.png"
-    lose = "./Image/catthema/lose.png"
-
-    lock_cat2 = "./Image/catthema/lock_cat2.png"
-    lock_cat3 = "./Image/catthema/lock_cat3.png"
-    lock_cat4 = "./Image/catthema/lock_cat4.png"
-
-    failbuy_cat2 = "./Image/catthema/failbuy_cat2.png"
-    failbuy_cat3 = "./Image/catthema/failbuy_cat3.png"
-    failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
 
     failbuy_doctor1 = "./Image/catthema/failbuy_doctor1.png"
     failbuy_doctor2 = "./Image/catthema/failbuy_doctor2.png"

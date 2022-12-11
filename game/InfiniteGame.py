@@ -277,7 +277,6 @@ class InfiniteGame:
                 self.item_list.append(new_item)
 
 
-
             # 무기 구입 정보 적용하기
             if self.stagew==True:
                 new_item = PowerUp(self.animation.animations["powerup"])
@@ -449,7 +448,7 @@ class InfiniteGame:
         print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen)  # bgfun=self.check_resize_end)
+        self.menu.mainloop(self.screen)
         pygame.display.flip()
 
     def register_ranking(self):  # 랭크 기록
@@ -478,7 +477,6 @@ class InfiniteGame:
     # 랭킹 등록 결과 화면
 
     def show_register_result(self):
-        # self.menu.remove_widget(self.result_frame)
         LeaderBoardMenu(self.screen).rank()
 
     def gameselectmenu(self):
