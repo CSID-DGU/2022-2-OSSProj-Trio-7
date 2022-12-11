@@ -30,7 +30,7 @@ soundset = 0.1
 global choosed_character  # 사용자가 선택한 캐릭터
 
 
-class GameselectMenu:
+class GameSelectMenu:
     def __init__(self, screen):
         
         title = "모드 선택"

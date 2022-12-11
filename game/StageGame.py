@@ -292,25 +292,14 @@ class StageGame:
                     (random.randrange(0, self.size[0]-new_item.sx), 0))
                 self.item_list.append(new_item)
 
-            # 기본값 0.002
-            # if random.random() < Default.item.value["speedup"]["spawn_rate"]:
-            #     if (Default.item.value["speedup"]["spawn_rate"] < 0.3):
-            #         Default.item.value["speedup"]["spawn_rate"] += 0.0001
-            #     new_item = SpeedUp(self.animation.animations["speedup"])
-            #     new_item.set_XY(
-            #         (random.randrange(0, self.size[0]-new_item.sx), 0))
-            #     self.item_list.append(new_item)
+
 
             # # 무기 구매 적용 
             if self.stagew==True:
-                new_item = PowerUp(self.animation.animations["powerup"])
-                new_item.use(self)
-                # self.item_list.append(new_item)
+                PowerUp(self)
 
             if self.infinitew==True:
-                new_item = SpeedUp(self.animation.animations["speedup"])
-                new_item.use(self)
-                # self.item_list.append(new_item)
+                SpeedUp(self)
 
             # 플레이어 객체 이동
             self.character.update(self)
@@ -457,7 +446,7 @@ class StageGame:
 
     def gameselectmenu(self):
         import menu.GameSelectMenu
-        game = menu.GameSelectMenu.GameselectMenu(self.screen)
+        game = menu.GameSelectMenu.GameSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.storyInfo)
