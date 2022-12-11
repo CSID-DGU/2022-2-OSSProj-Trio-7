@@ -45,9 +45,9 @@ class LeaderBoardMenu:
     def to_menu(self):
         self.menu.disable()
 
-    def gameselectmenu(self):
+    def ModeSelectMenu(self):
         import menu.ModeSelectMenu
-        game=menu.ModeSelectMenu.GameselectMenu(self.screen)
+        game=menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen)

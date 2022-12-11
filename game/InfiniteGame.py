@@ -440,7 +440,7 @@ class InfiniteGame:
         self.menu.add.vertical_margin(10)
         self.menu.add.button( '다시 시작 ', self.retry, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('모드 선택화면으로', self.gameselectmenu,
+        self.menu.add.button('모드 선택화면으로', self.ModeSelectMenu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)
@@ -479,9 +479,9 @@ class InfiniteGame:
     def show_register_result(self):
         LeaderBoardMenu(self.screen).rank()
 
-    def gameselectmenu(self):
+    def ModeSelectMenu(self):
         import menu.ModeSelectMenu
-        game = menu.ModeSelectMenu.GameSelectMenu(self.screen)
+        game = menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.choosed_chracter)
@@ -528,7 +528,7 @@ class InfiniteGame:
         self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button("모드 선택화면으로", self.gameselectmenu, selection_color=self.orange_color,
+        b3 = self.menu.add.button("모드 선택화면으로", self.ModeSelectMenu, selection_color=self.orange_color,
                              font_size=self.font_size,)
 
     def check_resize_end(self):

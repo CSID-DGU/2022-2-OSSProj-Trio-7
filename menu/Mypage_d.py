@@ -58,7 +58,7 @@ class Mypage_d:
 
     def to_menu(self):
         import menu.ModeSelectMenu
-        game=menu.ModeSelectMenu.GameSelectMenu(self.screen)
+        game=menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, 'doctor')

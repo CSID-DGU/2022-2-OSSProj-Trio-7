@@ -30,7 +30,7 @@ soundset = 0.1
 global choosed_character  # 사용자가 선택한 캐릭터
 
 
-class GameselectMenu:
+class ModeSelectMenu:
     def __init__(self, screen):
         
         title = "모드 선택"
@@ -75,7 +75,7 @@ class GameselectMenu:
                                          0.3, 0.75, 0.35, 0.05, "Image/thema/level1.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.mode_map1 = button(self.board_width, self.board_height,
-                                0.7, 0.75, 0.35, 0.05, "Image/catthema/SCORE.png") # x좌표, y좌표, 가로비율, 세로비율
+                                0.7, 0.75, 0.35, 0.05, "Image/thema/SCORE.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.inf_mode_map1 = 0
 
@@ -241,10 +241,10 @@ class GameselectMenu:
                 if self.mode_map1.isOver(pos):
                     if self.inf_mode_map1 == 0:
                         self.inf_mode_map1 = 1
-                        self.mode_map1.image = "Image/catthema/TIME.png"
+                        self.mode_map1.image = "Image/thema/TIME.png"
                     else:
                         self.inf_mode_map1 = 0
-                        self.mode_map1.image = "Image/catthema/SCORE.png"
+                        self.mode_map1.image = "Image/thema/SCORE.png"
                 pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭

@@ -37,9 +37,9 @@ class HelpMenu:
         self.show()
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
-    def gameselectmenu(self):
+    def ModeSelectMenu(self):
         import menu.ModeSelectMenu
-        game = menu.ModeSelectMenu.GameSelectMenu(self.screen)
+        game = menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.choosed_character)
@@ -61,7 +61,7 @@ class HelpMenu:
         self.menu.add.button('   조작법 설명서   ', self.controls,
                              selection_color=Color.ORANGE.value)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('     이전     ',self.gameselectmenu,
+        self.menu.add.button('     이전     ',self.ModeSelectMenu,
                              selection_color=Color.ORANGE.value)
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 

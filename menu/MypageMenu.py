@@ -51,8 +51,8 @@ class Mypage:
            
 
     def to_menu(self):
-        import menu.GameSelectMenu
-        game=menu.GameSelectMenu.GameselectMenu(self.screen)
+        import menu.ModeSelectMenu
+        game=menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, 'police')
