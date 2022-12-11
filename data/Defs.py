@@ -17,7 +17,6 @@ class User:
     price = [0, 0, 8000, 8000]
     score_score = 0
     time_score = 0.0
-    cat_lock = [False, False, False]
 
     police_lock = [False, False, False]
     firefighter_lock = [False, False, False]
@@ -107,7 +106,7 @@ class Color(enum.Enum):
     BLACK = (0, 0, 0)
     INDIGO = (0, 10, 63)
     NAVY = (0, 10, 63)
-
+    SKYBLUE = (0, 100, 162)
 
 
 

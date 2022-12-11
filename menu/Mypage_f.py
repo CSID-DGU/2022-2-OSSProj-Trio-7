@@ -28,12 +28,12 @@ class Mypage_f:
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(255, 255, 255),  # 버튼 배경색 설정
+            widget_background_color= Color.WHITE.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(0, 0, 0),  # 기본 글자색
-            title_background_color=(255, 255, 255, 0), 
-            title_font_color=(0, 0, 0, 0),
+            selection_color= Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color= Color.BLACK.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value, 
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -68,7 +68,6 @@ class Mypage_f:
     def show(self, character):
         self.db = Database()
         choosed_chracter = character  
-        # Database().char_lock()  
         self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
         self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
         Database().my_score_rank()
@@ -85,14 +84,10 @@ class Mypage_f:
 
             curs = Database().dct_db.cursor()
             self.id = User.user_id
-            sql = "SELECT user_id, fchar1,fchar2,fchar3 FROM tusers2 WHERE user_id=%s" #user_id와 user_character열만 선택
+            sql = "SELECT user_id, fchar1,fchar2,fchar3 FROM tusers2 WHERE user_id=%s"
             curs.execute(sql,self.id) 
             data = curs.fetchone()  
             curs.close()
-            '''char1 = data[1] # char1의 정보는 첫번째 인덱스에 저장되어 있음
-            char2 = data[2]
-            char3 = data[3]
-            char4 = data[4]'''
             self.fcharacter_data = CharacterDataManager.load()
             front_image_path = [Images.fire.value,Images.fire1.value, Images.fire2.value]
             self.fcharacter_imgs = [] #보유하고 있는 이미지만 들어 있는 파일
@@ -104,8 +99,7 @@ class Mypage_f:
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i-3]
                     ).scale(0.5, 0.5)
-                    #print("이미지경로",front_image_path[i-1])
-                    fcharacters.append((self.fcharacter_data[i].name, i))  # 3부터 #보유하고 있는 캐릭터 이름만 저장
+                    fcharacters.append((self.fcharacter_data[i].name, i))  # 3부터 보유하고 있는 캐릭터 이름만 저장
                     self.fcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
             for i in range(3): 
@@ -114,8 +108,7 @@ class Mypage_f:
                     ).scale(0.3, 0.3)
         
                     self.fcharacter_imgs2.append(default_image.copy())
-            #print(self.price)    
-            #print("이미지리스트",self.character_imgs)
+
             self.fcharacter_selector = self.menu.add.selector(
                 title='캐릭터 : ',
                 items=fcharacters,
@@ -132,17 +125,17 @@ class Mypage_f:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_font_color=(255, 255, 255)
-            self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+            self.mytheme.widget_font_color= Color.WHITE.value
+            self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_fcharacter,
                              selection_color=self.orange_color, font_size=self.font_size)
-            self.menu.add.vertical_margin(10)
+            self.menu.add.vertical_margin(Menus.margin_10.value)
             self.menu.add.button('         이전         ',self.to_menu,
                              selection_color=self.orange_color, font_size=self.font_size)
 
             self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_font_color=(0, 0, 0)
-            self.mytheme.widget_background_color = (255,255,255)
+            self.mytheme.widget_font_color= Color.BLACK.value
+            self.mytheme.widget_background_color = Color.WHITE.value
 
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
@@ -152,33 +145,6 @@ class Mypage_f:
             database.set_fchar()
             self.menu.clear()
             self.show('firefighter')
-        else:
-            print("character locked")
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
-
-    def select_fcharacter(self):
-        selected_idx = self.fcharacter_selector.get_value()[0][1]
-        if User.firefighter_lock[selected_idx] == False:
-            User.fcharacter = selected_idx
-            database = Database()
-            database.set_fchar()
-            self.menu.clear()
-            self.show('firefighter')
-        else:
-            print("character locked")
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
-            
-    def select_fcharacter(self): #게임 시작 함수
-        # 캐릭터 셀릭터가 선택하고 있는 데이터를 get_value 로 가져와서, 그 중 Character 객체를 [0][1]로 접근하여 할당
-        selected_idx = self.fcharacter_selector.get_value()[0][1]
-        if User.firefighter_lock[selected_idx-3] == False:
-            User.fcharacter = selected_idx
-            database = Database()
-            database.set_fchar()
-            self.menu.clear()
-            self.show("firefighter")
         else:
             print("character locked")
             import menu.CharacterLock
@@ -224,7 +190,4 @@ class Mypage_f:
 
         self.current = selected_value
         self.image_widget.set_image(self.fcharacter_imgs2[selected_value-3])
-        '''self.power.set_value(int((self.character_data[selected_value].missile_power/Default.character.value["max_stats"]["power"])*100))
-        self.fire_rate.set_value(int((Default.character.value["max_stats"]["fire_rate"]/self.character_data[selected_value].org_fire_interval)*100))
-        self.velocity.set_value(int((self.character_data[selected_value].org_velocity/Default.character.value["max_stats"]["mobility"])*100))'''
         self.item_description_widget.set_title(title = self.status2)

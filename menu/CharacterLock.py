@@ -5,7 +5,7 @@ import pygame_menu
 from data.CharacterDataManager import *
 from data.Defs import *
 from data.StageDataManager import *
-from menu.MypageMenu import *
+from menu.Mypage_p import *
 
 #Mypage에서 잠긴 캐릭터 SELECT할 시 보여주는 창
 class Characterlock:
@@ -72,7 +72,7 @@ class Characterlock:
     
     def back_from_locked(self):
         self.menu.clear()
-        Mypage(self.screen).show()
+        Mypage_p(self.screen).show()
 
         # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
@@ -118,7 +118,6 @@ class Characterlock:
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-10, self.id))
                 database.dct_db.commit()
-                User.cat_lock[1] = False
                 database.char_lock()                
                 
 
@@ -129,7 +128,6 @@ class Characterlock:
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-10, self.id))
                 database.dct_db.commit()
-                User.cat_lock[2] = False
                 database.char_lock()       
 
             if self.character == "Kongchi":
@@ -139,7 +137,6 @@ class Characterlock:
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-20, self.id))
                 database.dct_db.commit()
-                User.cat_lock[3] = False
                 database.char_lock()       
 
             self.back_from_locked()

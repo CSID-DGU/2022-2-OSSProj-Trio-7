@@ -496,12 +496,12 @@ class InfiniteGame:
 
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value,
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -567,7 +567,7 @@ class InfiniteGame:
         def update_difficulty():
             pass
 
-    class ScoreMode(Mode):  # 이지 모드
+    class ScoreMode(Mode):  # 스코어 모드
         @staticmethod
         def update_difficulty(game):
             play_time = float(time.time() - game.start_time)  # 게임 진행 시간

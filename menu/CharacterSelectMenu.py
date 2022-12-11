@@ -15,14 +15,15 @@ class CharacterSelect:
         
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
+
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value,
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
@@ -38,7 +39,6 @@ class CharacterSelect:
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
     def show_policMap(self):
-        print("경찰관선택")
         game = GameSelectMenu(self.screen)
 
         while True:
@@ -46,7 +46,6 @@ class CharacterSelect:
             pygame.display.flip()
 
     def show_firefighterMap(self):
-        print("소방관선택")
         game = GameSelectMenu(self.screen)
 
         while True:
@@ -54,7 +53,6 @@ class CharacterSelect:
             pygame.display.flip()
 
     def show_doctorMap(self):
-        print("의사선택")
         game = GameSelectMenu(self.screen)
 
         while True:
@@ -71,11 +69,11 @@ class CharacterSelect:
     def first_page(self):
         self.menu.clear()
         b1 = self.menu.add.button(' 경찰관  ', self.show_policMap)
-        self.menu.add.vertical_margin(10)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
         b2 = self.menu.add.button(' 소방관 ', self.show_firefighterMap)
-        self.menu.add.vertical_margin(10)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
         b3 = self.menu.add.button('   의사   ', self.show_doctorMap)
-        self.menu.add.vertical_margin(10)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
         b4 = self.menu.add.button('   직업이 궁금하나요?   ', self.show_jobinfo)
 
    # 화면 크기 조정 감지 및 비율 고정
