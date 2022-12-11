@@ -1,12 +1,11 @@
 from button import *
 import pygame
 import pygame_menu
-from menu.GameSelectMenu import GameSelectMenu
+from menu.ModeSelectMenu import ModeSelectMenu
 from menu.JobInfo import *
 
 class CharacterSelect:
     def __init__(self, screen):
-        infoObject = pygame.display.Info()
         title = "캐릭터 선택"
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
@@ -39,21 +38,24 @@ class CharacterSelect:
         self.menu.mainloop(self.screen, bgfun=self.check_resize)
 
     def show_policMap(self):
-        game = GameSelectMenu(self.screen)
+        print("경찰관선택")
+        game = ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, "police")
             pygame.display.flip()
 
     def show_firefighterMap(self):
-        game = GameSelectMenu(self.screen)
+        print("소방관선택")
+        game = ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, "firefighter")
             pygame.display.flip()
 
     def show_doctorMap(self):
-        game = GameSelectMenu(self.screen)
+        print("의사선택")
+        game = ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, "doctor")

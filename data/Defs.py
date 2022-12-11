@@ -53,12 +53,12 @@ class Images(enum.Enum):
 
     win = "./Image/stageclear.png"
 
-    failbuy_doctor1 = "./Image/catthema/failbuy_doctor1.png"
-    failbuy_doctor2 = "./Image/catthema/failbuy_doctor2.png"
-    failbuy_fire1 = "./Image/catthema/failbuy_fire1.png"
-    failbuy_fire2 = "./Image/catthema/failbuy_fire2.png"
-    failbuy_police1 = "./Image/catthema/failbuy_police1.png"
-    failbuy_police2 = "./Image/catthema/failbuy_police2.png"
+    failbuy_doctor1 = "./Image/thema/failbuy_doctor1.png"
+    failbuy_doctor2 = "./Image/thema/failbuy_doctor2.png"
+    failbuy_fire1 = "./Image/thema/failbuy_fire1.png"
+    failbuy_fire2 = "./Image/thema/failbuy_fire2.png"
+    failbuy_police1 = "./Image/thema/failbuy_police1.png"
+    failbuy_police2 = "./Image/thema/failbuy_police2.png"
 
     police = "./Image/policeCharacters/policeOfficer.png"
     police1 = "./Image/storeItems/police1.png"

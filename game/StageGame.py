@@ -140,7 +140,7 @@ class StageGame:
 
     def main(self):
 
-        from menu.GameSelectMenu import soundset
+        from menu.ModeSelectMenu import soundset
         # 메인 이벤트
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
@@ -204,7 +204,7 @@ class StageGame:
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
-                            from menu.GameSelectMenu import soundset
+                            from menu.ModeSelectMenu import soundset
                             soundset = 0.1
                             Default.sound.value['sfx']['volume'] = 0.1
                             pygame.mixer.music.set_volume(0.1)
@@ -438,9 +438,9 @@ class StageGame:
         menu.disable()
         pygame.mixer.music.unpause()
 
-    def gameselectmenu(self):
-        import menu.GameSelectMenu
-        game = menu.GameSelectMenu.GameSelectMenu(self.screen)
+    def ModeSelectMenu(self):
+        import menu.ModeSelectMenu
+        game = menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.storyInfo)
@@ -495,7 +495,7 @@ class StageGame:
             self.menu.add.button(
                 '다음 스테이지', self.nextstage, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('홈으로', self.gameselectmenu,
+        self.menu.add.button('홈으로', self.ModeSelectMenu,
                              font_size=self.font_size)
         User.coin = User.coin + self.coin
         self.database = Database()
@@ -571,7 +571,7 @@ class StageGame:
         self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button("모드 선택화면으로", self.gameselectmenu, selection_color=self.orange_color,
+        b3 = self.menu.add.button("모드 선택화면으로", self.ModeSelectMenu, selection_color=self.orange_color,
                              font_size=self.font_size,)
 
 

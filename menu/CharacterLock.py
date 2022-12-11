@@ -1,5 +1,3 @@
-
-
 import pygame
 import pygame_menu
 from data.CharacterDataManager import *
@@ -45,19 +43,6 @@ class Characterlock:
         self.coin = data[7]
         if self.character == "police":
             selected_idx = 1
-        '''
-        elif self.character == "police3":
-            selected_idx = 2
-        elif self.character == "firefigter2":
-            selected_idx = 4
-        elif self.character == "firefigter2":
-            selected_idx = 5
-        elif self.character == "doctor2":
-            selected_idx = 7
-        elif self.character == "doctor3":
-            selected_idx = 8
-        '''
-        #print(selected_idx)
         self.menu.add.vertical_margin(self.size[0]*0.5)
         if(data[7] >= price[selected_idx]):
             self.menu.add.button('unlock', self.unlock_character,font_size =self.size[0] * 30 //720)

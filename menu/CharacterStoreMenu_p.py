@@ -58,8 +58,8 @@ class CharacterStoreMenu_p:
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
 
     def to_menu(self):
-            import menu.GameSelectMenu
-            game=menu.GameSelectMenu.GameSelectMenu(self.screen)
+            import menu.ModeSelectMenu
+            game=menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
             while True:
                 game.show(self.screen, self.character)

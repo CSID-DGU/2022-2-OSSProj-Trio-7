@@ -13,8 +13,6 @@ class AnimationManager():
             "bomb_effect": BombEffectAnim(),
             "destroy_effect": DestroyEffectAnim(),
             "bomb": BombAnim(),
-            # "powerup": PowerupAnim(),
-            # "speedup": SpeedupAnim(),
             "Coin100WonAnim": Coin100WonAnim(),
             "Coin500WonAnim": Coin500WonAnim(),
             "Coin1000WonAnim": Coin1000WonAnim(),
@@ -89,7 +87,6 @@ class BombAnim(Animation):
     def __init__(self):
         super().__init__(
             Default.item.value["bomb"]["frames"], Default.item.value["size3"])
-
 
 class HealthAnim(Animation):
     # 목숨 아이템 애니메이션 객체

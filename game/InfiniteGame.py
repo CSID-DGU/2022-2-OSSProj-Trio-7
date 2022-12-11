@@ -64,7 +64,7 @@ class InfiniteGame:
         self.target3_image = target3img
         self.target4_image = target4img
         self.background_image = mapimg
-        from menu.GameSelectMenu import soundset
+        from menu.ModeSelectMenu import soundset
         if(choosed_chracter == "police"):
             self.background_music = "./Sound/bgm/bgm_police.mp3"
         if(choosed_chracter == "firefighter"):
@@ -112,7 +112,7 @@ class InfiniteGame:
 
 
     def main(self):
-        from menu.GameSelectMenu import soundset
+        from menu.ModeSelectMenu import soundset
         # 메인 이벤트
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
@@ -182,7 +182,7 @@ class InfiniteGame:
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
-                            from menu.GameSelectMenu import soundset
+                            from menu.ModeSelectMenu import soundset
                             soundset = 0.1
                             print(soundset)
                             Default.sound.value['sfx']['volume'] = 0.1
@@ -436,7 +436,7 @@ class InfiniteGame:
         self.menu.add.vertical_margin(10)
         self.menu.add.button( '다시 시작 ', self.retry, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        self.menu.add.button('모드 선택화면으로', self.gameselectmenu,
+        self.menu.add.button('모드 선택화면으로', self.ModeSelectMenu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)
@@ -475,9 +475,9 @@ class InfiniteGame:
     def show_register_result(self):
         LeaderBoardMenu(self.screen).rank()
 
-    def gameselectmenu(self):
-        import menu.GameSelectMenu
-        game = menu.GameSelectMenu.GameSelectMenu(self.screen)
+    def ModeSelectMenu(self):
+        import menu.ModeSelectMenu
+        game = menu.ModeSelectMenu.ModeSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.choosed_chracter)
@@ -524,7 +524,7 @@ class InfiniteGame:
         self.menu.add.vertical_margin(10)
         b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=self.orange_color, font_size=self.font_size)
         self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button("모드 선택화면으로", self.gameselectmenu, selection_color=self.orange_color,
+        b3 = self.menu.add.button("모드 선택화면으로", self.ModeSelectMenu, selection_color=self.orange_color,
                              font_size=self.font_size,)
 
     def check_resize_end(self):
