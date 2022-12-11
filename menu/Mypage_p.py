@@ -19,6 +19,8 @@ class Mypage_p:
     item_description_widget: 'pygame_menu.widgets.Label'
 
     def __init__(self,screen):
+        title = "마이페이지"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
 

@@ -10,6 +10,7 @@ class JobInfo:
         infoObject = pygame.display.Info()
         title = "직업 소개"
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
+        
         self.size = screen.get_size()
         self.screen = screen
         self.changed_screen_size = self.screen.get_size()
