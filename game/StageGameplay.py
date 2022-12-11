@@ -28,7 +28,7 @@ from data.StoryManager import *
 
 
 class StageGame:
-
+    # 캐릭터데이터, 캐릭터, 스테이지 정보, 맵 정보, 구매한 무기
     def __init__(self, character_data, character, stage, map_info, weapon):
         print("stageGame에서 직업", map_info)
         # 1. 게임초기화
@@ -42,7 +42,7 @@ class StageGame:
         self.size = [infoObject.current_w, infoObject.current_h]
         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE)
         self.font_size = self.size[0] * 40 // 720
-        self.scale = (self.size[0]*0.00015, self.size[1]*0.00015)
+        self.scale = (self.size[0]*0.0020, self.size[1]*0.0020)
         mytheme = pygame_menu.themes.THEME_ORANGE.copy()
         self.menu = pygame_menu.Menu('Select Stage...', self.size[0], self.size[1],
                                      theme=mytheme)
@@ -404,11 +404,6 @@ class StageGame:
             # 이미지화 한 텍스트라 이미지를 보여준다고 생각하면 됨
             self.screen.blit(score_life_text, (10, 5))
 
-            # 현재 흘러간 시간
-            playTime = (time.time() - self.startTime)
-            time_text = font.render("시간 : {:.2f}".format(
-                playTime), True, Color.YELLOW.value)
-            self.screen.blit(time_text, (self.size[0]//2, 5))
 
             # 화면갱신
             pygame.display.flip()  # 그려왔던데 화면에 업데이트가 됨
@@ -446,7 +441,7 @@ class StageGame:
 
     # 재시도 버튼 클릭 시
     def retry(self):
-        StageGame(self, self.character, self.stage, self.storyInfo, self.wselect).main()
+        StageGame(self, self.character, self.stage, self.storyInfo, self.wselect).main() # storyInfo는 맵 정보
         self.menu.disable()
 
     # 홈버튼 클릭 시
@@ -473,43 +468,51 @@ class StageGame:
 
         chapterlist = [['police', "gloomy street"], [
             'firefighter', "burning house"], ['doctor', "hospital"]]
-
-        if self.stage.chapter == 'police':
-            self.temp = 0
-        elif self.stage.chapter == 'firefighter':
+        if self.stage.chapter == "map1":
+            self.temp = 0    
+        elif self.stage.chapter == "map2":
             self.temp = 1
         else:
             self.temp = 2
 
-        if (self.stage.stage == 1):
+        if (self.stage.stage == 1): # 스테이지 단계
             self.stage_map = Stage(
-                self.stage_data["chapter"][chapterlist[self.temp][1]]["2"])
+                self.stage_data["chapter"][chapterlist[self.temp][1]]["2"]) # 맵이름을 가져오기 stage_data[챕터][맵이름][단계]
             StageGame(self.character_data,
-                      self.character_data[User.character], self.stage_map).main_info()
+                      self.character, self.stage_map, self.storyInfo, self.wselect).main_info()
             self.menu.disable()
         if (self.stage.stage == 2):
             self.stage_map = Stage(
-                self.stage_data["chapter"][chapterlist[self.temp][1]]["2"])
+                self.stage_data["chapter"][chapterlist[self.temp][1]]["3"])
             StageGame(self.character_data,
-                      self.character_data[User.character], self.stage_map).main_info()
+                      self.character, self.stage_map, self.storyInfo, self.wselect).main_info()
             self.menu.disable()
 
     # 클리어 화면
     def showStageClearScreen(self):
         pygame.mixer.music.stop()
-        stageclear_theme = pygame_menu.themes.THEME_SOLARIZED.copy()
-        stageclear_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        stageclear_theme.title_close_button_cursor = pygame_menu.locals.CURSOR_HAND
-        stageclear_theme.title_font_color = Color.WHITE.value
-        self.menu = pygame_menu.Menu('Stage Clear', self.size[0], self.size[1],
-                                     theme=stageclear_theme)
-        self.menu.add.image(Images.win.value, scale=self.scale)
-        self.menu.add.label("")
+        stageclaer_image = pygame_menu.baseimage.BaseImage(
+        image_path=Images.stage_clear.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(255, 255, 255),  # 기본 글자색
+            title_background_color=(255, 171, 0, 0),
+            title_font_color=(255, 255, 255, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+        self.mytheme.background_color = stageclaer_image
+        self.menu = pygame_menu.Menu('', self.size[0], self.size[1],
+                                     theme=self.mytheme)
         #self.menu.add.button('to Menu', self.toMenu,self.menu)
-        if (self.stage.stage != "3"):
+        if (self.stage.stage != 3):
             self.menu.add.button(
-                'Next stage', self.nextstage, font_size=self.font_size)
-        self.menu.add.button('Home', self.gameselectmenu,
+                '다음 스테이지', self.nextstage, font_size=self.font_size)
+        self.menu.add.vertical_margin(10)
+        self.menu.add.button('홈으로', self.gameselectmenu,
                              font_size=self.font_size)
         print(User.coin)
         print(self.coin)
@@ -517,7 +520,7 @@ class StageGame:
         print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen)  # ,bgfun = self.check_resize)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize)  # ,bgfun = self.check_resize)
 
     # 실패 화면
     def showGameOverScreen(self):
@@ -551,7 +554,7 @@ class StageGame:
         print(User.coin)
         self.database = Database()
         self.database.set_coin()
-        self.menu.mainloop(self.screen)  # ,bgfun = self.check_resize)
+        self.menu.mainloop(self.screen,bgfun = self.check_resize)  # ,bgfun = self.check_resize)
         #User.coin = User.coin + self.coin
         #self.database = Database()
         # self.database.set_coin()
@@ -618,5 +621,5 @@ class StageGame:
             print(self.screen)
             font_size = new_w * 40 // 720
             self.font_size = font_size
-            self.scale = (new_w*0.00015, new_h*0.00015)
+            self.scale = (new_w*0.0020, new_h*0.0020)
             return True

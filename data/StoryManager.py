@@ -1,5 +1,6 @@
 import pygame
 import time
+from data.Defs import *
 from data.database_user import *
 from data.Defs import *
 
@@ -31,10 +32,10 @@ class StoryManager():
         else:
             bg = pygame.image.load("./Image/background/doctor_background.png")
 
-        text_box = pygame.Rect(0, 400, infoObject.current_w, 165)
+        text_box = pygame.Rect(0, self.size[1]*0.80, self.size[0], self.size[1]*0.3)
 
         # dialogue init
-        font = pygame.font.SysFont("malgungothic", 20)
+        font = pygame.font.Font(Default.font.value, self.size[0]//25)
 
         self.texts1 = ["시민 : 도둑이 나타났다!!", '도둑 두목 : 날 잡을 수 있으면 잡아보시지!', '경찰 : 도둑을 어서 체포하자!', '경찰 : %s! 함께 현장으로 가자!'%(self.db.get_nickname())]
         self.texts2 = ["시민 : 불이야~! 불이났다!!", "거대한 불 : 모든 것을 태워버리겠다!", "소방관 : 어서 화재를 진압하자!", "소방관 : %s! 함께 현장으로 가자!"%(self.db.get_nickname())]
@@ -81,8 +82,14 @@ class StoryManager():
 
                         self.size =[width,height] #게임의 size 속성 변경
                         self.screen = pygame.display.set_mode(self.size, pygame.RESIZABLE) #창 크기 세팅
-                        # text박스 크기도 변경 필요
-                        text_box = pygame.Rect(0, self.size[1]*0.80, self.size[0], 165)
+                        font = pygame.font.Font(Default.font.value, self.size[0]//25)
+                        if self.mapinfo == "police":
+                            text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts1]
+                        elif self.mapinfo == "firefighter":
+                            text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts2]
+                        else:
+                            text_renders = [font.render(text, True, (255, 255, 255)) for text in self.texts3]
+                        text_box = pygame.Rect(0, self.size[1]*0.80, self.size[0], self.size[1]*0.3)
             
             keys = pygame.key.get_pressed()
 

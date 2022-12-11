@@ -42,7 +42,7 @@ class Images(enum.Enum):
     icon_caution = "./Image/Caution.jpg"
     icon_award = "./Image/Award.jpg"
 
-    stage_clear = "./Image/Stageclear_v1.jpg"
+    stage_clear = "./Image/stageclearpage.png"
     chapter_clear_oasis = "./Image/ChapterClear_Oasis.jpg"
     chapter_clear_ice = "./Image/ChapterClear_Ice.jpg"
     chapter_clear_space = "./Image/ChapterClear_Space.jpg"
@@ -65,6 +65,7 @@ class Images(enum.Enum):
     info_stage_4 = "./Image/Info_stage_4.png"
     info_stage_5 = "./Image/Info_stage_5.png"
     info_stage_6 = "./Image/Info_stage_6.png"
+    info_stage_7 = "./Image/Info_stage_7.png"
     info_items = "./Image/Info_items.png"
     info_controls = "./Image/Info_controls.png"
 
@@ -74,7 +75,7 @@ class Images(enum.Enum):
     cat4 = "./Image/catthema/cat4_front.png"
 
 
-    win = "./Image/catthema/win.png"
+    win = "./Image/stageclear.png"
     lose = "./Image/catthema/lose.png"
 
     lock_cat2 = "./Image/catthema/lock_cat2.png"
@@ -84,6 +85,13 @@ class Images(enum.Enum):
     failbuy_cat2 = "./Image/catthema/failbuy_cat2.png"
     failbuy_cat3 = "./Image/catthema/failbuy_cat3.png"
     failbuy_cat4 = "./Image/catthema/failbuy_cat4.png"
+
+    failbuy_doctor1 = "./Image/catthema/failbuy_doctor1.png"
+    failbuy_doctor2 = "./Image/catthema/failbuy_doctor2.png"
+    failbuy_fire1 = "./Image/catthema/failbuy_fire1.png"
+    failbuy_fire2 = "./Image/catthema/failbuy_fire2.png"
+    failbuy_police1 = "./Image/catthema/failbuy_police1.png"
+    failbuy_police2 = "./Image/catthema/failbuy_police2.png"
 
     police = "./Image/policeCharacters/policeOfficer.png"
     police1 = "./Image/storeItems/police1.png"
@@ -106,9 +114,11 @@ class Images(enum.Enum):
     JobInfo = "./Image/JobInfo.png"
 
     help = "./Image/help.png";
+    ranking = "./Image/ranking.png";
     stop = "./Image/stop.png";
     gameover = "./Image/gameover.png"; 
-
+    mypage = "./Image/mypage.png"; 
+    store = "./Image/store.png"; 
 
 class Scales(enum.Enum):
     large = (2, 2)
@@ -125,7 +135,12 @@ class Color(enum.Enum):
     WHITE = (255, 255, 255)
     TRANSPARENT = (255, 255, 255, 128)
     GRAY = (220, 220, 220)
+    ORANGE = (253, 111, 34)
     BLACK = (0, 0, 0)
+    INDIGO = (0, 10, 63)
+    NAVY = (0, 10, 63)
+
+
 
 
 class Menus(enum.Enum):
@@ -171,8 +186,8 @@ class Default(enum.Enum):
         ],
         "gun_size": 10,
         "bullet_size": {
-            "x": 20,
-            "y": 20
+            "x": 50,
+            "y": 50
         },
         "health": 12000,
         "firing_speed": [

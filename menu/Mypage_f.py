@@ -17,25 +17,33 @@ class Mypage_f:
     item_description_widget: 'pygame_menu.widgets.Label'
 
     def __init__(self,screen):
-        # 화면 받고 화면 크기 값 받기
-        self.screen = screen
         self.size = screen.get_size()
-        self.font_size = self.size[0] * 25 //720
-        #menu_image = pygame_menu.baseimage.BaseImage(image_path='./Image/Login.png',drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        self.mytheme = pygame_menu.themes.THEME_ORANGE.copy()
-        #mytheme.widget_font = pygame_menu.font.FONT_8BIT
-        #mytheme.widget_background_color = (150, 213, 252) #버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
-        self.mytheme.title_font = pygame_menu.font.FONT_BEBAS
-        self.mytheme.selection_color = (0,0,0) #선택됐을때 글씨색 설정
-        self.mytheme.widget_font_color = (0,0,0) #글씨색 설정
-        self.mytheme.title_background_color = (0,100,162)
-        self.mytheme.title_font_color = (255,255,255)
-        self.mytheme.widget_font = pygame_menu.font.FONT_BEBAS
-        #self.mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY_DIAGONAL
-        self.mytheme.background_color = (255,255,255)
-        self.mytheme.widget_font_size = self.font_size
-        self.menu = pygame_menu.Menu('My Page', self.size[0], self.size[1],
-                            theme=self.mytheme)
+        self.screen = screen
+
+        self.orange_color = (253, 111, 34)
+        self.font_size = self.size[0] * 30 // 720  # 글씨크기
+        
+        # 화면 받고 화면 크기 값 받기
+        self.mytheme = pygame_menu.Theme(
+            widget_font=Default.font.value,
+            widget_background_color=(255, 255, 255),  # 버튼 배경색 설정
+            title_font=Default.font.value,
+            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
+            widget_font_color=(0, 0, 0),  # 기본 글자색
+            title_background_color=(255, 255, 255, 0), 
+            title_font_color=(0, 0, 0, 0),
+            title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
+            widget_font_size=self.size[0] * 45 // 720
+        )
+
+        main_image = pygame_menu.baseimage.BaseImage(
+            image_path=Images.mypage.value, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)  # 메뉴 이미지, Images는 Defs.py에 선언되어 있는 클래스명
+
+        self.mytheme.background_color = main_image
+
+        self.menu = pygame_menu.Menu(
+            '', self.size[0], self.size[1], theme=self.mytheme)  # 상단바
+
 
 
         #캐릭터 데이터를 json에서 불러온다
@@ -59,14 +67,14 @@ class Mypage_f:
         self.db = Database()
         choosed_chracter = character  
         # Database().char_lock()  
-        self.menu.add.label("My ID : %s "%User.user_id)
-        self.menu.add.label("My NICKNAME : %s "%self.db.get_nickname())
+        self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
+        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
-        self.menu.add.label("Best Score : %s"%User.score_score)
-        self.menu.add.label("Best Time : %s"%User.time_score)
-        self.menu.add.label("My coin : %d "%User.coin)
+        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(0.75,0.75)
+        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(0.75,0.75)
+        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75,0.75)
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "firefighter":
             Database().fchar_lock()
@@ -101,13 +109,13 @@ class Mypage_f:
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.5, 0.5)
+                    ).scale(0.3, 0.3)
         
                     self.fcharacter_imgs2.append(default_image.copy())
             #print(self.price)    
             #print("이미지리스트",self.character_imgs)
             self.fcharacter_selector = self.menu.add.selector(
-                title='Character :\t',
+                title='캐릭터 : ',
                 items=fcharacters,
                 onchange=self.on_selector_change #이미지 수정 코드
             )
@@ -122,12 +130,17 @@ class Mypage_f:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_background_color = (150, 213, 252)
-            self.menu.add.button("SELECT",self.select_fcharacter)
-            self.menu.add.vertical_margin(5)
-            self.menu.add.button("    BACK    ",self.to_menu)
+            self.mytheme.widget_font_color=(255, 255, 255)
+            self.mytheme.widget_background_color = (0, 10, 63) # 버튼 색깔
+            self.menu.add.button('   캐릭터 선택   ', self.select_fcharacter,
+                             selection_color=self.orange_color, font_size=self.font_size)
+            self.menu.add.vertical_margin(10)
+            self.menu.add.button('         이전         ',self.to_menu,
+                             selection_color=self.orange_color, font_size=self.font_size)
+
             self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
-            self.mytheme.widget_background_color = (0,0,0,0)
+            self.mytheme.widget_font_color=(0, 0, 0)
+            self.mytheme.widget_background_color = (255,255,255)
 
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
@@ -171,21 +184,24 @@ class Mypage_f:
 
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
-        if (self.size != self.screen.get_size()): #현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
-            changed_screen_size = self.screen.get_size() #변경된 사이즈
-            ratio_screen_size = (changed_screen_size[0],changed_screen_size[0]*783/720) #y를 x에 비례적으로 계산
-            if(ratio_screen_size[0]<320): #최소 x길이 제한
-                ratio_screen_size = (494,537)
-            if(ratio_screen_size[1]>783): #최대 y길이 제한
-                ratio_screen_size = (720,783)
+        if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
+            changed_screen_size = self.screen.get_size()  # 변경된 사이즈
+            ratio_screen_size = (
+                changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
+            if (ratio_screen_size[0] < 320):  # 최소 x길이 제한
+                ratio_screen_size = (494, 537)
+            if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
+                ratio_screen_size = (720, 783)
             self.screen = pygame.display.set_mode(ratio_screen_size,
-                                                    pygame.RESIZABLE)
+                                                  pygame.RESIZABLE)
             window_size = self.screen.get_size()
             new_w, new_h = 1 * window_size[0], 1 * window_size[1]
             self.menu.resize(new_w, new_h)
+            self.menu._current._widgets_surface = make_surface(0, 0)
             self.size = window_size
-            self.menu._current._widgets_surface = make_surface(0,0)
             print(f'New menu size: {self.menu.get_size()}')
+            font_size = new_w * 45 // 720
+            self.mytheme.widget_font_size = font_size
 
     # 캐릭터 변경 시 실행
     def on_selector_change(self, selected, value: int) -> None:
