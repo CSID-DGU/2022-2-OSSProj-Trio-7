@@ -1,12 +1,11 @@
 from button import *
 import pygame
 import pygame_menu
-from menu.GameSelectMenu import GameselectMenu
+from menu.ModeSelectMenu import GameSelectMenu
 from menu.JobInfo import *
 
 class CharacterSelect:
     def __init__(self, screen):
-        infoObject = pygame.display.Info()
         title = "캐릭터 선택"
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()

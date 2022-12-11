@@ -1,5 +1,3 @@
-
-
 import pygame
 import pygame_menu
 from data.CharacterDataManager import *

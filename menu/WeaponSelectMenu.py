@@ -2,16 +2,11 @@ from email.policy import default
 from pickle import TRUE
 from button import *
 import pygame
-# import pygame_menu
 from data.CharacterDataManager import *
-# from data.Stage import Stage
 from data.StageDataManager import *
-from game.StageGame import StageGame
-from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
-# from menu.LeaderBoardMenu import *
 from menu.MypageMenu import *
 from menu.CharacterStoreMenu_p import *
 from menu.CharacterStoreMenu_f import *

@@ -15,7 +15,6 @@ from data.CharacterDataManager import *
 from data.Defs import *
 from data.StageDataManager import *
 from object.Item import *
-#from object.Mob import Mob
 from pygame_menu.utils import make_surface
 from data.Defs import User
 

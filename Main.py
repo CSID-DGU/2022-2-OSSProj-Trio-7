@@ -9,7 +9,7 @@ from data.database_user import *
 from data.Defs import *
 from data.Defs import User
 from menu.CharacterSelectMenu import CharacterSelect
-from menu.GameSelectMenu import *
+from menu.ModeSelectMenu import *
 from game.TutorialGame import *
 
 

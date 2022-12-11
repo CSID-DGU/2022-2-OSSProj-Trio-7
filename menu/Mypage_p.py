@@ -1,5 +1,3 @@
-
-
 from select import select
 import pygame
 import pygame_menu
@@ -9,7 +7,6 @@ from data.Stage import Stage
 from data.StageDataManager import *
 from data.database_user import Database
 from game.InfiniteGame import *
-from pygame_menu.locals import ALIGN_RIGHT
 from pygame_menu.utils import make_surface
 from data.StoreDataManager import *
 
@@ -59,8 +56,8 @@ class Mypage_p:
            
 
     def to_menu(self):
-        import menu.GameSelectMenu
-        game=menu.GameSelectMenu.GameselectMenu(self.screen)
+        import menu.ModeSelectMenu
+        game=menu.ModeSelectMenu.GameSelectMenu(self.screen)
 
         while True:
             game.show(self.screen, 'police')
