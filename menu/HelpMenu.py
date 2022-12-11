@@ -77,7 +77,6 @@ class HelpMenu:
         self.menu.add.button('     다음     ', self.infinite_game_2,
                              selection_color=Color.ORANGE.value)
 
-
     # 무한 모드 설명 페이지 2
     def infinite_game_2(self):
         self.menu.clear()
@@ -89,8 +88,7 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_3,
                              selection_color=Color.ORANGE.value)
-
-
+                             
     # 무한 모드 설명 페이지 3
     def infinite_game_3(self):
         self.menu.clear()
@@ -102,7 +100,6 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_4,
                              selection_color=Color.ORANGE.value)
-
 
     # 무한 모드 설명 페이지 4
     def infinite_game_4(self):
@@ -116,7 +113,6 @@ class HelpMenu:
         self.menu.add.button('     다음     ', self.infinite_game_5,
                              selection_color=Color.ORANGE.value)
 
-
     # 무한 모드 설명 페이지 5
     def infinite_game_5(self):
         self.menu.clear()
@@ -128,7 +124,6 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.infinite_game_6,
                              selection_color=Color.ORANGE.value)
-
 
     # 무한 모드 설명 페이지 6
     def infinite_game_6(self):
@@ -142,7 +137,6 @@ class HelpMenu:
         self.menu.add.button('     종료     ', self.show,
                              selection_color=Color.ORANGE.value)
 
-
     # 스테이지 모드 설명 페이지 1
     def stage_game_1(self):
         self.menu.clear()
@@ -155,7 +149,6 @@ class HelpMenu:
         self.menu.add.button('     다음     ', self.stage_game_2,
                              selection_color=Color.ORANGE.value)
 
-
     # 스테이지 모드 설명 페이지 2
     def stage_game_2(self):
         self.menu.clear()
@@ -167,7 +160,6 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_3,
                              selection_color=Color.ORANGE.value)
-
 
     # 스테이지 모드 설명 페이지 3
     def stage_game_3(self):
@@ -194,7 +186,6 @@ class HelpMenu:
         self.menu.add.button('     다음     ', self.stage_game_5,
                              selection_color=Color.ORANGE.value)
 
-
     # 스테이지 모드 설명 페이지 5
     def stage_game_5(self):
         self.menu.clear()
@@ -206,7 +197,6 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_6,
                              selection_color=Color.ORANGE.value)
-
 
     # 스테이지 모드 설명 페이지 6
     def stage_game_6(self):
@@ -220,7 +210,6 @@ class HelpMenu:
         self.menu.add.button('     다음     ', self.stage_game_6,
                              selection_color=self.orange_color, font_size=self.font_size)
 
-
     # 스테이지 모드 설명 페이지 6
     def stage_game_6(self):
         self.menu.clear()
@@ -232,7 +221,7 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     다음     ', self.stage_game_7,
                              selection_color=Color.ORANGE.value)
-    
+
     # 스테이지 모드 설명 페이지 7
     def stage_game_7(self):
         self.menu.clear()
@@ -244,8 +233,6 @@ class HelpMenu:
                              selection_color=Color.ORANGE.value)
         self.menu.add.button('     종료     ', self.show,
                              selection_color=Color.ORANGE.value)
-
-
 
     # 아이템 설명 페이지
     def items(self):

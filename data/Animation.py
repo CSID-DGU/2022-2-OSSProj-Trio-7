@@ -13,8 +13,8 @@ class AnimationManager():
             "bomb_effect": BombEffectAnim(),
             "destroy_effect": DestroyEffectAnim(),
             "bomb": BombAnim(),
-            "powerup": PowerupAnim(),
-            "speedup": SpeedupAnim(),
+            # "powerup": PowerupAnim(),
+            # "speedup": SpeedupAnim(),
             "Coin100WonAnim": Coin100WonAnim(),
             "Coin500WonAnim": Coin500WonAnim(),
             "Coin1000WonAnim": Coin1000WonAnim(),
@@ -91,18 +91,18 @@ class BombAnim(Animation):
             Default.item.value["bomb"]["frames"], Default.item.value["size3"])
 
 
-class PowerupAnim(Animation):
-    # 파워업 아이템 애니메이션 객체
-    def __init__(self):
-        super().__init__(
-            Default.item.value["powerup"]["frames"], Default.item.value["size2"])
+# class PowerupAnim(Animation):
+#     # 파워업 아이템 애니메이션 객체
+#     def __init__(self):
+#         super().__init__(
+#             Default.item.value["powerup"]["frames"], Default.item.value["size2"])
 
 
-class SpeedupAnim(Animation):
-    # 스피드업 아이템 애니메이션 객체
-    def __init__(self):
-        super().__init__(
-            Default.item.value["speedup"]["frames"], Default.item.value["size"])
+# class SpeedupAnim(Animation):
+#     # 스피드업 아이템 애니메이션 객체
+#     def __init__(self):
+#         super().__init__(
+#             Default.item.value["speedup"]["frames"], Default.item.value["size"])
 
 
 class HealthAnim(Animation):
@@ -113,21 +113,21 @@ class HealthAnim(Animation):
 
 
 class Coin100WonAnim(Animation):
-    # 코인 아이템 애니메이션 객체
+    # 100원 코인 아이템 애니메이션 객체
     def __init__(self):
         super().__init__(
             Default.item.value["100won"]["frames"], Default.item.value["size"])
 
 
 class Coin500WonAnim(Animation):
-    # 코인 아이템 애니메이션 객체
+    # 500원 코인 아이템 애니메이션 객체
     def __init__(self):
         super().__init__(
             Default.item.value["500won"]["frames"], Default.item.value["size"])
 
 
 class Coin1000WonAnim(Animation):
-    # 코인 아이템 애니메이션 객체
+    # 1000원 코인 아이템 애니메이션 객체
     def __init__(self):
         super().__init__(
             Default.item.value["1000won"]["frames"], Default.item.value["size"])

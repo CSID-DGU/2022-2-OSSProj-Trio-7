@@ -6,7 +6,7 @@ import pygame
 from data.CharacterDataManager import *
 # from data.Stage import Stage
 from data.StageDataManager import *
-from game.StageGameplay import StageGame
+from game.StageGame import StageGame
 from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
@@ -21,7 +21,7 @@ from menu.HelpMenu import *
 from menu.Mypage_p import *
 from menu.Mypage_f import *
 from menu.Mypage_d import *
-from menu.wselectmenu import *
+from menu.WeaponSelectMenu import *
 
 
 global soundset
@@ -43,40 +43,39 @@ class GameselectMenu:
         self.board_height = self.changed_screen_size[1]  # y
 
         self.rankpage = button(self.board_height, self.board_height,
-                               0.75, 0.05, 0.15, 0.063, "Image/thema/RANK.png")
+                               0.75, 0.05, 0.15, 0.063, "Image/thema/RANK.png") # x좌표, y좌표, 가로비율, 세로비율
         self.mypage = button(self.board_height, self.board_height,
-                             0.15, 0.05, 0.15, 0.06, "Image/thema/MYPAGE.png")
+                             0.15, 0.05, 0.15, 0.06, "Image/thema/MYPAGE.png") # x좌표, y좌표, 가로비율, 세로비율
         self.store = button(self.board_height, self.board_height,
-                            0.3, 0.05, 0.15, 0.06, "Image/thema/STORE.png")
+                            0.3, 0.05, 0.15, 0.06, "Image/thema/STORE.png") # x좌표, y좌표, 가로비율, 세로비율
         self.logout = button(self.board_height, self.board_height,
-                             0.9, 0.05, 0.15, 0.06, "Image/thema/logout.png")
+                             0.9, 0.05, 0.15, 0.06, "Image/thema/logout.png") # x좌표, y좌표, 가로비율, 세로비율
         self.help = button(self.board_height, self.board_height,
-                           0.61, 0.05, 0.15, 0.06, "Image/thema/help.png")
+                           0.61, 0.05, 0.15, 0.06, "Image/thema/help.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.returnpage = button(self.board_height, self.board_height,  # 직업 선택페이지로 되돌아가기
-                                 0.45, 0.05, 0.17, 0.065, "Image/thema/return.png")
+                                 0.45, 0.05, 0.17, 0.065, "Image/thema/return.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.setting = button(self.board_height, self.board_height, 0.05,
-                              0.05, 0.06, 0.06, "Image/thema/on.png")
-
+                              0.05, 0.06, 0.06, "Image/thema/on.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.barcol = button(self.board_height, self.board_height,
-                             0.5, 0.0, 1, 0.2, "Image/thema/bar.png")
+                             0.5, 0.0, 1, 0.2, "Image/thema/bar.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.logo = button(self.board_height, self.board_height,
-                           0.5, 0.92, 0.4, 0.07, "Image/thema/logo.png")
+                           0.5, 0.92, 0.4, 0.07, "Image/thema/logo.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.stageMode = button(self.board_width, self.board_height,
-                                0.3, 0.4, 0.35, 0.45, "Image/stageMode.png")
+                                0.3, 0.4, 0.35, 0.45, "Image/stageMode.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.infiniteMode = button(self.board_width, self.board_height,
-                                   0.7, 0.4, 0.35, 0.45, "Image/infiniteMode.png")
+                                   0.7, 0.4, 0.35, 0.45, "Image/infiniteMode.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.stage_level_button = button(self.board_width, self.board_height,
-                                         0.3, 0.75, 0.35, 0.05, "Image/thema/level1.png")
+                                         0.3, 0.75, 0.35, 0.05, "Image/thema/level1.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.mode_map1 = button(self.board_width, self.board_height,
-                                0.7, 0.75, 0.35, 0.05, "Image/catthema/SCORE.png")
+                                0.7, 0.75, 0.35, 0.05, "Image/catthema/SCORE.png") # x좌표, y좌표, 가로비율, 세로비율
 
         self.inf_mode_map1 = 0
 
@@ -126,8 +125,6 @@ class GameselectMenu:
         self.check_resize(screen)
         choosed_character = character
 
-
-
         # 현재 소리 on/off 상태
         if  Default.sound.value['sfx']['volume'] == 0.1:
             self.setting.image = "Image/thema/on.png"
@@ -148,7 +145,6 @@ class GameselectMenu:
             self.button[1].change(
                 screen.get_size()[0], screen.get_size()[1])
             self.button[1].draw(screen, (0, 0, 0))
-
 
         for event in pygame.event.get():
 
@@ -228,7 +224,6 @@ class GameselectMenu:
                                         self.character_data, self.character_data[User.dcharacter], self.stage_map, "doctor", winfo).main_info()
                                 pygame.display.update()
 
-
                 if self.stage_level_button.isOver(pos):
                     if self.stage_level == "1":
                         self.temp1 = "Image/thema/level2.png"  # 이미지 바꾸기
@@ -268,8 +263,6 @@ class GameselectMenu:
                         
                                 self.stage_map=self.mode[self.inf_mode_map1][1]
                                 User.pcharacter = self.database.show_pmychar()
-                                # wselectMenu(self.screen)
-                                # game = wselectMenu(self.screen)
                                 if self.pcheck:
                                     import menu.FailPlay
                                     menu.FailPlay.FailPlay(self.screen).show()
@@ -278,7 +271,6 @@ class GameselectMenu:
                                                 "Image/background/police_background.png", self.police_attackTarget[0], self.police_attackTarget[1], self.police_attackTarget[2], self.police_attackTarget[3], winfo).main()
                                 pygame.display.update()
 
-            
                 if self.infiniteMode.isOver(pos):  # 맵 선택하면 게임이랑 연결시키기
                     if choosed_character == "firefighter":  # 소방관 맵
                         wselectMenu(self.screen)
@@ -312,6 +304,7 @@ class GameselectMenu:
                             pygame.display.flip()
                             if game.isSelect == True:
                                 winfo = game.weapon # 무기 구매 정보
+
                                 self.stage_map=self.mode[self.inf_mode_map1][1]
                                 User.dcharacter = self.database.show_dmychar() # 캐릭터 분류하는 필수 함수
                                 if self.dcheck:
@@ -323,7 +316,6 @@ class GameselectMenu:
                                 pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
-
                 if self.mypage.isOver(pos):
                     if choosed_character == "police":
                         Mypage_p(self.screen).show()
