@@ -25,28 +25,15 @@ class CharacterBuy_d:
 
         self.charlock_theme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=(0, 10, 63),  # 버튼 배경색 설정
+            widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
-            selection_color=(253, 111, 34),  # 선택됐을때 글씨색 설정
-            widget_font_color=(255, 255, 255),  # 기본 글자색
-            title_background_color=(255, 171, 0, 0),
-            title_font_color=(255, 255, 255, 0),
+            selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
+            widget_font_color=Color.WHITE.value,  # 기본 글자색
+            title_background_color=Color.TRANSPARENT.value,
+            title_font_color=Color.TRANSPARENT.value,
             title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY,
             widget_font_size=self.size[0] * 45 // 720
         )
-
-        '''
-        self.charlock_theme =  pygame_menu.Theme(
-            widget_font = pygame_menu.font.FONT_BEBAS,
-            widget_background_color = (150, 213, 252), #버튼 가독성 올리기 위해서 버튼 배경색 설정 : 하늘색
-            title_font = pygame_menu.font.FONT_BEBAS,
-            selection_color = (0,0,0), #선택됐을때 글씨색 설정
-            widget_font_color = (255,255,255), #글씨색 설정
-            title_background_color = (0,100,162),
-            title_font_color = (255,255,255),
-            title_bar_style = pygame_menu.pygame_menu.widgets.MENUBAR_STYLE_NONE,
-            widget_font_size = self.size[0] * 30 //720)
-        '''
 
         if(character == 'doctor1'):
             self.menu_image = pygame_menu.baseimage.BaseImage(image_path=Images.failbuy_doctor1.value,drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
@@ -61,7 +48,6 @@ class CharacterBuy_d:
         self.menu.add.vertical_margin(self.size[0]*0.75)
         self.menu.add.button('         상점으로 돌아가기         ',self.back_from_locked,
                              selection_color=self.orange_color, font_size=self.font_size)
-        # self.menu.add.button('back', self.back_from_locked)
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
         CharacterStoreMenu_d.buy_character()
         
@@ -86,4 +72,3 @@ class CharacterBuy_d:
             self.menu.resize(new_w, new_h)
             self.size = window_size
             self.menu._current._widgets_surface = make_surface(0,0)
-            print(f'New menu size: {self.menu.get_size()}')

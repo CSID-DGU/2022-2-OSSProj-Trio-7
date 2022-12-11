@@ -5,7 +5,7 @@ import pygame_menu
 from data.CharacterDataManager import *
 from data.Defs import *
 from data.StageDataManager import *
-from menu.MypageMenu import *
+from menu.Mypage_p import *
 
 #Mypage에서 잠긴 캐릭터 SELECT할 시 보여주는 창
 class FailPlay:
@@ -35,7 +35,7 @@ class FailPlay:
     
     def go_to_mypage(self):
         self.menu.clear()
-        Mypage(self.screen).show()
+        Mypage_p(self.screen).show()
 
         # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
@@ -81,7 +81,6 @@ class FailPlay:
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-10, self.id))
                 database.dct_db.commit()
-                User.cat_lock[1] = False
                 database.char_lock()                
                 
 
@@ -92,7 +91,6 @@ class FailPlay:
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-10, self.id))
                 database.dct_db.commit()
-                User.cat_lock[2] = False
                 database.char_lock()       
 
             if self.character == "Kongchi":
@@ -102,7 +100,6 @@ class FailPlay:
                 sql = "UPDATE users2 SET user_coin=%s WHERE user_id = %s"
                 curs.execute(sql, (self.coin-20, self.id))
                 database.dct_db.commit()
-                User.cat_lock[3] = False
                 database.char_lock()       
  
             

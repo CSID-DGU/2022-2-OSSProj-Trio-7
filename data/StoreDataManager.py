@@ -30,7 +30,6 @@ class StoreDataManager:
 
                     if char_info == "police":
                         for i in data["police"]:
-                            print("캐릭터 : ",i)
                             characters.append(Character(**i))
                         json_file.close()
                         return characters
