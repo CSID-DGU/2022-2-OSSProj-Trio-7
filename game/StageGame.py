@@ -143,7 +143,7 @@ class StageGame:
 
         print(" ch_vol ", Default.sound.value['sfx']['volume'])
 
-        from menu.gameselectMenu import soundset
+        from menu.GameSelectMenu import soundset
         # 메인 이벤트
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
@@ -208,7 +208,7 @@ class StageGame:
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
-                            from menu.gameselectMenu import soundset
+                            from menu.GameSelectMenu import soundset
                             soundset = 0.1
                             print(soundset)
                             Default.sound.value['sfx']['volume'] = 0.1
@@ -456,8 +456,8 @@ class StageGame:
         pygame.mixer.music.unpause()
 
     def gameselectmenu(self):
-        import menu.gameselectMenu
-        game = menu.gameselectMenu.GameselectMenu(self.screen)
+        import menu.GameSelectMenu
+        game = menu.GameSelectMenu.GameselectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.storyInfo)

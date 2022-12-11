@@ -154,14 +154,6 @@ class Character(Object):
                 if self.is_gunged == False:
                     self.use_gung(game)
                     self.gung_count -= 1
-        # 궁극기 실행 후 일정 시간 이후 능력치를 다시 원래대로 초기화
-        # if self.is_gunged == True:
-        #     if time.time() - self.last_gung > Default.item.value["powerup"]["duration"]:
-        #         print("궁극기 사용 종료")
-        #         self.gung_sfx.set_volume(0)
-        #         self.missile_img = self.org_missile_img
-        #         self.is_gunged = False
-        #         self.gungs_fired = []
 
         # 궁극기가 화면을 벗어나 is_gunged == False 될 때
         if self.is_gunged == False:

@@ -22,6 +22,8 @@ class CharacterStoreMenu_f:
     item_description_widget: 'pygame_menu.widgets.Label'
 
     def __init__(self, screen, character_info):
+        title = "캐릭터 선택"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         # 화면 받고 화면 크기 값 받기
         self.screen = screen
         self.size = screen.get_size()

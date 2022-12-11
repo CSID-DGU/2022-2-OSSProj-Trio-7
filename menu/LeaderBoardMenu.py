@@ -10,6 +10,8 @@ from data.database_user import *
 # 리더보드 관련 메뉴
 class LeaderBoardMenu:
     def __init__(self,screen):
+        title = "랭킹"
+        pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
 
@@ -44,8 +46,8 @@ class LeaderBoardMenu:
         self.menu.disable()
 
     def gameselectmenu(self):
-        import menu.gameselectMenu
-        game=menu.gameselectMenu.GameselectMenu(self.screen)
+        import menu.GameSelectMenu
+        game=menu.GameSelectMenu.GameselectMenu(self.screen)
 
         while True:
             game.show(self.screen)
