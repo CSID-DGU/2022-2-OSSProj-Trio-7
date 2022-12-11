@@ -113,20 +113,16 @@ class Coin(Item):
             self.sfx.play()
             if self.kind == "100won":
                 game.coin += 100
-                print("100원")
                 self.is_collidable = False
                 game.item_list.remove(self)
             if self.kind == "500won":
-                print("500원")
                 game.coin += 500
                 self.is_collidable = False
                 game.item_list.remove(self)
             if self.kind == "1000won":
-                print("1000원")
                 game.coin += 1000
                 self.is_collidable = False
                 game.item_list.remove(self)
-
 
 class Health(Item):
     # 목숨 아이템: 획득 시 목숨 증가
