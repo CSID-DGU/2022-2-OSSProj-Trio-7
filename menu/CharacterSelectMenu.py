@@ -1,7 +1,7 @@
 from button import *
 import pygame
 import pygame_menu
-from menu.gameselectMenu import GameselectMenu
+from menu.GameSelectMenu import GameselectMenu
 from menu.JobInfo import *
 
 class CharacterSelect:

@@ -6,7 +6,7 @@ import pygame
 from data.CharacterDataManager import *
 # from data.Stage import Stage
 from data.StageDataManager import *
-from game.StageGameplay import StageGame
+from game.StageGame import StageGame
 from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *

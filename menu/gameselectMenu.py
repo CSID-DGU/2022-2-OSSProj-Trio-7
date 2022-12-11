@@ -6,7 +6,7 @@ import pygame
 from data.CharacterDataManager import *
 # from data.Stage import Stage
 from data.StageDataManager import *
-from game.StageGameplay import StageGame
+from game.StageGame import StageGame
 from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
@@ -21,7 +21,7 @@ from menu.HelpMenu import *
 from menu.Mypage_p import *
 from menu.Mypage_f import *
 from menu.Mypage_d import *
-from menu.wselectmenu import *
+from menu.WeaponSelectMenu import *
 
 
 global soundset

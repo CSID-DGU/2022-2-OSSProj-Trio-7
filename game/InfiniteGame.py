@@ -64,7 +64,7 @@ class InfiniteGame:
         self.target3_image = target3img
         self.target4_image = target4img
         self.background_image = mapimg
-        from menu.gameselectMenu import soundset
+        from menu.GameSelectMenu import soundset
         if(choosed_chracter == "police"):
             self.background_music = "./Sound/bgm/bgm_police.mp3"
         if(choosed_chracter == "firefighter"):
@@ -112,7 +112,7 @@ class InfiniteGame:
 
 
     def main(self):
-        from menu.gameselectMenu import soundset
+        from menu.GameSelectMenu import soundset
         # 메인 이벤트
         pygame.mixer.init()
         pygame.mixer.music.load(self.background_music)
@@ -182,7 +182,7 @@ class InfiniteGame:
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
-                            from menu.gameselectMenu import soundset
+                            from menu.GameSelectMenu import soundset
                             soundset = 0.1
                             print(soundset)
                             Default.sound.value['sfx']['volume'] = 0.1
@@ -480,8 +480,8 @@ class InfiniteGame:
         LeaderBoardMenu(self.screen).rank()
 
     def gameselectmenu(self):
-        import menu.gameselectMenu
-        game = menu.gameselectMenu.GameselectMenu(self.screen)
+        import menu.GameSelectMenu
+        game = menu.GameSelectMenu.GameselectMenu(self.screen)
 
         while True:
             game.show(self.screen, self.choosed_chracter)
