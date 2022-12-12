@@ -150,6 +150,8 @@ python3 Main.py
 |![image](https://user-images.githubusercontent.com/62867581/206831334-309cdf9c-eb99-4e57-bf13-d07d81baeb44.png)|![image](https://user-images.githubusercontent.com/62867581/206831467-7765d38a-39d0-4f3d-a701-f0e39e6d762b.png)|
 |- 게임모드 선택화면과 게임 플레이 화면에서 소리를  ON/OFF 할 수 있다. |- 게임플레이에 관한 자세한 안내사항은 도움말페이지에서 확인할 수 있다.|
 
+# 시연 영상
+[시연 영상 보러가기](https://youtu.be/Ea2c9fXBE8Q)
 # References
 
 http://www.pygame.org/docs
