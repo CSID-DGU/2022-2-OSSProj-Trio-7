@@ -27,7 +27,7 @@ class Mypage_d:
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color=Color.WHITE.value,  # 버튼 배경색 설정
+            widget_background_color=Color.TRANSPARENT.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
             selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
             widget_font_color=Color.BLACK.value,  # 기본 글자색
@@ -80,7 +80,6 @@ class Mypage_d:
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "doctor":
             Database().dchar_lock()
-            print('000')
             dcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
 
             curs = Database().dct_db.cursor()
@@ -127,7 +126,7 @@ class Mypage_d:
 
             self.item_description_widget = self.menu.add.label(title = self.status)
 
-            self.mytheme.widget_font_color= Color.WHITE.value
+            self.mytheme.widget_font_color= Color.TRANSPARENT.value
             self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_dcharacter,
                              selection_color=self.orange_color, font_size=self.font_size)
@@ -137,11 +136,11 @@ class Mypage_d:
 
             self.update_from_selection(int(self.dcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_font_color= Color.BLACK.value
-            self.mytheme.widget_background_color = Color.WHITE.value
+            self.mytheme.widget_background_color = Color.TRANSPARENT.value
 
     def select_dcharacter(self):
         selected_idx = self.dcharacter_selector.get_value()[0][1]
-        if User.doctor_lock[selected_idx] == False:
+        if User.doctor_lock[selected_idx-6] == False:
             User.dcharacter = selected_idx
             database = Database()
             database.set_dchar()
@@ -157,10 +156,10 @@ class Mypage_d:
             changed_screen_size = self.screen.get_size()  # 변경된 사이즈
             ratio_screen_size = (
                 changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
-            if (ratio_screen_size[0] < 320):  # 최소 x길이 제한
-                ratio_screen_size = (494, 537)
-            if (ratio_screen_size[1] > 783):  # 최대 y길이 제한
-                ratio_screen_size = (720, 783)
+            if (ratio_screen_size[0] < 300):  # 최소 x길이 제한
+                ratio_screen_size = (300, 390)
+            if (ratio_screen_size[1] > 700):  # 최대 y길이 제한
+                ratio_screen_size = (700, 910)
             self.screen = pygame.display.set_mode(ratio_screen_size,
                                                   pygame.RESIZABLE)
             window_size = self.screen.get_size()
