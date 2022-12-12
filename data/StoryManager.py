@@ -8,7 +8,6 @@ class StoryManager():
     def __init__(self, stageinfo):
         self.db = Database()
         self.mapinfo = stageinfo
-        print(self.mapinfo)
         # 게임창 설정
         pygame.init()
         infoObject = pygame.display.Info()
@@ -105,7 +104,6 @@ class StoryManager():
             if index != -1:
                 pygame.draw.rect(self.screen, (0, 0, 0, 0), text_box, 0)
                 if index == len(text_renders):
-                    print("스토리라인이 종료됩니다.")
                     time.sleep(2)
                     return
                 else:

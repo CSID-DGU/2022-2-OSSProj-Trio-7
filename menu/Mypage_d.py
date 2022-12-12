@@ -146,9 +146,7 @@ class Mypage_d:
             database.set_dchar()
             self.menu.clear()
             self.show('doctor')
-        else:
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.dcharacter_data[selected_idx].name).show()
+        
 
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):

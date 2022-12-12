@@ -144,10 +144,7 @@ class Mypage_p:
             self.menu.clear()
             self.show('police')
         else:
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.pcharacter_data[selected_idx].name).show()
-
-   
+            
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
         if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경

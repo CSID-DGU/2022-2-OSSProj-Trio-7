@@ -38,7 +38,6 @@ class CharacterBuy_p:
                             theme=self.charlock_theme)
 
     def show(self):     
-        print(self.size[0])
         self.menu.add.vertical_margin(self.size[0]*0.75)
         self.menu.add.button('         상점으로 돌아가기         ',self.back_from_locked,
                              selection_color=self.orange_color, font_size=self.font_size)
