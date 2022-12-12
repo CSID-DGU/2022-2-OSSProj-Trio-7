@@ -14,16 +14,18 @@ from data.StoreDataManager import *
 class Mypage_f:
     image_widget: 'pygame_menu.widgets.Image'
     item_description_widget: 'pygame_menu.widgets.Label'
-
+    
     def __init__(self,screen):
         title = "마이페이지"
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
-
-        self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 30 // 720  # 글씨크기
-        
+        self.scale75 = 0.75
+        self.scale50 = 0.50
+        self.scale30 = 0.30
+        self.top_padding = 25
+
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
@@ -67,14 +69,14 @@ class Mypage_f:
     def show(self, character):
         self.db = Database()
         choosed_chracter = character  
-        self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
-        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
+        self.menu.add.label("아이디 : %s "%User.user_id).scale(self.scale75, self.scale75)
+        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(self.scale75, self.scale75)
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
-        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(0.75,0.75)
-        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(0.75,0.75)
-        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75,0.75)
+        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(self.scale75, self.scale75)
+        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(self.scale75, self.scale75)
+        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(self.scale75, self.scale75)
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "firefighter":
             Database().fchar_lock()
@@ -96,14 +98,14 @@ class Mypage_f:
                 if(fchar != -1): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i-3]
-                    ).scale(0.5, 0.5)
+                    ).scale(self.scale50, self.scale50)
                     fcharacters.append((self.fcharacter_data[i].name, i))  # 3부터 보유하고 있는 캐릭터 이름만 저장
                     self.fcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.3, 0.3)
+                    ).scale(self.scale30, self.scale30)
         
                     self.fcharacter_imgs2.append(default_image.copy())
 
@@ -112,9 +114,10 @@ class Mypage_f:
                 items=fcharacters,
                 onchange=self.on_selector_change #이미지 수정 코드
             )
+            
             self.image_widget = self.menu.add.image(
                 image_path=self.fcharacter_imgs[0],
-                padding=(25, 0, 0, 0)  # top, right, bottom, left
+                padding=(self.top_padding, 0, 0, 0)  # top, right, bottom, left
             )
             self.status = ""
             if User.fcharacter == 3:
@@ -126,10 +129,10 @@ class Mypage_f:
             self.mytheme.widget_font_color= Color.TRANSPARENT.value
             self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_fcharacter,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
             self.menu.add.vertical_margin(Menus.margin_10.value)
             self.menu.add.button('         이전         ',self.to_menu,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
 
             self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_font_color= Color.BLACK.value
@@ -143,7 +146,7 @@ class Mypage_f:
             database.set_fchar()
             self.menu.clear()
             self.show('firefighter')
-        
+
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
         if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경

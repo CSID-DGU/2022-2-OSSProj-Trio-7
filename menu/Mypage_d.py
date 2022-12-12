@@ -20,10 +20,12 @@ class Mypage_d:
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
-
-        self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 30 // 720  # 글씨크기
-        
+        self.scale75 = 0.75
+        self.scale50 = 0.50
+        self.scale30 = 0.30
+        self.top_padding = 25
+
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
@@ -69,14 +71,14 @@ class Mypage_d:
         self.db = Database()
         choosed_chracter = character  
         self.nickname = self.db.get_nickname() 
-        self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
-        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
+        self.menu.add.label("아이디 : %s "%User.user_id).scale(self.scale75,self.scale75)
+        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(self.scale75, self.scale75)
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
-        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(0.75,0.75)
-        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(0.75,0.75)
-        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75,0.75)
+        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(self.scale75, self.scale75)
+        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(self.scale75, self.scale75)
+        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(self.scale75, self.scale75)
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "doctor":
             Database().dchar_lock()
@@ -105,7 +107,7 @@ class Mypage_d:
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.3, 0.3)
+                    ).scale(self.scale30, self.scale30)
         
                     self.dcharacter_imgs2.append(default_image.copy())
 
@@ -116,7 +118,7 @@ class Mypage_d:
             )
             self.image_widget = self.menu.add.image(
                 image_path=self.dcharacter_imgs[0],
-                padding=(25, 0, 0, 0)  # top, right, bottom, left
+                padding=(self.top_padding, 0, 0, 0)  # top, right, bottom, left
             )
             self.status = ""
             if User.dcharacter == 6:
@@ -129,10 +131,10 @@ class Mypage_d:
             self.mytheme.widget_font_color= Color.TRANSPARENT.value
             self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_dcharacter,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
             self.menu.add.vertical_margin(Menus.margin_10.value)
             self.menu.add.button('         이전         ',self.to_menu,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
 
             self.update_from_selection(int(self.dcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_font_color= Color.BLACK.value
