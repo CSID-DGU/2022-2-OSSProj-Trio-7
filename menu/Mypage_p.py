@@ -27,7 +27,7 @@ class Mypage_p:
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color= Color.WHITE.value,  # 버튼 배경색 설정
+            widget_background_color= Color.TRANSPARENT.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
             selection_color=Color.ORANGE.value,  # 선택됐을때 글씨색 설정
             widget_font_color=Color.BLACK.value,  # 기본 글자색
@@ -123,7 +123,7 @@ class Mypage_p:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_font_color= Color.WHITE.value
+            self.mytheme.widget_font_color= Color.TRANSPARENT.value
             self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_pcharacter,
                              selection_color=self.orange_color, font_size=self.font_size)
@@ -133,7 +133,7 @@ class Mypage_p:
 
             self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_font_color= Color.BLACK.value
-            self.mytheme.widget_background_color = Color.WHITE.value
+            self.mytheme.widget_background_color = Color.TRANSPARENT.value
 
     def select_pcharacter(self):
         selected_idx = self.pcharacter_selector.get_value()[0][1]
@@ -144,7 +144,6 @@ class Mypage_p:
             self.menu.clear()
             self.show('police')
         else:
-            print("character locked")
             import menu.CharacterLock
             menu.CharacterLock.Characterlock(self.screen,self.pcharacter_data[selected_idx].name).show()
 

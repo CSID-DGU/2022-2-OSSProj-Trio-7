@@ -27,7 +27,7 @@ class Mypage_f:
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
-            widget_background_color= Color.WHITE.value,  # 버튼 배경색 설정
+            widget_background_color= Color.TRANSPARENT.value,  # 버튼 배경색 설정
             title_font=Default.font.value,
             selection_color= Color.ORANGE.value,  # 선택됐을때 글씨색 설정
             widget_font_color= Color.BLACK.value,  # 기본 글자색
@@ -78,7 +78,6 @@ class Mypage_f:
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "firefighter":
             Database().fchar_lock()
-            print('000')
             fcharacters = [] #보유하고 있는 캐릭터 이름만 저장하는 리스트
 
             curs = Database().dct_db.cursor()
@@ -124,7 +123,7 @@ class Mypage_f:
                 self.status = "Unlocked"
 
             self.item_description_widget = self.menu.add.label(title = self.status)
-            self.mytheme.widget_font_color= Color.WHITE.value
+            self.mytheme.widget_font_color= Color.TRANSPARENT.value
             self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_fcharacter,
                              selection_color=self.orange_color, font_size=self.font_size)
@@ -134,18 +133,18 @@ class Mypage_f:
 
             self.update_from_selection(int(self.fcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_font_color= Color.BLACK.value
-            self.mytheme.widget_background_color = Color.WHITE.value
+            self.mytheme.widget_background_color = Color.TRANSPARENT.value
 
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
         if User.firefighter_lock[selected_idx-3] == False:
-            User.pcharacter = selected_idx
+
+            User.fcharacter = selected_idx
             database = Database()
             database.set_fchar()
             self.menu.clear()
             self.show('firefighter')
         else:
-            print("character locked")
             import menu.CharacterLock
             menu.CharacterLock.Characterlock(self.screen,self.fcharacter_data[selected_idx].name).show()
 
