@@ -177,19 +177,18 @@ class InfiniteGame:
                         if soundset == 0.1:
                             self.setting.image = "Image/thema/off.png"
                             soundset = 0
-                            print(soundset)
                             Default.sound.value['sfx']['volume'] = 0
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
                             from menu.ModeSelectMenu import soundset
                             soundset = 0.1
-                            print(soundset)
                             Default.sound.value['sfx']['volume'] = 0.1
                             pygame.mixer.music.set_volume(0.1)
 
                 if event.type == pygame.VIDEORESIZE:  # 창크기가 변경되었을 때
                     # 화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
+                    print('10:!3')
                     width, height = max(event.w, 300), max(event.h, 390)
 
                     # 크기를 조절해도 화면의 비율이 유지되도록, 가로와 세로 중 작은 것을 기준으로 종횡비(10:13)으로 계산
@@ -333,7 +332,6 @@ class InfiniteGame:
                     if self.character.is_collidable == True:
                         self.character.last_crashed = time.time()
                         self.character.is_collidable = False
-                        print("crash!")
                         self.life -= 1
                         mob.destroy(self)
 
@@ -438,10 +436,7 @@ class InfiniteGame:
         self.menu.add.vertical_margin(10)
         self.menu.add.button('모드 선택화면으로', self.ModeSelectMenu,
                              font_size=self.font_size)
-        print(User.coin)
-        print(self.coin)
         User.coin = User.coin + self.coin
-        print(User.coin)
         self.database = Database()
         self.database.set_coin()
         self.menu.mainloop(self.screen)
@@ -451,13 +446,10 @@ class InfiniteGame:
         current_score = self.score  # 현재 게임 기록
         play_time = time.time() - self.start_time
         current_time = play_time
-        print(self.user)
-        print(current_score)
         if (isinstance(self.mode, InfiniteGame.ScoreMode)):  # score mode
             # 기록 없는 경우
             if self.database.rank_not_score_exists(self.user, "score") is True:
                 self.database.update_score2("score", current_score)  # 기록추가
-                print("enter")
             else:
                 if (self.database.high_score("score") <= current_score):  # 데이터 베이스에 저장되어 있는 점수 비교 후 등록
                     self.database.update_score(
@@ -550,7 +542,6 @@ class InfiniteGame:
             self.size = window_size
             self.menu._current._widgets_surface = make_surface(0, 0)
             print(f'New menu size: {self.menu.get_size()}')
-            print(self.screen)
             font_size = new_w * 40 // 720
             self.font_size = font_size
             self.scale = (new_w*0.00015, new_h*0.00015)

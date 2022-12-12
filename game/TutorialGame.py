@@ -125,7 +125,6 @@ class tutorial:
                         for text in self.texts1]
         text_box = pygame.Rect(
             0, self.size[1]*0.8, self.size[0], self.size[1]/3)
-        # print(index)
 
         while self.SB == 0:
             # fps 제한을 위해 한 loop에 한번 반드시 호출해야합니다.
@@ -192,7 +191,6 @@ class tutorial:
                 pos = pygame.mouse.get_pos()  # mouse
                 if event.type == pygame.MOUSEBUTTONUP:
                     if self.gotohome.isOver(pos):  # 마우스로  버튼 클릭하면
-                        print("home 화면으로 돌아가기")
                         Login(self.screen)
 
             # 몹을 확률적으로 발생시키기 -> 몹 하나가 화면에 가만히 있도록
@@ -219,29 +217,20 @@ class tutorial:
             keys = pygame.key.get_pressed()
 
 
-            # if index == len(text_renders)-1:
-            #     print("튜토리얼이 종료됩니다.")
-            #     time.sleep(2)
-            #     return
-
             if index == -1 and keys[pygame.K_RETURN]:
                 box_render = True  # 텍스트 박스 렌더링
                 index += 1
-
-                print(index)
-                print(box_render)
 
             if (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]) and index == 0:  # 방향키 미션일 경우
                 self.test_sound.play()
                 box_render = True
                 index += 1
-                print("첫 번째 미션 클리어!")
+
 
             if keys[pygame.K_SPACE] and index == 1:
                 self.test_sound.play()
                 index += 1
                 box_render = True
-                print("두 번째 미션 클리어!")
                 # 폭탄 개수 +=1
                 self.character1.bomb_count += 1
 
@@ -249,7 +238,6 @@ class tutorial:
                 self.test_sound.play()
                 index += 1
                 box_render = True
-                print("세 번쨰 미션 클리어!")
                 # 궁극기 개수 +=1
                 self.character1.gung_count += 1
 
@@ -257,14 +245,12 @@ class tutorial:
                 self.test_sound.play()
                 index += 1
                 box_render = True
-                print("마지막 미션 클리어!")
 
             if box_render == True:  # 박스 렌더링이 true일 경우 화면에 텍스트 박스를 그림
                 pygame.draw.rect(self.screen, (0, 0, 0, 0), text_box, 0)
                 self.screen.blit(
                     text_renders[index], (self.size[0]*0.02, self.size[1]*0.85))
                 if index == len(text_renders)-1 and keys[pygame.K_RETURN]:
-                    print("튜토리얼이 종료됩니다.")
                     time.sleep(2)
                     return
 
@@ -274,8 +260,6 @@ class tutorial:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-            # print("update")
-            # pygame.display.update() # 업데이트를 시킬 위치를 지정해야 함
 
             # 발사체와 몹 충돌 감지(player1)
             for missile in list(self.character1.get_missiles_fired()):
@@ -339,15 +323,12 @@ class tutorial:
                     self.win1, (self.size[0], self.size[1]))
                 self.screen.fill(Color.BLACK.value)
                 self.screen.blit(self.win1,  [0, 0])
-            # print("update")
-            # pygame.display.update()
 
             self.character1.tutorial_update1(self)
 
             pygame.display.flip()
 
         pygame.mixer.music.stop()
-        print("update")
         # pygame.display.update()
 
 # 충돌 감지 함수
