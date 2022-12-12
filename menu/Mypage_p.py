@@ -20,9 +20,11 @@ class Mypage_p:
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
-
-        self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 30 // 720  # 글씨크기
+        self.scale75 = 0.75
+        self.scale50 = 0.50
+        self.scale30 = 0.30
+        self.top_padding = 25
         
         # 화면 받고 화면 크기 값 받기
         self.mytheme = pygame_menu.Theme(
@@ -66,14 +68,14 @@ class Mypage_p:
         choosed_chracter = character 
         self.db = Database()
         self.nickname = self.db.get_nickname()  
-        self.menu.add.label("아이디 : %s "%User.user_id).scale(0.75,0.75)
-        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(0.75,0.75)
+        self.menu.add.label("아이디 : %s "%User.user_id).scale(self.scale75,self.scale75)
+        self.menu.add.label("닉네임 : %s "%self.db.get_nickname()).scale(self.scale75, self.scale75)
         Database().my_score_rank()
         Database().my_time_rank()
         User.coin = Database().show_mycoin()
-        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(0.75,0.75)
-        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(0.75,0.75)
-        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(0.75,0.75)
+        self.menu.add.label("최고 점수 : %s"%User.score_score).scale(self.scale75, self.scale75)
+        self.menu.add.label("최고 시간 : %s"%User.time_score).scale(self.scale75, self.scale75)
+        self.menu.add.label("보유한 돈 : %d "%User.coin).scale(self.scale75, self.scale75)
         #캐릭터 선택 메뉴 구성
         if choosed_chracter == "police":
             Database().pchar_lock()
@@ -96,14 +98,14 @@ class Mypage_p:
                 if(pchar > -1): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i-1]
-                    ).scale(0.5, 0.5)
+                    ).scale(self.scale50, self.scale50)
                     pcharacters.append((self.pcharacter_data[i-1].name, i-1)) # 0부텉 보유하고 있는 캐릭터 이름만 저장
                     self.pcharacter_imgs.append(default_image.copy()) #보유하고 있는 캐릭터만 배열에 이미지 저장
 
             for i in range(3): 
                     default_image = pygame_menu.BaseImage(
                     image_path=front_image_path[i]
-                    ).scale(0.3, 0.3)
+                    ).scale(self.scale30, self.scale30)
         
                     self.pcharacter_imgs2.append(default_image.copy())
 
@@ -114,7 +116,7 @@ class Mypage_p:
             ).scale(0.75,0.75)
             self.image_widget = self.menu.add.image(
                 image_path=self.pcharacter_imgs[0],
-                padding=(25, 0, 0, 0)  # top, right, bottom, left
+                padding=(self.top_padding, 0, 0, 0)  # top, right, bottom, left
             )
             self.status = ""
             if User.pcharacter == 0:
@@ -126,10 +128,10 @@ class Mypage_p:
             self.mytheme.widget_font_color= Color.TRANSPARENT.value
             self.mytheme.widget_background_color = Color.INDIGO.value # 버튼 색깔
             self.menu.add.button('   캐릭터 선택   ', self.select_pcharacter,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
             self.menu.add.vertical_margin(Menus.margin_10.value)
             self.menu.add.button('         이전         ',self.to_menu,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
 
             self.update_from_selection(int(self.pcharacter_selector.get_value()[0][1]))
             self.mytheme.widget_font_color= Color.BLACK.value
@@ -143,11 +145,7 @@ class Mypage_p:
             database.set_pchar()
             self.menu.clear()
             self.show('police')
-        else:
-            import menu.CharacterLock
-            menu.CharacterLock.Characterlock(self.screen,self.pcharacter_data[selected_idx].name).show()
 
-   
     # 화면 크기 조정 감지 및 비율 고정
     def check_resize(self):
         if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경

@@ -14,10 +14,9 @@ class LeaderBoardMenu:
         pygame.display.set_caption(title)  # 창의 제목 표시줄 옵션
         self.size = screen.get_size()
         self.screen = screen
-
-        self.orange_color = (253, 111, 34)
         self.font_size = self.size[0] * 38 // 720  # 글씨크기
         self.font_option = self.size[0] * 5//720
+        
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
             widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
@@ -57,13 +56,13 @@ class LeaderBoardMenu:
     def rank(self):
         self.menu.clear()
         self.menu.add.button('     점수 랭킹     ', self.show_current_score_rank,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.button('     시간 랭킹     ', self.show_current_time_rank,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
         self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.button('        이전       ', self.to_menu,
-                             selection_color=self.orange_color, font_size=self.font_size)
+                             selection_color=Color.ORANGE.value, font_size=self.font_size)
         self.menu.mainloop(self.screen,bgfun = self.check_resize)
 
     def check_resize_main(self):
@@ -84,6 +83,7 @@ class LeaderBoardMenu:
             rank = Database()
             self.menu.clear()
             self.tens = 0 # 페이지 변수
+            self.ten = 10
 
             if(mode == 'score'):
                 global score_data
@@ -111,18 +111,18 @@ class LeaderBoardMenu:
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.ORANGE.value)
             
             for i in range(10): # 한 페이지에 10개씩 조회 가능
-                if(tens*10+i == len(score_data)): break
-                name = str(score_data[tens*10+i]['nickname'])
-                score = '{0:>05s}'.format(str(score_data[tens*10+i]['score']))
-                date = str(score_data[tens*10+i]['date'])
-                table.add_row([str(i+1+tens*10), name, score, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.ORANGE.value)
+                if(tens*self.ten+i == len(score_data)): break
+                name = str(score_data[tens*self.ten+i]['nickname'])
+                score = '{0:>05s}'.format(str(score_data[tens*self.ten+i]['score']))
+                date = str(score_data[tens*self.ten+i]['date'])
+                table.add_row([str(i+1+tens*self.ten), name, score, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.ORANGE.value)
 
             
             # 페이지 넘김을 위한 버튼 구성
             if(tens == 0):  # 1 페이지 일 때
-                if(tens != len(score_data)//10):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
+                if(tens != len(score_data)//self.ten):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
                     self.menu.add.button('>', self.get_next_score_rank_page,align=ALIGN_RIGHT)
-            elif(tens == len(score_data)//10): # 마지막 페이지 일 때
+            elif(tens == len(score_data)//self.ten): # 마지막 페이지 일 때
                     self.menu.add.button('<', self.get_prev_score_rank_page,align=ALIGN_LEFT)
                     self.menu.add.label('  ',align=ALIGN_CENTER)
             else:   # 1 페이지도, 마지막 페이지도 아닐 때
@@ -147,17 +147,17 @@ class LeaderBoardMenu:
                             cell_font=pygame_menu.font.FONT_OPEN_SANS_BOLD, cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.ORANGE.value)
             
             for i in range(10): # 한 페이지에 10개씩 조회 가능
-                if(tens*10+i == len(time_data)): break
-                name = str(time_data[tens*10+i]['nickname'])
+                if(tens*self.ten+i == len(time_data)): break
+                name = str(time_data[tens*self.ten+i]['nickname'])
                 time = '{0:>05s}'.format(str(time_data[tens*10+i]['time']))
-                date = str(time_data[tens*10+i]['date'])
-                table.add_row([str(i+1+tens*10), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.ORANGE.value)
+                date = str(time_data[tens*self.ten+i]['date'])
+                table.add_row([str(i+1+tens*self.ten), name, time, date], cell_align=pygame_menu.locals.ALIGN_CENTER, cell_border_color=Color.ORANGE.value)
 
             # 페이지 넘김을 위한 버튼 구성
             if(tens == 0):  # 1 페이지 일 때
-                if(tens != len(time_data)//10):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
+                if(tens != len(time_data)//self.ten):  # 1 페이지가 마지막 페이지는 아닐 때 # 넘기는 버튼 > 
                     self.menu.add.button('>', self.get_next_time_rank_page,align=ALIGN_RIGHT)
-            elif(tens == len(time_data)//10): # 마지막 페이지 일 때
+            elif(tens == len(time_data)//self.ten): # 마지막 페이지 일 때
                     self.menu.add.button('<', self.get_prev_time_rank_page,align=ALIGN_LEFT)
                     self.menu.add.label('  ',align=ALIGN_CENTER)
             else:   # 1 페이지도, 마지막 페이지도 아닐 때
