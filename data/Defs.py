@@ -113,6 +113,7 @@ class Color(enum.Enum):
 class Menus(enum.Enum):
     margin_10 = 10
     margin_20 = 20
+    margin_30 = 30
     margin_40 = 40
     margin_50 = 50
     margin_100 = 100

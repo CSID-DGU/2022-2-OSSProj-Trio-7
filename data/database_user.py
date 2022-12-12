@@ -1,4 +1,3 @@
-# 드림즈컴츄르 추가 파일
 import pymysql
 from datetime import datetime
 import bcrypt

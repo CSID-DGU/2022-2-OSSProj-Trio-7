@@ -2,16 +2,13 @@ from email.policy import default
 from pickle import TRUE
 from button import *
 import pygame
-# import pygame_menu
 from data.CharacterDataManager import *
-# from data.Stage import Stage
 from data.StageDataManager import *
 from game.StageGame import StageGame
 from game.InfiniteGame import InfiniteGame
 from pygame_menu.utils import make_surface
 from pygame.locals import *
 from data.Defs import *
-# from menu.LeaderBoardMenu import *
 from menu.CharacterStoreMenu_p import *
 from menu.CharacterStoreMenu_f import *
 from menu.CharacterStoreMenu_d import *
@@ -42,7 +39,7 @@ class ModeSelectMenu:
         self.board_height = self.changed_screen_size[1]  # y
 
         self.rankpage = button(self.board_height, self.board_height,
-                               0.75, 0.05, 0.15, 0.063, "Image/thema/RANK.png") # x좌표, y좌표, 가로비율, 세로비율
+                               0.75, 0.05, 0.15, 0.063, "Image/thema/rank.png") # x좌표, y좌표, 가로비율, 세로비율
         self.mypage = button(self.board_height, self.board_height,
                              0.15, 0.05, 0.15, 0.06, "Image/thema/MYPAGE.png") # x좌표, y좌표, 가로비율, 세로비율
         self.store = button(self.board_height, self.board_height,
@@ -102,6 +99,9 @@ class ModeSelectMenu:
         
         self.background_music = "./Sound/bgm/bgm_gameSelect.wav"
 
+        self.soundOn = 0.1
+        self.soundOff = 0
+
         self.mode = [("score", InfiniteGame.ScoreMode()),
                      ("time", InfiniteGame.TimeMode())]
 
@@ -125,15 +125,15 @@ class ModeSelectMenu:
         choosed_character = character
 
         # 현재 소리 on/off 상태
-        if  Default.sound.value['sfx']['volume'] == 0.1:
+        if  Default.sound.value['sfx']['volume'] == self.soundOn:
             self.setting.image = "Image/thema/on.png"
-            pygame.mixer.music.set_volume(0.1)
+            pygame.mixer.music.set_volume(self.soundOn)
         else :
             pass
 
-        if  Default.sound.value['sfx']['volume'] == 0:
+        if  Default.sound.value['sfx']['volume'] == self.soundOff:
             self.setting.image = "Image/thema/off.png"
-            pygame.mixer.music.set_volume(0)
+            pygame.mixer.music.set_volume(self.soundOff)
         else :
             pass
 
@@ -353,18 +353,18 @@ class ModeSelectMenu:
                     if self.sound == "on":
                         self.setting.image = "Image/thema/off.png"
                         self.sound = "off"
-                        soundset = 0
+                        soundset = self.soundOff
                         print(soundset)
-                        Default.sound.value['sfx']['volume'] = 0
-                        pygame.mixer.music.set_volume(0)
+                        Default.sound.value['sfx']['volume'] = self.soundOff
+                        pygame.mixer.music.set_volume(self.soundOff)
                         self.character_data = CharacterDataManager.load()  # volume 적용
                     else:
                         self.setting.image = "Image/thema/on.png"
                         self.sound = "on"
-                        soundset = 0.1
+                        soundset = self.soundOn
                         print(soundset)
-                        Default.sound.value['sfx']['volume'] = 0.1
-                        pygame.mixer.music.set_volume(0.1)
+                        Default.sound.value['sfx']['volume'] = self.soundOn
+                        pygame.mixer.music.set_volume(self.soundOn)
                         self.character_data = CharacterDataManager.load()  # volume 적용
 
     # 화면 크기 조정 감지 및 비율 고정

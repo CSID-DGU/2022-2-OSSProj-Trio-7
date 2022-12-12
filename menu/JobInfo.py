@@ -40,7 +40,7 @@ class JobInfo:
 
     def show(self, screen):
         self.check_resize(screen)
-        screen.fill((255, 255, 255))  # 배경 나중에 바꾸기.
+        screen.fill(Color.WHITE)
         
     def returnPage(self):
         from menu.CharacterSelectMenu import CharacterSelect

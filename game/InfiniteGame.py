@@ -64,17 +64,18 @@ class InfiniteGame:
         self.target3_image = target3img
         self.target4_image = target4img
         self.background_image = mapimg
-        from menu.ModeSelectMenu import soundset
         if(choosed_chracter == "police"):
             self.background_music = "./Sound/bgm/bgm_police.mp3"
         if(choosed_chracter == "firefighter"):
             self.background_music = "./Sound/bgm/bgm_firefighter.mp3"
         if(choosed_chracter == "doctor"):
             self.background_music = "./Sound/bgm/bgm_doctor.mp3"
+        self.soundOn = 0.1
+        self.soundOff = 0
         self.SB = 0
-        self.dy = 2
-        self.mob_velocity = 2
-        self.coin = 0
+        self.dy = 2 # 배경 이동 속도
+        self.mob_velocity = 2 # 몹이동속도
+        self.coin = 0 # 획득 코인
         self.enemyBullets = []
         self.crashed_mob_count = 0  # 폭파시킨 몹 갯수
 
@@ -90,9 +91,9 @@ class InfiniteGame:
         self.board_width = self.changed_screen_size[0]  # x
         self.board_height = self.changed_screen_size[1]  # y
         import button
-        self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png")
+        self.setting = button.button(self.board_height, self.board_height, 0.85, 0.05, 0.1, 0.085, "Image/thema/on.png") # x좌표, y좌표, 가로비율, 세로비율
 
-        self.stop = button.button(self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png")
+        self.stop = button.button(self.board_width, self.board_height, 0.95, 0.05, 0.1, 0.1, "Image/thema/stop.png") # x좌표, y좌표, 가로비율, 세로비율
         self.sound = "on"
 
         self.plusgenerate = 0.0001 # FPS 단위마다 생성 범위 증가
@@ -119,15 +120,15 @@ class InfiniteGame:
         pygame.mixer.music.play(-1)
 
         # 현재 소리 on/off 상태
-        if  Default.sound.value['sfx']['volume'] == 0.1:
+        if  Default.sound.value['sfx']['volume'] ==self.soundOn:
             self.setting.image = "Image/thema/on.png"
-            pygame.mixer.music.set_volume(0.1)
+            pygame.mixer.music.set_volume(self.soundOn)
         else :
             pass
 
-        if  Default.sound.value['sfx']['volume'] == 0:
+        if  Default.sound.value['sfx']['volume'] == self.soundOff:
             self.setting.image = "Image/thema/off.png"
-            pygame.mixer.music.set_volume(0)
+            pygame.mixer.music.set_volume(self.soundOff)
         else :
             pass
         
@@ -164,8 +165,6 @@ class InfiniteGame:
                 if event.type == pygame.KEYDOWN:  # 어떤 키를 눌렀을때!(키보드가 눌렸을 때)
                     if event.key == pygame.K_x:
                         self.SB = 1
-                    if event.key == pygame.K_z:  # 테스트용
-                        self.score += 30
                         
                 pos = pygame.mouse.get_pos()  # mouse
 
@@ -174,21 +173,22 @@ class InfiniteGame:
                         self.StopGame()
 
                     if self.setting.isOver(pos):
-                        if soundset == 0.1:
+                        if soundset == self.soundOn:
                             self.setting.image = "Image/thema/off.png"
-                            soundset = 0
-                            Default.sound.value['sfx']['volume'] = 0
+                            soundset = self.soundOff
+                            print(soundset)
+                            Default.sound.value['sfx']['volume'] = self.soundOff
                             pygame.mixer.music.set_volume(0)
                         else:
                             self.setting.image = "Image/thema/on.png"
                             from menu.ModeSelectMenu import soundset
-                            soundset = 0.1
-                            Default.sound.value['sfx']['volume'] = 0.1
-                            pygame.mixer.music.set_volume(0.1)
+                            soundset = self.soundOn
+                            print(soundset)
+                            Default.sound.value['sfx']['volume'] = self.soundOn
+                            pygame.mixer.music.set_volume(self.soundOn)
 
                 if event.type == pygame.VIDEORESIZE:  # 창크기가 변경되었을 때
                     # 화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
-                    print('10:!3')
                     width, height = max(event.w, 300), max(event.h, 390)
 
                     # 크기를 조절해도 화면의 비율이 유지되도록, 가로와 세로 중 작은 것을 기준으로 종횡비(10:13)으로 계산
@@ -425,15 +425,15 @@ class InfiniteGame:
                                      theme=self.mytheme)
         self.menu.add.label("점수 : {}".format(
             self.score), font_size=self.font_size)
-        self.menu.add.vertical_margin(10)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.label("시간 : {:.2f}".format(
             play_time), font_size=self.font_size)
-        self.menu.add.vertical_margin(30)
+        self.menu.add.vertical_margin(Menus.margin_30.value)
         self.menu.add.button(
             '   랭킹   ', self.show_register_result, font_size=self.font_size)
-        self.menu.add.vertical_margin(10)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.button( '다시 시작 ', self.retry, font_size=self.font_size)
-        self.menu.add.vertical_margin(10)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
         self.menu.add.button('모드 선택화면으로', self.ModeSelectMenu,
                              font_size=self.font_size)
         User.coin = User.coin + self.coin
@@ -483,9 +483,6 @@ class InfiniteGame:
     # 일시정지 화면
     def StopGame(self):
         pygame.mixer.music.pause()
-        self.orange_color = (253, 111, 34)
-        self.font_size = self.size[0] * 38 // 720  # 글씨크기
-
         self.mytheme = pygame_menu.Theme(
             widget_font=Default.font.value,
             widget_background_color=Color.INDIGO.value,  # 버튼 배경색 설정
@@ -512,11 +509,11 @@ class InfiniteGame:
     def stop_page(self):
         self.menu.clear()
         b1 = self.menu.add.button('   계속하기   ', self.Continue, 
-                             self.menu, selection_color=self.orange_color, font_size=self.font_size)
-        self.menu.add.vertical_margin(10)
-        b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=self.orange_color, font_size=self.font_size)
-        self.menu.add.vertical_margin(10)
-        b3 = self.menu.add.button("모드 선택화면으로", self.ModeSelectMenu, selection_color=self.orange_color,
+                             self.menu, selection_color=Color.ORANGE.value, font_size=self.font_size)
+        self.menu.add.vertical_margin(Menus.margin_10.value)
+        b2 = self.menu.add.button("   다시시작   ", self.retry,selection_color=Color.ORANGE.value, font_size=self.font_size)
+        self.menu.add.vertical_margin(Menus.margin_30.value)
+        b3 = self.menu.add.button("모드 선택화면으로", self.ModeSelectMenu, selection_color=Color.ORANGE.value,
                              font_size=self.font_size,)
 
     def check_resize_end(self):
@@ -553,33 +550,8 @@ class InfiniteGame:
                      self.background_image,self.target1_image,self.target2_image,self.target3_image,self.target4_image, self.wselect).main()
         self.menu.disable()
 
-    # 난이도를 나누는 모드 클래스 (상속하여 사용)
-    class Mode:
-        def update_difficulty():
-            pass
+    class ScoreMode():  # 스코어 모드
+        print("스코어 모드")
 
-    class ScoreMode(Mode):  # 스코어 모드
-        @staticmethod
-        def update_difficulty(game):
-            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
-            if (game.mob_gen_rate < 0.215):  # 최대값 제한
-                # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
-                game.mob_gen_rate = play_time//10/10 + 0.015
-            if (game.dy < 20):  # 최대값 제한
-                game.dy = play_time//5*2 + 2  # 5초마다 dy(배경 이동 속도) 2 증가 (기본 2)
-            if (game.mob_velocity < 3):  # 최대값 제한
-                # 10초마다 mob_velocity(몹 이동 속도) 1 증가 (기본 2)
-                game.mob_velocity = play_time//10*1 + 2
-
-    class TimeMode(Mode):  # time 모드
-        @staticmethod
-        def update_difficulty(game):
-            play_time = float(time.time() - game.start_time)  # 게임 진행 시간
-            if (game.mob_gen_rate < 0.215):  # 최대값 제한
-                # 10초마다 mob_gen_rate 0.1 증가(기본 0.015)
-                game.mob_gen_rate = play_time//10/10 + 0.015
-            if (game.dy < 20):  # 최대값 제한
-                game.dy = play_time//5*2 + 2  # 5초마다 dy(배경 이동 속도) 2 증가 (기본 2)
-            if (game.mob_velocity < 3):  # 최대값 제한
-                # 10초마다 mob_velocity(몹 이동 속도) 2 증가 (기본 2)
-                game.mob_velocity = play_time//10*1 + 2
+    class TimeMode():  # 타임 모드
+        print("타임 모드")
