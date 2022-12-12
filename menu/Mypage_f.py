@@ -138,6 +138,7 @@ class Mypage_f:
     def select_fcharacter(self):
         selected_idx = self.fcharacter_selector.get_value()[0][1] # 이게 문제
         if User.firefighter_lock[selected_idx-3] == False:
+
             User.fcharacter = selected_idx
             database = Database()
             database.set_fchar()
