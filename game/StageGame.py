@@ -580,7 +580,7 @@ class StageGame:
         if (self.size != self.screen.get_size()):  # 현재 사이즈와 저장된 사이즈 비교 후 다르면 변경
             changed_screen_size = self.screen.get_size()  # 변경된 사이즈
             ratio_screen_size = (
-                changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
+                changed_screen_size[0], changed_screen_size[0]*sizescale.maxiset.value/sizescale.maxi.value)  # y를 x에 비례적으로 계산
             if (ratio_screen_size[0] < sizescale.mini.value):  # 최소 x길이 제한
                 ratio_screen_size = (sizescale.mini.value, sizescale.miniset.value)
             if (ratio_screen_size[1] > sizescale.maxi.value):  # 최대 y길이 제한
