@@ -163,7 +163,7 @@ class Default(enum.Enum):
             "x": 50,
             "y": 50
         },
-        "health": 12000,
+        "health": 1500,
         "firing_speed": [
             25,
             20,

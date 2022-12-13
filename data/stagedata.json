@@ -4,7 +4,7 @@
 			"1": [
 				"map1",
 				1,
-				50,
+				20,
 				"./Image/background/police_background.png",
 				"./Sound/bgm/bgm_police.mp3",
 				1,
@@ -21,7 +21,7 @@
 			"2": [
 				"map1",
 				2,
-				100,
+				20,
 				"./Image/background/police_background.png",
 				"./Sound/bgm/bgm_police.mp3",
 				1,
@@ -38,7 +38,7 @@
 			"3": [
 				"map1",
 				3,
-				150,
+				20,
 				"./Image/background/police_background.png",
 				"./Sound/bgm/bgm_police.mp3",
 				1,
@@ -57,7 +57,7 @@
 			"1": [
 				"map2",
 				1,
-				50,
+				20,
 				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bgm_firefighter.mp3",
 				1,
@@ -74,7 +74,7 @@
 			"2": [
 				"map2",
 				2,
-				100,
+				20,
 				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bgm_firefighter.mp3",
 				1,
@@ -91,7 +91,7 @@
 			"3": [
 				"map2",
 				3,
-				150,
+				20,
 				"./Image/background/firefighter_background.png",
 				"./Sound/bgm/bgm_firefighter.mp3",
 				1,
@@ -110,7 +110,7 @@
 			"1": [
 				"map3",
 				1,
-				50,
+				20,
 				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bgm_doctor.mp3",
 				1,
@@ -127,7 +127,7 @@
 			"2": [
 				"map3",
 				2,
-				100,
+				20,
 				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bgm_doctor.mp3",
 				1,
@@ -144,7 +144,7 @@
 			"3": [
 				"map3",
 				3,
-				150,
+				20,
 				"./Image/background/doctor_background.png",
 				"./Sound/bgm/bgm_doctor.mp3",
 				1,

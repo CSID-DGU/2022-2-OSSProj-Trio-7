@@ -56,7 +56,7 @@ class InfiniteGame:
         self.missileList = []
         self.character = character
         self.score = 0
-        self.life = 3
+        self.life = 2
         self.start_time = time.time()
         self.mob_gen_rate = 0.01
         self.target1_image = target1img
@@ -311,7 +311,7 @@ class InfiniteGame:
                     if self.check_crash(missile, mob):
                         self.score += 10
                         self.crashed_mob_count += 1
-                        if (self.crashed_mob_count >= 10):  # 몹 10마리 잡으면 궁극기 추가
+                        if (self.crashed_mob_count >= 1):  # 몹 1마리 잡으면 궁극기 추가
                             self.character.gung_count += 1
                             self.crashed_mob_count = 0
                         if missile in self.character.missiles_fired:
