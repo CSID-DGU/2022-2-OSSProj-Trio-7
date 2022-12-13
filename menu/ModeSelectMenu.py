@@ -188,8 +188,7 @@ class ModeSelectMenu:
                                     self.stage_data["chapter"]["gloomy street"][self.stage_level])
 
                                 if self.pcheck:
-                                    import menu.FailPlay
-                                    menu.FailPlay.FailPlay(self.screen).show()
+                                    pass
                                 else:
                                     StageGame(
                                         self.character_data, self.character_data[User.pcharacter], self.stage_map, "police", winfo).main_info() 
@@ -202,8 +201,7 @@ class ModeSelectMenu:
                                     self.stage_data["chapter"]["burning house"][self.stage_level])
 
                                 if self.fcheck:
-                                    import menu.FailPlay
-                                    menu.FailPlay.FailPlay(self.screen).show()
+                                    pass
                                 else:
                                     StageGame(
                                         self.character_data, self.character_data[User.fcharacter], self.stage_map, "firefighter", winfo).main_info()
@@ -216,8 +214,7 @@ class ModeSelectMenu:
                                     self.stage_data["chapter"]["hospital"][self.stage_level])
 
                                 if self.dcheck:
-                                    import menu.FailPlay
-                                    menu.FailPlay.FailPlay(self.screen).show()
+                                    pass
                                 else:
                                     StageGame(
                                         self.character_data, self.character_data[User.dcharacter], self.stage_map, "doctor", winfo).main_info()
@@ -263,8 +260,7 @@ class ModeSelectMenu:
                                 self.stage_map=self.mode[self.inf_mode_map1][1]
                                 User.pcharacter = self.database.show_pmychar()
                                 if self.pcheck:
-                                    import menu.FailPlay
-                                    menu.FailPlay.FailPlay(self.screen).show()
+                                    pass
                                 else: 
                                     InfiniteGame(self.character_data[User.pcharacter], "police", self.stage_map,
                                                 "Image/background/police_background.png", self.police_attackTarget[0], self.police_attackTarget[1], self.police_attackTarget[2], self.police_attackTarget[3], winfo).main()
@@ -285,8 +281,7 @@ class ModeSelectMenu:
                                 self.stage_map=self.mode[self.inf_mode_map1][1]
                                 User.fcharacter = self.database.show_fmychar()
                                 if self.fcheck:
-                                    import menu.FailPlay
-                                    menu.FailPlay.FailPlay(self.screen).show()
+                                    pass
                                 else: 
                                     InfiniteGame(self.character_data[User.fcharacter], "firefighter", self.stage_map,
                                                 "Image/background/firefighter_background.png", self.firefighter_attackTarget[0], self.firefighter_attackTarget[1], self.firefighter_attackTarget[2], self.firefighter_attackTarget[3], winfo).main()
@@ -307,8 +302,7 @@ class ModeSelectMenu:
                                 self.stage_map=self.mode[self.inf_mode_map1][1]
                                 User.dcharacter = self.database.show_dmychar() # 캐릭터 분류하는 필수 함수
                                 if self.dcheck:
-                                    import menu.FailPlay
-                                    menu.FailPlay.FailPlay(self.screen).show()
+                                    pass
                                 else:
                                     InfiniteGame(self.character_data[User.dcharacter], "doctor", self.stage_map,
                                                 "Image/background/doctor_background.png", self.doctor_attackTarget[0], self.doctor_attackTarget[1], self.doctor_attackTarget[2], self.doctor_attackTarget[3], winfo).main()
