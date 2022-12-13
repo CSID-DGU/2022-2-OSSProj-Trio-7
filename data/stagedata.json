@@ -79,7 +79,7 @@
 				"./Sound/bgm/bgm_firefighter.mp3",
 				1,
 				1,
-				"./Image/fireCharacters/fireStage_monster.png",
+				"./Image/fireCharacters/FireStage_monster.png",
 				[
 					"./Image/fireCharacters/FireStage_boss2.png",
 					"./Image/fireCharacters/FireStage_boss2.png",
@@ -96,7 +96,7 @@
 				"./Sound/bgm/bgm_firefighter.mp3",
 				1,
 				1,
-				"./Image/fireCharacters/fireStage_monster.png",
+				"./Image/fireCharacters/FireStage_monster.png",
 				[
 					"./Image/fireCharacters/FireStage_boss3.png",
 					"./Image/fireCharacters/FireStage_boss3.png",
