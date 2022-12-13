@@ -1,9 +1,3 @@
-# Character : 이동속도, 투사체 속도, 크기, 이미지, 투사체 사운드
-# stage : 목표점수, 배경이미지, 배경 사운드
-
-# 게임 : 목숨, 시간
-# 로직 : 세이브파일 변경 후 저장 필요
-
 import random
 import time
 from collections import OrderedDict
