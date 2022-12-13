@@ -74,7 +74,7 @@ class wselectMenu:
 
              if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.stageW.isOver(pos):
-                    if (User.coin>=User.wprice.value):
+                    if (User.coin>=User.wprice[0]):
                         print("데미지 강화 아이템을 구매하셨습니다.")
                         self.isSelect = True
                         self.weapon = "stage" # 구매한 무기 정보를 설정
@@ -85,7 +85,7 @@ class wselectMenu:
                         print("돈이 부족합니다.")
                 
                 if self.infiniteW.isOver(pos):
-                    if(User.coin>=User.wprice.value):
+                    if(User.coin>=User.wprice[0]):
                         print("속도 강화 아이템을 구매하셨습니다.")
                         self.isSelect = True
                         self.weapon = "infinite"
