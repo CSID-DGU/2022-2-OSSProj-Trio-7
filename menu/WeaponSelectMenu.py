@@ -52,7 +52,7 @@ class wselectMenu:
         self.check_resize(screen)
        
     def show(self):
-        
+        self.check_resize(self.screen)
         self.screen.fill((255, 255, 255))  # 배경 나중에 바꾸기.
         # bg = pygame.image.load("Image/weaponSelect/wbackground.png")
         # bg = pygame.transform.scale(bg, self.size)
@@ -74,7 +74,7 @@ class wselectMenu:
 
              if event.type == pygame.MOUSEBUTTONUP:  # 마우스 클릭
                 if self.stageW.isOver(pos):
-                    if (User.coin>=2000):
+                    if (User.coin>=User.wprice.value):
                         print("데미지 강화 아이템을 구매하셨습니다.")
                         self.isSelect = True
                         self.weapon = "stage" # 구매한 무기 정보를 설정
@@ -85,7 +85,7 @@ class wselectMenu:
                         print("돈이 부족합니다.")
                 
                 if self.infiniteW.isOver(pos):
-                    if(User.coin>=2000):
+                    if(User.coin>=User.wprice.value):
                         print("속도 강화 아이템을 구매하셨습니다.")
                         self.isSelect = True
                         self.weapon = "infinite"
@@ -107,9 +107,9 @@ class wselectMenu:
             changed_screen_size = self.screen.get_size()  # 변경된 사이즈
             ratio_screen_size = (
                 changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
-            if (ratio_screen_size[0] < 300):  # 최소 x길이 제한
-                ratio_screen_size = (300, 390)
-            if (ratio_screen_size[1] > 700):  # 최대 y길이 제한
-                ratio_screen_size = (700, 910)
+            if (ratio_screen_size[0] < sizescale.mini.value):  # 최소 x길이 제한
+                ratio_screen_size = (sizescale.mini.value, sizescale.miniset.value)
+            if (ratio_screen_size[1] > sizescale.maxi.value):  # 최대 y길이 제한
+                ratio_screen_size = (sizescale.maxi.value, sizescale.maxiset.value)
             screen = pygame.display.set_mode(ratio_screen_size, pygame.RESIZABLE)
             return 0

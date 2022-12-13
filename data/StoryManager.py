@@ -68,7 +68,7 @@ class StoryManager():
             for event in pygame.event.get():
                 if event.type == pygame.VIDEORESIZE: #화면이 리사이즈 되면
                         #화면 크기가 최소 300x390은 될 수 있도록, 변경된 크기가 그것보다 작으면 300x390으로 바꿔준다
-                        width, height = max(event.w,300), max(event.h,390)
+                        width, height = max(event.w, sizescale.mini.value), max(event.h, sizescale.miniset.value)
 
                         #크기를 조절해도 화면의 비율이 유지되도록, 가로와 세로 중 작은 것을 기준으로 종횡비(10:13)으로 계산
                         if(width<=height):
