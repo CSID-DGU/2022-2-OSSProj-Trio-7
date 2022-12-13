@@ -62,11 +62,11 @@
 				"./Sound/bgm/bgm_firefighter.mp3",
 				1,
 				1,
-				"./Image/fireCharacters/fireStage_monster.png",
+				"./Image/fireCharacters/FireStage_monster.png",
 				[
-					"./Image/fireCharacters/fireStage_boss1.png",
-					"./Image/fireCharacters/fireStage_boss1.png",
-					"./Image/fireCharacters/fireStage_boss1.png"
+					"./Image/fireCharacters/FireStage_boss1.png",
+					"./Image/fireCharacters/FireStage_boss1.png",
+					"./Image/fireCharacters/FireStage_boss1.png"
 				],
 				"./Image/fireCharacters/fireball.png",
 				""
@@ -81,9 +81,9 @@
 				1,
 				"./Image/fireCharacters/fireStage_monster.png",
 				[
-					"./Image/fireCharacters/fireStage_boss2.png",
-					"./Image/fireCharacters/fireStage_boss2.png",
-					"./Image/fireCharacters/fireStage_boss2.png"
+					"./Image/fireCharacters/FireStage_boss2.png",
+					"./Image/fireCharacters/FireStage_boss2.png",
+					"./Image/fireCharacters/FireStage_boss2.png"
 				],
 				"./Image/fireCharacters/fireball.png",
 				""
@@ -98,9 +98,9 @@
 				1,
 				"./Image/fireCharacters/fireStage_monster.png",
 				[
-					"./Image/fireCharacters/fireStage_boss3.png",
-					"./Image/fireCharacters/fireStage_boss3.png",
-					"./Image/fireCharacters/fireStage_boss3.png"
+					"./Image/fireCharacters/FireStage_boss3.png",
+					"./Image/fireCharacters/FireStage_boss3.png",
+					"./Image/fireCharacters/FireStage_boss3.png"
 				],
 				"./Image/fireCharacters/fireball.png",
 				"F5S4"

@@ -17,7 +17,7 @@ class User:
     price = [0, 0, 8000, 8000]
     score_score = 0
     time_score = 0.0
-    wprice = 2000
+    wprice = [2000]
 
     police_lock = [False, False, False]
     firefighter_lock = [False, False, False]
