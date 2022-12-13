@@ -156,10 +156,10 @@ class Mypage_d:
             changed_screen_size = self.screen.get_size()  # 변경된 사이즈
             ratio_screen_size = (
                 changed_screen_size[0], changed_screen_size[0]*783/720)  # y를 x에 비례적으로 계산
-            if (ratio_screen_size[0] < 300):  # 최소 x길이 제한
-                ratio_screen_size = (300, 390)
-            if (ratio_screen_size[1] > 700):  # 최대 y길이 제한
-                ratio_screen_size = (700, 910)
+            if (ratio_screen_size[0] < sizescale.mini.value):  # 최소 x길이 제한
+                ratio_screen_size = (sizescale.mini.value, sizescale.miniset.value)
+            if (ratio_screen_size[1] > sizescale.maxi.value):  # 최대 y길이 제한
+                ratio_screen_size = (sizescale.maxi.value, sizescale.maxiset.value)
             self.screen = pygame.display.set_mode(ratio_screen_size,
                                                   pygame.RESIZABLE)
             window_size = self.screen.get_size()

@@ -17,6 +17,7 @@ class User:
     price = [0, 0, 8000, 8000]
     score_score = 0
     time_score = 0.0
+    wprice = 2000
 
     police_lock = [False, False, False]
     firefighter_lock = [False, False, False]
@@ -93,6 +94,11 @@ class Scales(enum.Enum):
     small = (.6, .6)
     tiny = (.1, .1)
 
+class sizescale(enum.Enum):
+    mini = 300
+    miniset = 390
+    maxi = 700
+    maxiset = 910
 
 class Color(enum.Enum):
     RED = (200, 60, 50)
