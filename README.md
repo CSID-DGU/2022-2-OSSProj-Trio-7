@@ -21,7 +21,7 @@
 
 ✔ 팀장 : 동국대학교 산업시스템공학과 [유근태](https://github.com/Felix-Silas)
 
-✔ 팀원 : 동국대학교 철학과 [송우영](https://github.com/wooyoung0830)
+✔ 팀원 : 동국대학교 철학과 [송우영](https://github.com/f0rever0)
 
 ✔ 팀원 : 동국대학교 경영정보학과 [노성균](https://github.com/RohSungKyun)
 
